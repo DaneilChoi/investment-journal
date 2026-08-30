@@ -1,0 +1,10 @@
+{
+  "name": "투자일지",
+  "short_name": "투자일지",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#173bd5",
+  "lang": "ko",
+  "description": "매일의 투자 과정을 기록하는 투자일지"
+}

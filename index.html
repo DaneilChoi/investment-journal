@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>투자일지</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#173bd5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="투자일지">
+<style>
+:root{
+  --navy:#172554; --blue:#2563eb; --indigo:#4338ca; --red:#ef4444;
+  --yellow:#f4d000; --line:#e5e7eb; --muted:#64748b; --bg:#f8fafc;
+  --card:#fff; --green:#16a34a; --orange:#f59e0b;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Malgun Gothic",sans-serif;background:var(--bg);color:#111827}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh}
+.topbar{height:64px;background:linear-gradient(110deg,#173bd5,#3730a3 50%,#ed174e);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px}.logo{font-size:25px;color:#ef1d25}.top-date{font-weight:800}.icon-btn{background:transparent;border:0;color:#fff;font-size:23px}
+main{max-width:1050px;margin:auto;padding:22px 18px 90px}
+.screen{display:none}.screen.active{display:block}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:4px 0 18px}
+.section-title h1{font-size:24px;margin:0}.sub{color:var(--muted);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 3px 12px rgba(15,23,42,.04)}
+.yellow-card{border:2px solid var(--yellow)}
+.month-nav{display:flex;align-items:center;justify-content:center;gap:24px;font-size:21px;font-weight:850;margin:12px 0 18px}
+.month-nav button{border:0;background:transparent;font-size:28px;color:var(--navy)}
+.calendar{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.weekdays,.days{display:grid;grid-template-columns:repeat(7,1fr)}
+.weekdays div{text-align:center;padding:12px 4px;font-weight:800;color:#475569;border-bottom:1px solid var(--line);font-size:13px}
+.weekdays div:first-child{color:#dc2626}.weekdays div:last-child{color:#2563eb}
+.day{min-height:78px;border-right:1px solid #f1f5f9;border-bottom:1px solid #f1f5f9;padding:8px;position:relative;background:#fff}
+.day:nth-child(7n){border-right:0}.day.muted{color:#cbd5e1}.day:hover{background:#f8fbff}
+.day .num{font-weight:700}.day.selected .num{background:#2563eb;color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center}
+.dot-row{position:absolute;left:8px;bottom:8px;display:flex;gap:4px}.dot{width:7px;height:7px;border-radius:50%}.dot.blue{background:#2563eb}.dot.green{background:#16a34a}.dot.red{background:#ef4444}.dot.orange{background:#f59e0b}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}.summary-grid strong{display:block;font-size:22px;margin-top:5px}.positive{color:var(--green)}.negative{color:var(--red)}
+.journal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.back{border:0;background:transparent;font-size:25px;color:var(--navy)}
+.journal-card h2{font-size:18px;text-align:center;margin:0 0 14px}.edit{float:right;border:0;background:transparent;color:#64748b}
+textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px;padding:12px;resize:vertical;outline:none}textarea:focus,input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.trade-table{width:100%;border-collapse:collapse;font-size:14px}.trade-table th,.trade-table td{padding:10px 7px;border-bottom:1px solid #eef2f7;text-align:center}.trade-table th{font-weight:800;color:#475569}.trade-table .buy{color:#ef4444;font-weight:800}.trade-table .sell{color:#2563eb;font-weight:800}.add-link{border:0;background:transparent;color:#2563eb;font-weight:800;padding:10px}
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.review-box{min-height:135px;border:1px solid #dbe3ee;border-radius:10px;padding:12px}.review-box h3{font-size:15px;margin:0 0 8px}.review-box textarea{border:0;padding:0;min-height:90px;box-shadow:none}
+.primary{width:100%;border:0;border-radius:10px;padding:13px;background:linear-gradient(100deg,#4338ca,#2563eb);color:#fff;font-weight:850}
+.secondary{border:1px solid #dbe3ee;background:#fff;border-radius:9px;padding:10px 14px}.danger{color:#dc2626}
+.prev-plan{background:#fff;border:1px solid #cbd5e1;border-radius:12px;padding:15px;margin-bottom:14px}.prev-plan h3{margin:0 0 8px;font-size:15px}.prev-plan p{white-space:pre-wrap;margin:0;color:#334155;font-size:14px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:30}.nav-inner{max-width:1050px;width:100%;display:grid;grid-template-columns:repeat(4,1fr)}.nav button{border:0;background:#fff;padding:10px 4px 9px;color:#64748b;font-size:12px;font-weight:750}.nav button.active{color:#2563eb}.nav .ico{display:block;font-size:20px;margin-bottom:2px}
+.modal-wrap{display:none;position:fixed;inset:0;background:rgba(15,23,42,.48);z-index:50;align-items:center;justify-content:center;padding:18px}.modal-wrap.show{display:flex}.modal{background:#fff;border-radius:16px;width:min(520px,100%);max-height:92vh;overflow:auto;padding:20px}.modal-head{display:flex;justify-content:space-between;align-items:center}.modal-head h2{margin:0;font-size:19px}.close{border:0;background:transparent;font-size:25px}.field{margin:13px 0}.field label{display:block;font-size:13px;font-weight:800;color:#475569;margin-bottom:6px}.field input,.field select{width:100%;padding:11px;border:1px solid #dbe3ee;border-radius:9px;outline:none}.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.seg button{padding:11px;border-radius:9px;border:1px solid #dbe3ee;background:#fff;font-weight:800}.seg button.active.buy{background:#fee2e2;border-color:#ef4444;color:#dc2626}.seg button.active.sell{background:#dbeafe;border-color:#2563eb;color:#1d4ed8}
+.stock-list{display:grid;gap:9px}.stock-row{display:flex;align-items:center;justify-content:space-between;padding:13px;border:1px solid #e5e7eb;border-radius:11px;background:#fff}.stock-row button{border:0;background:transparent;text-align:left;flex:1}.ticker{font-size:12px;color:#94a3b8}.stock-price{font-weight:850}
+.stats-big{font-size:34px;font-weight:900}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{border:1px solid var(--line);border-radius:12px;padding:13px;text-align:center}.stat b{display:block;font-size:20px;margin-top:5px}.bar-chart{height:180px;display:flex;align-items:flex-end;gap:7px;padding:15px 5px;border-bottom:1px solid #cbd5e1}.bar{flex:1;min-width:6px;background:#2563eb;border-radius:5px 5px 0 0}.setting-row{display:flex;justify-content:space-between;align-items:center;padding:16px 4px;border-bottom:1px solid #eef2f7}.setting-row:last-child{border-bottom:0}.lang-buttons{display:flex;gap:8px}.lang-buttons button{border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:7px 11px}.lang-buttons button.active{background:#2563eb;color:#fff;border-color:#2563eb}
+.toast{position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 15px;border-radius:9px;display:none;z-index:80;font-size:13px}.toast.show{display:block}
+@media(max-width:650px){main{padding:16px 12px 82px}.day{min-height:64px;padding:6px}.summary-grid strong{font-size:18px}.review-grid,.stat-grid{grid-template-columns:1fr 1fr}.topbar{padding:0 14px}.journal-card{padding:13px}.trade-table{font-size:12px}.trade-table th,.trade-table td{padding:8px 3px}}
+
+.intro-screen{position:fixed;inset:0;z-index:100;background:linear-gradient(145deg,#173bd5 0%,#3730a3 52%,#ed174e 100%);display:flex;align-items:center;justify-content:center;color:#fff;padding:28px}
+.intro-screen.hidden{display:none}
+.intro-content{width:min(520px,100%);text-align:center}
+.intro-logo{font-size:58px;line-height:1;margin-bottom:22px;text-shadow:0 8px 24px rgba(0,0,0,.18)}
+.intro-title{font-size:40px;font-weight:950;letter-spacing:-1.5px;margin:0 0 12px}
+.intro-subtitle{font-size:17px;line-height:1.7;opacity:.92;margin:0 auto 34px;max-width:390px}
+.intro-features{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:34px}
+.intro-feature{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:15px 8px;backdrop-filter:blur(8px)}
+.intro-feature .ficon{font-size:25px;display:block;margin-bottom:7px}
+.intro-feature span:last-child{font-size:12px;font-weight:750}
+.start-btn{width:min(360px,100%);border:0;border-radius:13px;background:#fff;color:#2437a8;font-weight:900;font-size:17px;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.intro-bottom{margin-top:18px;font-size:12px;opacity:.72}
+@media(max-width:520px){.intro-title{font-size:33px}.intro-subtitle{font-size:15px}.intro-features{gap:7px}.intro-feature{padding:12px 5px}}
+
+
+/* v1.3 */
+.brand{cursor:pointer;user-select:none}.brand:active{transform:scale(.98)}
+.autosave{font-size:12px;color:#64748b;font-weight:700}.autosave.saving{color:#f59e0b}.autosave.saved{color:#16a34a}
+.trade-list{display:flex;flex-direction:column;gap:8px}.trade-item{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.drag-handle{cursor:grab;color:#94a3b8;font-size:20px;text-align:center;touch-action:none}.drag-handle:active{cursor:grabbing}.trade-main{min-width:0}.trade-main b{display:block}.trade-meta{font-size:12px;color:#64748b;margin-top:3px}.trade-actions{display:flex;gap:5px}.trade-actions button{padding:5px 8px}.trade-item.dragging{opacity:.45;border-style:dashed}
+.stock-suggest{position:relative}.stock-results{position:absolute;left:0;right:0;top:100%;z-index:50;background:#fff;border:1px solid #dbe3ee;border-radius:10px;box-shadow:0 10px 25px rgba(15,23,42,.12);max-height:220px;overflow:auto;display:none}.stock-results.show{display:block}.stock-result{width:100%;border:0;background:#fff;text-align:left;padding:11px 13px;border-bottom:1px solid #f1f5f9}.stock-result:hover{background:#f8fafc}.stock-result b{display:block}.stock-result small{color:#64748b}
+.modal.wide{max-width:720px}.modal-wrap .modal{max-height:90vh;overflow:auto}
+.print-actions{display:flex;gap:8px;flex-wrap:wrap}.setting-row button{min-width:82px}
+@media(max-width:640px){.topbar{padding:0 14px}.brand{font-size:18px}.top-date{font-size:12px}.trade-item{grid-template-columns:24px 1fr auto}.trade-actions button{font-size:12px;padding:5px}.review-grid{grid-template-columns:1fr}}
+@media print{body{background:#fff}.topbar,.nav,.no-print{display:none!important}main{max-width:none;padding:0}.screen{display:none!important}.print-target{display:block!important}.card{box-shadow:none;break-inside:avoid}.yellow-card{border:1px solid #ccc}}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand" id="brandHome" role="button" tabindex="0"><span class="logo">▲</span><span data-i18n="appName">투자일지</span></div>
+  <div class="top-date" id="topDate"></div>
+  <button class="icon-btn" id="menuBtn">⋮</button>
+</header>
+
+
+<div id="introScreen" class="intro-screen">
+  <div class="intro-content">
+    <div class="intro-logo">▲</div>
+    <h1 class="intro-title" data-i18n="appName">투자일지</h1>
+    <p class="intro-subtitle" data-i18n="introSubtitle">매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.</p>
+    <div class="intro-features">
+      <div class="intro-feature"><span class="ficon">📅</span><span data-i18n="introFeature1">매일 기록</span></div>
+      <div class="intro-feature"><span class="ficon">📊</span><span data-i18n="introFeature2">투자 분석</span></div>
+      <div class="intro-feature"><span class="ficon">📈</span><span data-i18n="introFeature3">투자 복기</span></div>
+    </div>
+    <button class="start-btn" id="startApp" data-i18n="startApp">투자일지 시작하기</button>
+    <div class="intro-bottom" data-i18n="introBottom">나의 기록은 이 브라우저에 안전하게 저장됩니다.</div>
+  </div>
+</div>
+
+<main>
+  <section id="calendarScreen" class="screen active">
+    <div class="section-title"><div><h1 data-i18n="journal">일지</h1><div class="sub" data-i18n="calendarHint">달력에서 날짜를 선택하세요.</div></div></div>
+    <div class="card">
+      <div class="month-nav"><button id="prevMonth">‹</button><span id="monthLabel"></span><button id="nextMonth">›</button></div>
+      <div class="calendar">
+        <div class="weekdays"><div data-i18n="sun">일</div><div data-i18n="mon">월</div><div data-i18n="tue">화</div><div data-i18n="wed">수</div><div data-i18n="thu">목</div><div data-i18n="fri">금</div><div data-i18n="sat">토</div></div>
+        <div id="days" class="days"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 id="summaryTitle" style="margin-top:0">8월 요약</h3>
+      <div class="summary-grid"><div><span data-i18n="writtenDays">기록한 날</span><strong id="sumDays">0일</strong></div><div><span data-i18n="tradeCount">매매 횟수</span><strong id="sumTrades">0회</strong></div><div><span data-i18n="monthlyReturn">수익률</span><strong id="sumReturn" class="positive">-</strong></div></div>
+    </div>
+  </section>
+
+  <section id="journalScreen" class="screen">
+    <div class="journal-head"><button class="back" id="backCalendar">‹</button><div style="text-align:center"><strong id="journalDate"></strong><div id="autosaveStatus" class="autosave">✓ 자동 저장됨</div></div><button class="icon-btn" style="color:#172554" id="journalMenu">⋮</button></div>
+    <div id="previousPlan" class="prev-plan" style="display:none"></div>
+    <div class="card yellow-card journal-card"><h2 data-i18n="marketAnalysis">투자전 오늘의 시장 분석 <button class="edit">✎</button></h2><textarea id="marketAnalysis" data-placeholder="marketPlaceholder"></textarea></div>
+    <div class="card yellow-card journal-card">
+      <h2 data-i18n="todayTrades">오늘의 매매 <button class="edit">✎</button></h2>
+      <div id="tradeTableWrap"></div>
+      <div style="text-align:center;margin-top:10px"><button class="add-link" id="addTradeBtn">＋ <span data-i18n="addTrade">매매 추가</span></button></div>
+    </div>
+    <div class="card yellow-card journal-card"><h2 data-i18n="tradeReason">매매 이유 <button class="edit">✎</button></h2><textarea id="tradeReason" data-placeholder="reasonPlaceholder"></textarea></div>
+    <div class="card yellow-card journal-card"><h2 data-i18n="dailyReview">오늘의 복기</h2><div class="review-grid"><div class="review-box"><h3>👍 <span data-i18n="goodPoint">잘한 점</span></h3><textarea id="goodPoint" data-placeholder="goodPlaceholder"></textarea></div><div class="review-box"><h3>🤔 <span data-i18n="badPoint">아쉬운 점</span></h3><textarea id="badPoint" data-placeholder="badPlaceholder"></textarea></div></div></div>
+    <div class="card yellow-card journal-card"><h2 data-i18n="tomorrowPlan">내일의 계획 <button class="edit">✎</button></h2><textarea id="tomorrowPlan" data-placeholder="planPlaceholder"></textarea></div>
+    <button class="primary" id="saveJournal" data-i18n="save">저장하기</button>
+  </section>
+
+  <section id="stocksScreen" class="screen">
+    <div class="section-title"><div><h1 data-i18n="stocks">종목</h1><div class="sub" data-i18n="stocksHint">기록한 종목과 매매 내역을 확인합니다.</div></div></div>
+    <div class="card"><input id="stockSearch" style="width:100%;padding:12px;border:1px solid #dbe3ee;border-radius:10px" placeholder="종목명 또는 코드 검색"></div>
+    <div id="stockList" class="stock-list"></div>
+  </section>
+
+  <section id="statsScreen" class="screen">
+    <div class="section-title"><div><h1 data-i18n="stats">통계</h1><div class="sub" id="statsMonthLabel"></div></div></div>
+    <div class="card"><div data-i18n="monthlyReturn">월간 수익률</div><div id="statsReturn" class="stats-big positive">-</div><div id="statsProfit" class="sub"></div></div>
+    <div class="card"><div class="stat-grid"><div class="stat"><span data-i18n="tradeCount">총 매매</span><b id="stTrades">0</b></div><div class="stat"><span data-i18n="winRate">승률</span><b id="stWin">-</b></div><div class="stat"><span data-i18n="avgWin">평균 수익</span><b class="positive">-</b></div><div class="stat"><span data-i18n="avgLoss">평균 손실</span><b class="negative">-</b></div></div></div>
+    <div class="card"><h3 data-i18n="returnTrend">수익률 추이</h3><div id="barChart" class="bar-chart"></div></div>
+    <div class="card"><h3 data-i18n="frequentStocks">자주 매매한 종목</h3><div id="topStocks"></div></div>
+  </section>
+
+  <section id="settingsScreen" class="screen">
+    <div class="section-title"><h1 data-i18n="settings">설정</h1></div>
+    <div class="card">
+      <div class="setting-row"><span>🔔 <span data-i18n="notifications">알림 설정</span></span><span>›</span></div>
+      <div class="setting-row"><span>📊 <span data-i18n="stockManagement">종목 관리</span></span><span>›</span></div>
+      <div class="setting-row"><span>🌐 <span data-i18n="language">언어</span></span><div class="lang-buttons"><button id="koBtn">한국어</button><button id="enBtn">English</button></div></div>
+      <div class="setting-row"><span>🔊 <span data-i18n="soundEffects">효과음</span></span><button class="secondary" id="soundToggle">켜짐</button></div>
+      <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
+      <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printToday">오늘 출력</button></div>
+      <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
+      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.3</span></div>
+    </div>
+  </section>
+</main>
+
+<nav class="nav"><div class="nav-inner">
+  <button class="active" data-screen="calendarScreen"><span class="ico">📅</span><span data-i18n="journal">일지</span></button>
+  <button data-screen="stocksScreen"><span class="ico">📊</span><span data-i18n="stocks">종목</span></button>
+  <button data-screen="statsScreen"><span class="ico">📈</span><span data-i18n="stats">통계</span></button>
+  <button data-screen="settingsScreen"><span class="ico">⚙</span><span data-i18n="settings">설정</span></button>
+</div></nav>
+
+<div id="tradeModal" class="modal-wrap"><div class="modal wide">
+  <div class="modal-head"><h2 data-i18n="addTradeTitle">매매 추가</h2><button class="close" id="closeTrade">×</button></div>
+  <div class="field"><label data-i18n="stock">종목</label><div class="stock-suggest"><input id="tradeStock" autocomplete="off" placeholder="삼성전자 / 005930"><div id="stockResults" class="stock-results"></div></div><input id="tradeCode" type="hidden"><div id="selectedStockHint" class="sub" style="margin-top:5px"></div></div>
+  <div class="field"><label data-i18n="buySell">매수 / 매도</label><div class="seg"><button id="buyBtn" class="buy active" data-i18n="buy">매수</button><button id="sellBtn" class="sell" data-i18n="sell">매도</button></div></div>
+  <div class="field"><label data-i18n="price">가격</label><input id="tradePrice" type="number" min="0" placeholder="75000"></div>
+  <div class="field"><label data-i18n="quantity">수량</label><input id="tradeQty" type="number" min="0" placeholder="10"></div>
+  <div class="field"><label data-i18n="tradeReason">매매 이유</label><textarea id="tradeWhy" style="min-height:90px"></textarea></div>
+  <button class="primary" id="addTradeConfirm" data-i18n="add">추가하기</button>
+</div></div>
+
+<div id="stockModal" class="modal-wrap"><div class="modal">
+  <div class="modal-head"><h2 id="stockModalTitle"></h2><button class="close" id="closeStock">×</button></div>
+  <div id="stockModalBody"></div>
+</div></div>
+
+<div id="printModal" class="modal-wrap"><div class="modal wide">
+  <div class="modal-head"><h2 data-i18n="printTitle">투자일지 출력</h2><button class="close" id="closePrint">×</button></div>
+  <div class="field"><label data-i18n="printRange">출력 범위</label><div class="seg"><button id="printTodayRange" class="active" data-i18n="today">오늘</button><button id="printMonthRange" data-i18n="thisMonth">이번 달</button></div></div>
+  <div class="field"><label data-i18n="printOptions">출력 항목</label><div style="display:grid;gap:8px"><label><input id="printJournalOpt" type="checkbox" checked> <span data-i18n="dailyJournal">일별 투자일지</span></label><label><input id="printTradesOpt" type="checkbox" checked> <span data-i18n="tradeRecords">매매 내역</span></label><label><input id="printAnalysisOpt" type="checkbox" checked> <span data-i18n="marketAnalysis">시장 분석</span></label></div></div>
+  <div class="print-actions"><button class="primary" id="printExecute" data-i18n="printNow">인쇄 / PDF 저장</button></div>
+</div></div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const I18N={
+ko:{appName:"투자일지",soundEffects:"효과음",soundOn:"켜짐",soundOff:"꺼짐",clickSound:"클릭",savedSound:"저장 완료",addSound:"추가 완료",introSubtitle:"매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.",introFeature1:"매일 기록",introFeature2:"투자 분석",introFeature3:"투자 복기",startApp:"투자일지 시작하기",introBottom:"나의 기록은 이 브라우저에 안전하게 저장됩니다.",journal:"일지",calendarHint:"달력에서 날짜를 선택하세요.",sun:"일",mon:"월",tue:"화",wed:"수",thu:"목",fri:"금",sat:"토",writtenDays:"기록한 날",tradeCount:"매매 횟수",monthlyReturn:"수익률",marketAnalysis:"투자전 오늘의 시장 분석",todayTrades:"오늘의 매매",addTrade:"매매 추가",tradeReason:"매매 이유",dailyReview:"오늘의 복기",goodPoint:"잘한 점",badPoint:"아쉬운 점",tomorrowPlan:"내일의 계획",save:"저장하기",stocks:"종목",stocksHint:"기록한 종목과 매매 내역을 확인합니다.",stats:"통계",settings:"설정",notifications:"알림 설정",stockManagement:"종목 관리",language:"언어",backup:"데이터 백업",export:"내보내기",import:"불러오기",print:"일지 출력",printToday:"오늘 출력",printTitle:"투자일지 출력",printRange:"출력 범위",today:"오늘",thisMonth:"이번 달",printOptions:"출력 항목",dailyJournal:"일별 투자일지",tradeRecords:"매매 내역",printNow:"인쇄 / PDF 저장",reset:"초기 데이터 삭제",delete:"삭제",appInfo:"앱 정보",addTradeTitle:"매매 추가",stock:"종목",buySell:"매수 / 매도",buy:"매수",sell:"매도",price:"가격",quantity:"수량",add:"추가하기",marketPlaceholder:"오늘 시장에서 중요했던 내용을 자유롭게 기록하세요.",reasonPlaceholder:"오늘의 매매를 왜 했는지 기록하세요.",goodPlaceholder:"오늘 잘한 점을 기록하세요.",badPlaceholder:"오늘 아쉬웠던 점을 기록하세요.",planPlaceholder:"내일의 투자 계획을 기록하세요.",winRate:"승률",avgWin:"평균 수익",avgLoss:"평균 손실",returnTrend:"수익률 추이",frequentStocks:"자주 매매한 종목",confirmReset:"모든 저장 데이터를 삭제할까요?",saved:"저장되었습니다.",autoSaved:"자동 저장됨",editDone:"수정 완료",edited:"수정되었습니다.",importMergeConfirm:"백업을 기존 데이터에 합칠까요?\n확인=병합 / 취소=교체",imported:"백업을 불러왔습니다.",importError:"백업 파일을 읽을 수 없습니다.",popupBlocked:"팝업이 차단되었습니다.",added:"매매가 추가되었습니다.",exported:"백업 파일을 만들었습니다.",noTrades:"등록된 매매가 없습니다.",noStocks:"아직 기록한 종목이 없습니다.",yesterdayPlan:"어제의 계획",check:"확인",tradeHistory:"매매 내역",totalTrades:"총 매매",averageBuy:"평균 매수가",averageSell:"평균 매도가",days:"일",times:"회"},
+en:{appName:"Investment Journal",soundEffects:"Sound effects",soundOn:"On",soundOff:"Off",clickSound:"Click",savedSound:"Saved",addSound:"Added",introSubtitle:"Record your investment journey every day,<br>and reflect on your investing habits.",introFeature1:"Daily Journal",introFeature2:"Market Analysis",introFeature3:"Daily Review",startApp:"Start Investment Journal",introBottom:"Your records are stored safely in this browser.",journal:"Journal",calendarHint:"Select a date from the calendar.",sun:"Sun",mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",writtenDays:"Written days",tradeCount:"Trades",monthlyReturn:"Return",marketAnalysis:"Today's Market Analysis",todayTrades:"Today's Trades",addTrade:"Add trade",tradeReason:"Trade Rationale",dailyReview:"Daily Review",goodPoint:"What Went Well",badPoint:"What Could Be Improved",tomorrowPlan:"Tomorrow's Plan",save:"Save",stocks:"Stocks",stocksHint:"Review recorded stocks and trades.",stats:"Stats",settings:"Settings",notifications:"Notifications",stockManagement:"Stock management",language:"Language",backup:"Data backup",export:"Export",import:"Import",print:"Print journal",printToday:"Print today",printTitle:"Print Investment Journal",printRange:"Print range",today:"Today",thisMonth:"This month",printOptions:"Print items",dailyJournal:"Daily journal",tradeRecords:"Trade records",printNow:"Print / Save PDF",reset:"Delete saved data",delete:"Delete",appInfo:"App info",addTradeTitle:"Add Trade",stock:"Stock",buySell:"Buy / Sell",buy:"Buy",sell:"Sell",price:"Price",quantity:"Quantity",add:"Add",marketPlaceholder:"Record the important market events of today.",reasonPlaceholder:"Why did you make today's trade?",goodPlaceholder:"What did you do well today?",badPlaceholder:"What could you have done better?",planPlaceholder:"Record your plan for tomorrow.",winRate:"Win rate",avgWin:"Avg. win",avgLoss:"Avg. loss",returnTrend:"Return trend",frequentStocks:"Most traded stocks",confirmReset:"Delete all saved data?",saved:"Saved.",autoSaved:"Auto-saved",editDone:"Save changes",edited:"Changes saved.",importMergeConfirm:"Merge this backup into existing data?\nOK=Merge / Cancel=Replace",imported:"Backup imported.",importError:"Could not read the backup file.",popupBlocked:"Pop-up was blocked.",added:"Trade added.",exported:"Backup file created.",noTrades:"No trades recorded.",noStocks:"No stocks recorded yet.",yesterdayPlan:"Yesterday's plan",check:"Check",tradeHistory:"Trade history",totalTrades:"Total trades",averageBuy:"Avg. buy",averageSell:"Avg. sell",days:"days",times:"times"}
+};
+let lang=localStorage.getItem("journal_lang")||"ko";
+let data=JSON.parse(localStorage.getItem("journal_data")||"null")||{
+ journals:{
+  "2026-08-28":{marketAnalysis:"코스피는 전일 대비 상승 출발. 반도체와 2차전지 강세가 이어짐.",tradeReason:"삼성전자: 75,000원 지지선 확인 후 반등 기대.\\nSK하이닉스: 단기 과열 판단, 일부 차익 실현.",goodPoint:"계획했던 가격에서 매수/매도\\n손절 원칙 지킴",badPoint:"SK하이닉스 매도 후 추가 상승\\n너무 일찍 대응한 종목이 있었음",tomorrowPlan:"삼성전자 75,000원 아래 추가 매수 검토\\n급등 시 추격매수 하지 않기\\n2차전지 흐름 체크"},
+ },
+ trades:{
+  "2026-08-28":[{stock:"삼성전자",code:"005930",type:"buy",price:75000,qty:10,reason:"지지선 확인 후 반등 기대"},{stock:"SK하이닉스",code:"000660",type:"sell",price:285000,qty:5,reason:"단기 과열 판단"}]
+ }
+};
+let viewDate=new Date(), selectedDate=key(new Date()), selectedTradeType="buy";
+if(!data.version)data.version="1.3";
+Object.values(data.trades).forEach(arr=>arr.forEach(x=>{if(!x.id)x.id="trade_"+Math.random().toString(36).slice(2,9)}));
+function saveData(){localStorage.setItem("journal_data",JSON.stringify(data))}
+function pad(n){return String(n).padStart(2,"0")}
+function key(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
+function parseKey(s){const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)}
+function t(k){return I18N[lang][k]||k}
+
+
+let editingTradeIndex = -1;
+let printRange = "today";
+let autoSaveTimer = null;
+let stockCatalog = [
+["삼성전자","005930","KOSPI"],["SK하이닉스","000660","KOSPI"],["삼성SDI","006400","KOSPI"],["삼성전기","009150","KOSPI"],
+["삼성물산","028260","KOSPI"],["삼성중공업","010140","KOSPI"],["현대차","005380","KOSPI"],["기아","000270","KOSPI"],
+["NAVER","035420","KOSPI"],["카카오","035720","KOSPI"],["LG에너지솔루션","373220","KOSPI"],["POSCO홀딩스","005490","KOSPI"],
+["셀트리온","068270","KOSPI"],["현대모비스","012330","KOSPI"],["KB금융","105560","KOSPI"],["신한지주","055550","KOSPI"],
+["하나금융지주","086790","KOSPI"],["두산에너빌리티","034020","KOSPI"],["한화에어로스페이스","012450","KOSPI"],["HD현대중공업","329180","KOSPI"],
+["한미반도체","042700","KOSPI"],["카카오뱅크","323410","KOSPI"],["크래프톤","259960","KOSPI"],["HMM","011200","KOSPI"],
+["현대글로비스","086280","KOSPI"],["대한항공","003490","KOSPI"],["LG화학","051910","KOSPI"],["LG전자","066570","KOSPI"],
+["SK이노베이션","096770","KOSPI"],["KT","030200","KOSPI"],["삼성생명","032830","KOSPI"],["삼성화재","000810","KOSPI"],
+["SK텔레콤","017670","KOSPI"],["KT&G","033780","KOSPI"],["한국전력","015760","KOSPI"],["포스코퓨처엠","003670","KOSPI"],
+["에코프로","086520","KOSDAQ"],["에코프로비엠","247540","KOSDAQ"],["알테오젠","196170","KOSDAQ"],["HLB","028300","KOSDAQ"],
+["레인보우로보틱스","277810","KOSDAQ"],["펄어비스","263750","KOSDAQ"],["JYP Ent.","035900","KOSDAQ"],["에스엠","041510","KOSDAQ"]
+];
+function stockMatches(q){
+ q=(q||"").trim().toLowerCase();
+ if(!q)return [];
+ return stockCatalog.filter(x=>(x[0]+" "+x[1]+" "+x[2]).toLowerCase().includes(q)).slice(0,8);
+}
+let stockSearchTimer=null;
+async function showStockResults(){
+ const q=tradeStock.value.trim(), box=document.getElementById("stockResults");
+ const local=stockMatches(q);
+ if(!q){box.classList.remove("show");return}
+ const render=arr=>{if(!arr.length){box.classList.remove("show");return}box.innerHTML=arr.map(x=>`<button type="button" class="stock-result" data-name="${escapeHtml(x[0])}" data-code="${x[1]}" data-market="${x[2]}"><b>${escapeHtml(x[0])}</b><small>${x[1]} · ${x[2]}</small></button>`).join("");box.classList.add("show")};
+ render(local);
+ clearTimeout(stockSearchTimer);
+ stockSearchTimer=setTimeout(async()=>{
+   try{
+     const dd=new Date();const bas=`${dd.getFullYear()}${pad(dd.getMonth()+1)}${pad(dd.getDate())}`;
+     const r=await fetch(`https://k-skill-proxy.nomadamas.org/v1/korean-stock/search?q=${encodeURIComponent(q)}&bas_dd=${bas}`,{headers:{Accept:"application/json"}});
+     if(!r.ok)return;
+     const j=await r.json();const remote=(j.items||[]).map(x=>[x.name||x.short_name,x.code,x.market||""]);
+     if(remote.length)render(remote);
+   }catch(e){/* local catalog remains available when offline */ }
+ },250);
+}
+function selectStock(name,code,market){
+ tradeStock.value=name; tradeCode.value=code;
+ document.getElementById("selectedStockHint").textContent=`${code} · ${market}`;
+ document.getElementById("stockResults").classList.remove("show"); uiSound("select");
+}
+
+let soundOn = localStorage.getItem("journal_sound") !== "0";
+let audioCtx = null;
+function ensureAudio(){
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if(audioCtx.state === "suspended") audioCtx.resume();
+}
+function uiSound(kind="click"){
+  if(!soundOn) return;
+  try{
+    ensureAudio();
+    const now=audioCtx.currentTime;
+    const osc=audioCtx.createOscillator();
+    const gain=audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    const presets={
+      click:{freq:520,dur:.045,vol:.035},
+      select:{freq:660,dur:.05,vol:.03},
+      success:{freq:740,dur:.11,vol:.045},
+      start:{freq:520,dur:.08,vol:.035}
+    };
+    const p=presets[kind]||presets.click;
+    osc.type="sine";
+    osc.frequency.setValueAtTime(p.freq,now);
+    if(kind==="success"){osc.frequency.setValueAtTime(660,now);osc.frequency.linearRampToValueAtTime(880,now+.09)}
+    if(kind==="start"){osc.frequency.linearRampToValueAtTime(760,now+.08)}
+    gain.gain.setValueAtTime(p.vol,now);
+    gain.gain.exponentialRampToValueAtTime(.001,now+p.dur);
+    osc.start(now); osc.stop(now+p.dur);
+  }catch(e){}
+}
+function updateSoundButton(){
+  const b=document.getElementById("soundToggle");
+  if(b){b.textContent=soundOn?t("soundOn"):t("soundOff");b.classList.toggle("active",soundOn)}
+}
+
+function applyLang(){
+ document.documentElement.lang=lang;
+ document.querySelectorAll("[data-i18n]").forEach(e=>{e.innerHTML=t(e.dataset.i18n)});
+ document.querySelectorAll("[data-placeholder]").forEach(e=>e.placeholder=t(e.dataset.placeholder));
+ document.getElementById("koBtn").classList.toggle("active",lang==="ko");document.getElementById("enBtn").classList.toggle("active",lang==="en");
+ renderCalendar();renderJournal();renderStocks();renderStats();updateSoundButton();
+}
+function fmtDate(s){const d=parseKey(s);return lang==="ko"?`${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${["일","월","화","수","목","금","토"][d.getDay()]})`:`${d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}`}
+function showScreen(id){
+ document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));
+ if(id==="calendarScreen")renderCalendar(); if(id==="stocksScreen")renderStocks(); if(id==="statsScreen")renderStats();
+}
+function renderCalendar(){
+ const y=viewDate.getFullYear(),m=viewDate.getMonth();
+ document.getElementById("monthLabel").textContent=lang==="ko"?`${y}년 ${m+1}월`:viewDate.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+ document.getElementById("summaryTitle").textContent=lang==="ko"?`${m+1}월 요약`:`${viewDate.toLocaleDateString("en-US",{month:"long"})} Summary`;
+ const first=new Date(y,m,1), last=new Date(y,m+1,0), prevLast=new Date(y,m,0);
+ let html="";
+ for(let i=first.getDay()-1;i>=0;i--){const d=new Date(y,m-1,prevLast.getDate()-i);html+=dayHtml(d,true)}
+ for(let i=1;i<=last.getDate();i++)html+=dayHtml(new Date(y,m,i),false);
+ let next=1;while((first.getDay()+last.getDate()+next-1)%7!==0){html+=dayHtml(new Date(y,m+1,next++),true)}
+ document.getElementById("days").innerHTML=html;
+ let days=0,trades=0;for(let i=1;i<=last.getDate();i++){const k=key(new Date(y,m,i));if(data.journals[k])days++;trades+=(data.trades[k]||[]).length}
+ document.getElementById("sumDays").textContent=`${days}${lang==="ko"?"일":" "+t("days")}`;document.getElementById("sumTrades").textContent=`${trades}${lang==="ko"?"회":" "+t("times")}`;document.getElementById("sumReturn").textContent="+3.42%";
+}
+function dayHtml(d,muted){
+ const k=key(d),tr=data.trades[k]||[],j=data.journals[k], dots=[];
+ if(j)dots.push("blue");if(tr.length)dots.push("orange");
+ return `<div class="day ${muted?"muted":""} ${k===selectedDate?"selected":""}" data-date="${k}"><div class="num">${d.getDate()}</div><div class="dot-row">${dots.map(x=>`<span class="dot ${x}"></span>`).join("")}</div></div>`;
+}
+function renderJournal(){
+ document.getElementById("journalDate").textContent=fmtDate(selectedDate);
+ document.getElementById("topDate").textContent=fmtDate(selectedDate);
+ const j=data.journals[selectedDate]||{},tr=data.trades[selectedDate]||[];
+ ["marketAnalysis","tradeReason","goodPoint","badPoint","tomorrowPlan"].forEach(id=>document.getElementById(id).value=j[id]||"");
+ const prev=new Date(parseKey(selectedDate));prev.setDate(prev.getDate()-1);const pj=data.journals[key(prev)];
+ const box=document.getElementById("previousPlan");
+ if(pj&&pj.tomorrowPlan){box.style.display="block";box.innerHTML=`<h3>📋 ${t("yesterdayPlan")} (${key(prev).slice(5).replace("-","/")}) <span style="float:right;color:#16a34a">✓ ${t("check")}</span></h3><p>${escapeHtml(pj.tomorrowPlan)}</p>`}else box.style.display="none";
+ const wrap=document.getElementById("tradeTableWrap");
+ if(!tr.length){wrap.innerHTML=`<div class="sub" style="text-align:center;padding:14px">${t("noTrades")}</div>`;return}
+ wrap.innerHTML=`<div class="trade-list" id="tradeList">${tr.map((x,i)=>`<div class="trade-item" draggable="true" data-index="${i}">
+   <div class="drag-handle" title="Drag to reorder">☰</div>
+   <div class="trade-main"><b>${escapeHtml(x.stock)} ${x.code?`<span class="sub">(${escapeHtml(x.code)})</span>`:""}</b><div class="trade-meta"><span class="${x.type}">${x.type==="buy"?t("buy"):t("sell")}</span> · ${Number(x.price).toLocaleString()} × ${x.qty}${x.reason?` · ${escapeHtml(x.reason)}`:""}</div></div>
+   <div class="trade-actions"><button class="secondary" onclick="editTrade(${i})">✎</button><button class="secondary danger" onclick="removeTrade(${i})">×</button></div>
+ </div>`).join("")}</div>`;
+ setupTradeDrag();
+}
+function setupTradeDrag(){
+ const list=document.getElementById("tradeList"); if(!list)return;
+ let dragged=null;
+ list.querySelectorAll(".trade-item").forEach(item=>{
+  item.addEventListener("dragstart",()=>{dragged=item;item.classList.add("dragging")});
+  item.addEventListener("dragend",()=>{if(dragged)dragged.classList.remove("dragging");dragged=null;persistTradeOrder()});
+  item.addEventListener("dragover",e=>{e.preventDefault();if(!dragged||dragged===item)return;const r=item.getBoundingClientRect();item.parentNode.insertBefore(dragged,e.clientY<r.top+r.height/2?item:item.nextSibling)});
+ });
+}
+function persistTradeOrder(){
+ const list=document.getElementById("tradeList");if(!list)return;
+ const current=data.trades[selectedDate]||[], ordered=[...list.children].map(el=>current[Number(el.dataset.index)]);
+ // Re-index from rendered original indexes
+ data.trades[selectedDate]=ordered.filter(Boolean); saveData(); renderJournal(); renderCalendar();
+}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function setAutoSaveStatus(state){
+ const el=document.getElementById("autosaveStatus"); if(!el)return;
+ el.className="autosave "+state;
+ el.textContent=state==="saving"?"● 저장 중...":`✓ ${t("autoSaved")} ${new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"})}`;
+}
+function saveJournal(silent=false){
+ data.journals[selectedDate]={marketAnalysis:marketAnalysis.value,tradeReason:tradeReason.value,goodPoint:goodPoint.value,badPoint:badPoint.value,tomorrowPlan:tomorrowPlan.value};
+ saveData();setAutoSaveStatus("saved");renderCalendar();if(!silent)toast(t("saved"));
+}
+function scheduleAutoSave(){
+ setAutoSaveStatus("saving"); clearTimeout(autoSaveTimer); autoSaveTimer=setTimeout(()=>saveJournal(true),1200);
+}
+function removeTrade(i){if(!confirm(lang==="ko"?"이 매매를 삭제할까요?":"Delete this trade?"))return;data.trades[selectedDate].splice(i,1);saveData();renderJournal();renderCalendar()}
+function editTrade(i){
+ const x=(data.trades[selectedDate]||[])[i];if(!x)return;
+ editingTradeIndex=i; tradeModal.classList.add("show"); tradeStock.value=x.stock;tradeCode.value=x.code||"";
+ document.getElementById("selectedStockHint").textContent=x.code||"";
+ tradePrice.value=x.price;tradeQty.value=x.qty;tradeWhy.value=x.reason||"";selectedTradeType=x.type;
+ buyBtn.classList.toggle("active",x.type==="buy");sellBtn.classList.toggle("active",x.type==="sell");
+ document.getElementById("addTradeConfirm").textContent=t("editDone");
+}
+function renderStocks(){
+ const q=(document.getElementById("stockSearch").value||"").toLowerCase();
+ const map={};Object.values(data.trades).flat().forEach(x=>{const k=x.code||x.stock;if(!map[k])map[k]={stock:x.stock,code:x.code||"",count:0,last:x.price};map[k].count++});
+ const arr=Object.values(map).filter(x=>(x.stock+" "+x.code).toLowerCase().includes(q)).sort((a,b)=>b.count-a.count);
+ document.getElementById("stockList").innerHTML=arr.length?arr.map(x=>`<div class="stock-row"><button onclick="openStock('${escapeHtml(x.code||x.stock)}')"><b>${escapeHtml(x.stock)}</b><div class="ticker">${escapeHtml(x.code)}</div></button><div class="stock-price">${Number(x.last).toLocaleString()}</div></div>`).join(""):`<div class="card sub">${t("noStocks")}</div>`;
+}
+function openStock(code){
+ let trades=[];Object.entries(data.trades).forEach(([date,arr])=>arr.forEach(x=>{if((x.code||x.stock)===code)trades.push({...x,date})}));
+ const name=trades[0]?.stock||code;document.getElementById("stockModalTitle").textContent=`${name} ${trades[0]?.code?`(${trades[0].code})`:""}`;
+ const buys=trades.filter(x=>x.type==="buy"),sells=trades.filter(x=>x.type==="sell");
+ const avg=a=>a.length?Math.round(a.reduce((s,x)=>s+Number(x.price),0)/a.length).toLocaleString():"-";
+ document.getElementById("stockModalBody").innerHTML=`<div class="card"><div class="stat-grid"><div class="stat"><span>${t("totalTrades")}</span><b>${trades.length}</b></div><div class="stat"><span>${t("buy")}</span><b>${buys.length}</b></div><div class="stat"><span>${t("sell")}</span><b>${sells.length}</b></div><div class="stat"><span>${t("averageBuy")}</span><b>${avg(buys)}</b></div></div></div><h3>${t("tradeHistory")}</h3>${trades.sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<div class="stock-row"><span>${x.date}<br><b class="${x.type}">${x.type==="buy"?t("buy"):t("sell")}</b></span><span>${Number(x.price).toLocaleString()} × ${x.qty}</span></div>`).join("")}`;
+ document.getElementById("stockModal").classList.add("show");
+}
+function renderStats(){
+ const month=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}`;
+ const trades=[];Object.entries(data.trades).forEach(([d,a])=>{if(d.startsWith(month))a.forEach(x=>trades.push({...x,date:d}))});
+ document.getElementById("statsMonthLabel").textContent=lang==="ko"?`${viewDate.getFullYear()}년 ${viewDate.getMonth()+1}월`:`${viewDate.toLocaleDateString("en-US",{month:"long",year:"numeric"})}`;
+ document.getElementById("stTrades").textContent=trades.length;document.getElementById("statsReturn").textContent="+3.42%";document.getElementById("statsProfit").textContent=lang==="ko"?"예시 실현손익 +342,000원":"Example realized P&L +₩342,000";document.getElementById("stWin").textContent="59.3%";
+ const chart=document.getElementById("barChart");chart.innerHTML="";for(let i=0;i<20;i++){const b=document.createElement("div");b.className="bar";b.style.height=(20+Math.random()*70)+"%";chart.appendChild(b)}
+ const counts={};trades.forEach(x=>counts[x.stock]=(counts[x.stock]||0)+1);const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5);document.getElementById("topStocks").innerHTML=top.length?top.map((x,i)=>`<div class="setting-row"><span>${i+1}. ${escapeHtml(x[0])}</span><b>${x[1]}${lang==="ko"?"회":" times"}</b></div>`).join(""):`<div class="sub">${t("noStocks")}</div>`;
+}
+function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),1600)}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.screen)));
+document.getElementById("days").addEventListener("click",e=>{const d=e.target.closest(".day");if(!d)return;uiSound("select");selectedDate=d.dataset.date;renderJournal();showScreen("journalScreen")});
+document.getElementById("backCalendar").onclick=()=>showScreen("calendarScreen");
+document.getElementById("prevMonth").onclick=()=>{viewDate.setMonth(viewDate.getMonth()-1);renderCalendar();renderStats()};
+document.getElementById("nextMonth").onclick=()=>{viewDate.setMonth(viewDate.getMonth()+1);renderCalendar();renderStats()};
+document.getElementById("saveJournal").onclick=()=>{uiSound("success");saveJournal();};
+document.getElementById("addTradeBtn").onclick=()=>{editingTradeIndex=-1;tradeModal.classList.add("show");tradeStock.value="";tradeCode.value="";document.getElementById("selectedStockHint").textContent="";tradePrice.value="";tradeQty.value="";tradeWhy.value="";selectedTradeType="buy";buyBtn.classList.add("active");sellBtn.classList.remove("active");document.getElementById("addTradeConfirm").textContent=t("add")};
+document.getElementById("closeTrade").onclick=()=>tradeModal.classList.remove("show");
+document.getElementById("buyBtn").onclick=()=>{selectedTradeType="buy";buyBtn.classList.add("active");sellBtn.classList.remove("active")};
+document.getElementById("sellBtn").onclick=()=>{selectedTradeType="sell";sellBtn.classList.add("active");buyBtn.classList.remove("active")};
+document.getElementById("addTradeConfirm").onclick=()=>{
+ const raw=tradeStock.value.trim();if(!raw||!tradePrice.value||!tradeQty.value){toast(lang==="ko"?"종목, 가격, 수량을 입력하세요.":"Enter stock, price and quantity.");return}
+ let stock=raw,code=tradeCode.value.trim();
+ const m=raw.match(/(.+?)[\s\/]+(\d{6})$/);if(m&&!code){stock=m[1].trim();code=m[2]}
+ const item={id:editingTradeIndex>=0?(data.trades[selectedDate][editingTradeIndex].id||("trade_"+Date.now())):("trade_"+Date.now()),stock,code,type:selectedTradeType,price:Number(tradePrice.value),qty:Number(tradeQty.value),reason:tradeWhy.value};
+ data.trades[selectedDate]=data.trades[selectedDate]||[];
+ if(editingTradeIndex>=0)data.trades[selectedDate][editingTradeIndex]=item;else data.trades[selectedDate].push(item);
+ const wasEdit=editingTradeIndex>=0;saveData();tradeModal.classList.remove("show");document.getElementById("addTradeConfirm").textContent=t("add");editingTradeIndex=-1;renderJournal();renderCalendar();toast(wasEdit?t("edited"):t("added"));uiSound("success");
+};
+document.getElementById("stockSearch").addEventListener("input",renderStocks);
+document.getElementById("closeStock").onclick=()=>stockModal.classList.remove("show");
+document.getElementById("koBtn").onclick=()=>{lang="ko";localStorage.setItem("journal_lang",lang);applyLang()};
+document.getElementById("enBtn").onclick=()=>{lang="en";localStorage.setItem("journal_lang",lang);applyLang()};
+
+document.getElementById("soundToggle").onclick=()=>{
+  soundOn=!soundOn;
+  localStorage.setItem("journal_sound",soundOn?"1":"0");
+  updateSoundButton();
+  if(soundOn) uiSound("select");
+};
+
+
+tradeStock.addEventListener("input",showStockResults);
+document.getElementById("stockResults").addEventListener("click",e=>{const b=e.target.closest(".stock-result");if(b)selectStock(b.dataset.name,b.dataset.code,b.dataset.market)});
+document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))document.getElementById("stockResults").classList.remove("show")});
+["marketAnalysis","tradeReason","goodPoint","badPoint","tomorrowPlan"].forEach(id=>document.getElementById(id).addEventListener("input",scheduleAutoSave));
+document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
+document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
+
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.3",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").onchange=e=>{
+ const file=e.target.files[0];if(!file)return;const reader=new FileReader();
+ reader.onload=()=>{try{
+   const incoming=JSON.parse(reader.result);const incomingData=incoming.data||incoming;
+   if(!incomingData.journals||!incomingData.trades)throw new Error("invalid");
+   const mode=confirm(t("importMergeConfirm"))?"merge":"replace";
+   if(mode==="replace"){data=incomingData}else{
+     data.journals={...data.journals,...incomingData.journals};
+     data.trades={...data.trades};
+     Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
+   }
+   data.version="1.3";saveData();renderCalendar();renderJournal();toast(t("imported"));
+ }catch(err){toast(t("importError"))}finally{e.target.value=""}}
+ reader.readAsText(file);
+};
+
+document.getElementById("printBtn").onclick=()=>document.getElementById("printModal").classList.add("show");
+document.getElementById("closePrint").onclick=()=>document.getElementById("printModal").classList.remove("show");
+document.getElementById("printTodayRange").onclick=()=>{printRange="today";document.getElementById("printTodayRange").classList.add("active");document.getElementById("printMonthRange").classList.remove("active")};
+document.getElementById("printMonthRange").onclick=()=>{printRange="month";document.getElementById("printMonthRange").classList.add("active");document.getElementById("printTodayRange").classList.remove("active")};
+function buildPrintHtml(){
+ const dates=printRange==="today"? [selectedDate] : Object.keys({...data.journals,...data.trades}).filter(d=>d.startsWith(`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}`)).sort();
+ const includeJ=document.getElementById("printJournalOpt").checked, includeT=document.getElementById("printTradesOpt").checked, includeA=document.getElementById("printAnalysisOpt").checked;
+ let out=`<div class="print-target"><h1>▲ ${t("appName")}</h1><p>${printRange==="today"?fmtDate(selectedDate):document.getElementById("statsMonthLabel").textContent}</p>`;
+ dates.forEach(d=>{
+   const j=data.journals[d]||{}, tr=data.trades[d]||[];
+   out+=`<section class="card"><h2>${fmtDate(d)}</h2>`;
+   if(includeA) out+=`<h3>${t("marketAnalysis")}</h3><p>${escapeHtml(j.marketAnalysis||"-").replace(/\n/g,"<br>")}</p>`;
+   if(includeT){
+     out+=`<h3>${t("todayTrades")}</h3>`;
+     out+=tr.length?tr.map(x=>`<p><b>${escapeHtml(x.stock)}</b> ${x.code?`(${escapeHtml(x.code)})`:""} · ${x.type==="buy"?t("buy"):t("sell")} · ${Number(x.price).toLocaleString()} × ${x.qty}<br><small>${escapeHtml(x.reason||"")}</small></p>`).join(""):`<p>-</p>`;
+   }
+   if(includeJ) out+=`<h3>${t("dailyReview")}</h3><p><b>${t("goodPoint")}</b><br>${escapeHtml(j.goodPoint||"-").replace(/\n/g,"<br>")}</p><p><b>${t("badPoint")}</b><br>${escapeHtml(j.badPoint||"-").replace(/\n/g,"<br>")}</p><h3>${t("tomorrowPlan")}</h3><p>${escapeHtml(j.tomorrowPlan||"-").replace(/\n/g,"<br>")}</p>`;
+   out+=`</section>`;
+ });
+ return out+`</div>`;
+}
+document.getElementById("printExecute").onclick=()=>{
+ const w=window.open("","_blank");if(!w){toast(t("popupBlocked"));return}
+ w.document.write(`<html><head><title>${t("appName")}</title><style>body{font-family:system-ui,sans-serif;color:#111827;padding:30px;line-height:1.6}h1{border-bottom:3px solid #f4d000;padding-bottom:12px}h2{margin-top:30px}h3{margin-bottom:5px}.card{border:1px solid #ddd;border-radius:12px;padding:18px;margin:18px 0;break-inside:avoid}@media print{body{padding:10px}}</style></head><body>${buildPrintHtml()}</body></html>`);
+ w.document.close();setTimeout(()=>{w.focus();w.print()},250);
+};
+
+document.getElementById("resetBtn").onclick=()=>{if(!confirm(t("confirmReset")))return;localStorage.removeItem("journal_data");location.reload()};
+document.getElementById("menuBtn").onclick=()=>showScreen("settingsScreen");
+document.getElementById("journalMenu").onclick=()=>document.getElementById("printModal").classList.add("show");
+if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+
+const introScreen=document.getElementById("introScreen");
+const startApp=document.getElementById("startApp");
+function closeIntro(){
+  uiSound("start");
+  introScreen.classList.add("hidden");
+  localStorage.setItem("journal_intro_seen","1");
+}
+if(localStorage.getItem("journal_intro_seen")==="1") introScreen.classList.add("hidden");
+startApp.onclick=closeIntro;
+
+
+document.querySelectorAll("button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const id=btn.id;
+    if(["saveJournal","addTradeConfirm","startApp","soundToggle"].includes(id)) return;
+    uiSound("click");
+  });
+});
+
+applyLang();
+</script>
+</body>
+</html>
