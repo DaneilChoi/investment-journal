@@ -74,6 +74,8 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 .brand{cursor:pointer;user-select:none}.brand:active{transform:scale(.98)}
 .autosave{font-size:12px;color:#64748b;font-weight:700}.autosave.saving{color:#f59e0b}.autosave.saved{color:#16a34a}
 .trade-list{display:flex;flex-direction:column;gap:8px}.trade-item{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.drag-handle{cursor:grab;color:#94a3b8;font-size:20px;text-align:center;touch-action:none}.drag-handle:active{cursor:grabbing}.trade-main{min-width:0}.trade-main b{display:block}.trade-meta{font-size:12px;color:#64748b;margin-top:3px}.trade-actions{display:flex;gap:5px}.trade-actions button{padding:5px 8px}.trade-item.dragging{opacity:.45;border-style:dashed}
+.trade-section{margin-bottom:14px}.trade-section:last-child{margin-bottom:0}.trade-section-head{display:flex;justify-content:space-between;align-items:center;font-weight:900;padding:9px 11px;border-radius:10px 10px 0 0}.trade-section-head.buy{color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;border-bottom:0}.trade-section-head.sell{color:#1d4ed8;background:#dbeafe;border:1px solid #bfdbfe;border-bottom:0}.trade-section .trade-list{border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;padding:8px;background:#fff}.buy-add{color:#dc2626}.sell-add{color:#2563eb}.trade-item.buy-card{border-left:4px solid #ef4444}.trade-item.sell-card{border-left:4px solid #2563eb}.drag-handle{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.order-actions{display:flex;flex-direction:column;gap:3px}.order-btn{border:1px solid #dbe3ee;background:#fff;border-radius:7px;padding:3px 7px;line-height:1;font-weight:900;color:#475569}.order-btn:active{background:#f1f5f9}.trade-item.touch-dragging{position:relative;z-index:5;box-shadow:0 12px 25px rgba(15,23,42,.16);opacity:.92}.stock-source{font-size:11px;color:#64748b;margin-top:4px}.stock-result .market-badge{display:inline-block;margin-left:6px;padding:2px 5px;border-radius:999px;font-size:10px;font-weight:800;background:#f1f5f9;color:#475569}.stock-result .market-badge.kosdaq{background:#dbeafe;color:#1d4ed8}.stock-result .market-badge.kospi{background:#fee2e2;color:#b91c1c}
+
 .stock-suggest{position:relative}.stock-results{position:absolute;left:0;right:0;top:100%;z-index:50;background:#fff;border:1px solid #dbe3ee;border-radius:10px;box-shadow:0 10px 25px rgba(15,23,42,.12);max-height:220px;overflow:auto;display:none}.stock-results.show{display:block}.stock-result{width:100%;border:0;background:#fff;text-align:left;padding:11px 13px;border-bottom:1px solid #f1f5f9}.stock-result:hover{background:#f8fafc}.stock-result b{display:block}.stock-result small{color:#64748b}
 .modal.wide{max-width:720px}.modal-wrap .modal{max-height:90vh;overflow:auto}
 .print-actions{display:flex;gap:8px;flex-wrap:wrap}.setting-row button{min-width:82px}
@@ -233,7 +235,7 @@ let data=JSON.parse(localStorage.getItem("journal_data")||"null")||{
  }
 };
 let viewDate=new Date(), selectedDate=key(new Date()), selectedTradeType="buy";
-if(!data.version)data.version="1.3";
+if(!data.version)data.version="1.5";
 Object.values(data.trades).forEach(arr=>arr.forEach(x=>{
  if(!x.id)x.id="trade_"+Math.random().toString(36).slice(2,9);
  if(!x.currency)x.currency=inferCurrency(x);
@@ -267,22 +269,64 @@ function stockMatches(q){
  return stockCatalog.filter(x=>(x[0]+" "+x[1]+" "+x[2]).toLowerCase().includes(q)).slice(0,8);
 }
 let stockSearchTimer=null;
+let remoteStockCache=JSON.parse(localStorage.getItem("journal_stock_catalog_v15")||"null")||[];
+let remoteStockCacheAt=Number(localStorage.getItem("journal_stock_catalog_v15_at")||0);
+const STOCK_MAP_URL="https://raw.githubusercontent.com/pinion05/kr-us-stock-name-ticker-maps/main/data/kr/kr-stock-name-to-code.json";
+function stockMatches(q){
+ q=(q||"").trim().toLowerCase();
+ if(!q)return [];
+ return stockCatalog.filter(x=>(x[0]+" "+x[1]+" "+x[2]).toLowerCase().includes(q)).slice(0,8);
+}
+function normalizeRemoteStockItems(j){
+ const arr=[];
+ if(Array.isArray(j)){
+   for(const x of j){const name=x.name||x.stock_name||x.itmsNm||x.ISU_NM||x.ISU_ABBRV;const code=String(x.code||x.ticker||x.srtnCd||x.ISU_SRT_CD||"").padStart(6,"0");const market=(x.market||x.mrktCtg||x.MKT_TP_NM||"").toUpperCase();if(name&&/^\d{6}$/.test(code))arr.push([name,code,market.includes("KOSDAQ")?"KOSDAQ":market.includes("KOSPI")||market.includes("유가")?"KOSPI":"KRX"])}
+ } else if(j && typeof j==="object") {
+   for(const [name,code0] of Object.entries(j)){const code=String(code0).padStart(6,"0");if(/^\d{6}$/.test(code))arr.push([name,code,"KRX"])}
+ }
+ return arr;
+}
+function mergeRemoteStocks(arr){
+ const seen=new Set(stockCatalog.map(x=>x[1]));
+ for(const x of arr){if(!seen.has(x[1])){stockCatalog.push(x);seen.add(x[1])}}
+}
+function renderStockResults(arr,box,source=""){
+ if(!arr.length){box.innerHTML=`<div class="stock-source" style="padding:10px 13px">${lang==="ko"?"검색 결과가 없습니다.":"No matching stocks found."}</div>`;box.classList.add("show");return}
+ box.innerHTML=arr.slice(0,12).map(x=>`<button type="button" class="stock-result" data-name="${escapeHtml(x[0])}" data-code="${x[1]}" data-market="${x[2]}"><b>${escapeHtml(x[0])}<span class="market-badge ${(x[2]||"").toLowerCase()}">${escapeHtml(x[2]||"KRX")}</span></b><small>${x[1]}</small></button>`).join("")+`<div class="stock-source" style="padding:7px 13px">${source||""}</div>`;
+ box.classList.add("show");
+}
+async function loadRemoteStockCatalog(){
+ try{
+   if(remoteStockCache.length && Date.now()-remoteStockCacheAt<7*24*60*60*1000){mergeRemoteStocks(remoteStockCache);return remoteStockCache}
+   const r=await fetch(STOCK_MAP_URL,{cache:"no-store"});
+   if(!r.ok)throw new Error("stock map http "+r.status);
+   const j=await r.json();
+   const arr=normalizeRemoteStockItems(j);
+   if(arr.length){remoteStockCache=arr;remoteStockCacheAt=Date.now();localStorage.setItem("journal_stock_catalog_v15",JSON.stringify(arr));localStorage.setItem("journal_stock_catalog_v15_at",String(remoteStockCacheAt));mergeRemoteStocks(arr)}
+   return arr;
+ }catch(e){return []}
+}
 async function showStockResults(){
  const q=tradeStock.value.trim(), box=document.getElementById("stockResults");
- const local=stockMatches(q);
  if(!q){box.classList.remove("show");return}
- const render=arr=>{if(!arr.length){box.classList.remove("show");return}box.innerHTML=arr.map(x=>`<button type="button" class="stock-result" data-name="${escapeHtml(x[0])}" data-code="${x[1]}" data-market="${x[2]}"><b>${escapeHtml(x[0])}</b><small>${x[1]} · ${x[2]}</small></button>`).join("");box.classList.add("show")};
- render(local);
+ const local=stockMatches(q);
+ renderStockResults(local,box,local.length?(lang==="ko"?"기본 목록":"Built-in list"):"");
  clearTimeout(stockSearchTimer);
  stockSearchTimer=setTimeout(async()=>{
+   // 1) Existing search proxy: preserves KOSPI/KOSDAQ market labels when available.
    try{
      const dd=new Date();const bas=`${dd.getFullYear()}${pad(dd.getMonth()+1)}${pad(dd.getDate())}`;
      const r=await fetch(`https://k-skill-proxy.nomadamas.org/v1/korean-stock/search?q=${encodeURIComponent(q)}&bas_dd=${bas}`,{headers:{Accept:"application/json"}});
-     if(!r.ok)return;
-     const j=await r.json();const remote=(j.items||[]).map(x=>[x.name||x.short_name,x.code,x.market||""]);
-     if(remote.length)render(remote);
-   }catch(e){/* local catalog remains available when offline */ }
- },250);
+     if(r.ok){
+       const j=await r.json();const remote=normalizeRemoteStockItems(j.items||[]);
+       if(remote.length){mergeRemoteStocks(remote);renderStockResults(remote,box,lang==="ko"?"온라인 종목 검색":"Online stock search");return}
+     }
+   }catch(e){}
+   // 2) Full KRX-name/code fallback. This fills mid/small-cap KOSPI and KOSDAQ names missing from the small built-in list.
+   const all=await loadRemoteStockCatalog();
+   const hits=all.filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q.toLowerCase())).slice(0,12);
+   if(hits.length)renderStockResults(hits,box,lang==="ko"?"전체 KRX 종목명/코드 목록":"Full KRX name/code list");
+ },180);
 }
 function selectStock(name,code,market){
  tradeStock.value=name; tradeCode.value=code;
@@ -379,12 +423,12 @@ function renderJournal(){
  wrap.innerHTML=groups.map(([type,label])=>{
    const items=tr.map((x,i)=>({...x,_index:i})).filter(x=>x.type===type);
    if(!items.length)return "";
-   return `<div class="trade-section"><div class="trade-section-head ${type}"><span>${type==="buy"?"🟦":"🟥"} ${t(type)}</span><span>${items.length}${lang==="ko"?"건":" trades"}</span></div><div class="trade-list" data-trade-type="${type}">${items.map(x=>{
+   return `<div class="trade-section"><div class="trade-section-head ${type}"><span>${type==="buy"?"🔴":"🔵"} ${t(type)}</span><span>${items.length}${lang==="ko"?"건":" trades"}</span></div><div class="trade-list" data-trade-type="${type}">${items.map(x=>{
      const c=inferCurrency(x);
-     return `<div class="trade-item" draggable="true" data-index="${x._index}">
+     return `<div class="trade-item ${type}-card" draggable="true" data-index="${x._index}">
        <div class="drag-handle" title="Drag to reorder">☰</div>
        <div class="trade-main"><b>${escapeHtml(x.stock)} ${x.code?`<span class="sub">(${escapeHtml(x.code)})</span>`:""}</b><div class="trade-meta"><span class="${x.type}">${t(x.type)}</span> · ${formatPrice(x.price,c)} × ${x.qty}${x.reason?` · ${escapeHtml(x.reason)}`:""}</div></div>
-       <div class="trade-actions"><button class="secondary" onclick="editTrade(${x._index})">✎</button><button class="secondary danger" onclick="removeTrade(${x._index})">×</button></div>
+       <div class="trade-actions"><div class="order-actions"><button class="order-btn" type="button" onclick="moveTrade('${type}',${items.indexOf(x)},-1)" aria-label="up">↑</button><button class="order-btn" type="button" onclick="moveTrade('${type}',${items.indexOf(x)},1)" aria-label="down">↓</button></div><button class="secondary" onclick="editTrade(${x._index})">✎</button><button class="secondary danger" onclick="removeTrade(${x._index})">×</button></div>
      </div>`;
    }).join("")}</div></div>`;
  }).join("");
@@ -392,13 +436,45 @@ function renderJournal(){
 }
 function setupTradeDrag(){
  document.querySelectorAll("#tradeTableWrap .trade-list").forEach(list=>{
-   let dragged=null;
-   list.querySelectorAll(".trade-item").forEach(item=>{
+   let dragged=null, startY=0, moved=false;
+   const items=[...list.querySelectorAll(".trade-item")];
+   items.forEach(item=>{
+     item.draggable=true;
      item.addEventListener("dragstart",()=>{dragged=item;item.classList.add("dragging")});
-     item.addEventListener("dragend",()=>{if(dragged)dragged.classList.remove("dragging");if(dragged){persistTradeOrder(list)}}); 
-     item.addEventListener("dragover",e=>{e.preventDefault();if(!dragged||dragged===item)return;const r=item.getBoundingClientRect();item.parentNode.insertBefore(dragged,e.clientY<r.top+r.height/2?item:item.nextSibling)});
+     item.addEventListener("dragend",()=>{if(dragged)dragged.classList.remove("dragging");if(dragged){persistTradeOrder(list);dragged=null}});
+     item.addEventListener("dragover",e=>{e.preventDefault();if(!dragged||dragged===item)return;const r=item.getBoundingClientRect();list.insertBefore(dragged,e.clientY<r.top+r.height/2?item:item.nextSibling)});
+     const handle=item.querySelector(".drag-handle");
+     handle.addEventListener("pointerdown",e=>{
+       if(e.pointerType!=="touch")return;
+       e.preventDefault();dragged=item;startY=e.clientY;moved=false;item.classList.add("touch-dragging");
+       try{handle.setPointerCapture(e.pointerId)}catch(_){}
+     });
+     handle.addEventListener("pointermove",e=>{
+       if(e.pointerType!=="touch"||dragged!==item)return;
+       if(Math.abs(e.clientY-startY)>5)moved=true;if(!moved)return;
+       const siblings=[...list.querySelectorAll(".trade-item")].filter(x=>x!==item);
+       let target=null;
+       for(const other of siblings){const r=other.getBoundingClientRect();if(e.clientY<r.top+r.height/2){target=other;break}}
+       if(target)list.insertBefore(item,target);else list.appendChild(item);
+     });
+     const finishTouch=e=>{
+       if(e.pointerType!=="touch"||dragged!==item)return;
+       item.classList.remove("touch-dragging");
+       if(moved){persistTradeOrder(list);uiSound("select")}
+       dragged=null;moved=false;
+     };
+     handle.addEventListener("pointerup",finishTouch);handle.addEventListener("pointercancel",finishTouch);
    });
  });
+}
+function moveTrade(type,index,delta){
+ const list=(data.trades[selectedDate]||[]).filter(x=>x.type===type);
+ if(index<0||index>=list.length)return;
+ const target=index+delta;if(target<0||target>=list.length)return;
+ const a=list[index],b=list[target];
+ const all=data.trades[selectedDate]||[];
+ const posA=all.indexOf(a),posB=all.indexOf(b);
+ all[posA]=b;all[posB]=a;data.trades[selectedDate]=all;saveData();renderJournal();renderCalendar();uiSound("select");
 }
 function persistTradeOrder(list){
  const current=data.trades[selectedDate]||[];
@@ -500,7 +576,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.4",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.5",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
