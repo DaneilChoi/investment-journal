@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>투자일지</title>
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#173bd5">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -79,6 +80,19 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 @media(max-width:640px){.topbar{padding:0 14px}.brand{font-size:18px}.top-date{font-size:12px}.trade-item{grid-template-columns:24px 1fr auto}.trade-actions button{font-size:12px;padding:5px}.review-grid{grid-template-columns:1fr}}
 @media print{body{background:#fff}.topbar,.nav,.no-print{display:none!important}main{max-width:none;padding:0}.screen{display:none!important}.print-target{display:block!important}.card{box-shadow:none;break-inside:avoid}.yellow-card{border:1px solid #ccc}}
 
+
+.trade-add-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.add-link.buy-add{border-color:#bfdbfe;color:#1d4ed8;background:#eff6ff}
+.add-link.sell-add{border-color:#fecaca;color:#dc2626;background:#fef2f2}
+.trade-section{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px}
+.trade-section-head{display:flex;justify-content:space-between;align-items:center;font-weight:900;margin-bottom:8px}
+.trade-section-head.buy{color:#1d4ed8}.trade-section-head.sell{color:#dc2626}
+.price-input{display:flex;align-items:center;border:1px solid #dbe3ee;border-radius:10px;background:#fff;overflow:hidden}
+.price-input input{border:0!important;outline:0;flex:1;border-radius:0!important}.price-input span{padding:0 12px;color:#64748b;font-weight:800}
+.print-options{display:grid;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.print-options label{display:grid;grid-template-columns:1fr 28px;align-items:center;min-height:46px;padding:0 14px;border-bottom:1px solid #eef2f7;cursor:pointer}
+.print-options label:last-child{border-bottom:0}.print-options input{width:18px;height:18px;justify-self:end}
+@media(max-width:520px){.trade-add-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -128,7 +142,10 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
     <div class="card yellow-card journal-card">
       <h2 data-i18n="todayTrades">오늘의 매매 <button class="edit">✎</button></h2>
       <div id="tradeTableWrap"></div>
-      <div style="text-align:center;margin-top:10px"><button class="add-link" id="addTradeBtn">＋ <span data-i18n="addTrade">매매 추가</span></button></div>
+      <div class="trade-add-grid">
+        <button class="add-link buy-add" id="addBuyBtn">＋ <span data-i18n="addBuy">매수 추가</span></button>
+        <button class="add-link sell-add" id="addSellBtn">＋ <span data-i18n="addSell">매도 추가</span></button>
+      </div>
     </div>
     <div class="card yellow-card journal-card"><h2 data-i18n="tradeReason">매매 이유 <button class="edit">✎</button></h2><textarea id="tradeReason" data-placeholder="reasonPlaceholder"></textarea></div>
     <div class="card yellow-card journal-card"><h2 data-i18n="dailyReview">오늘의 복기</h2><div class="review-grid"><div class="review-box"><h3>👍 <span data-i18n="goodPoint">잘한 점</span></h3><textarea id="goodPoint" data-placeholder="goodPlaceholder"></textarea></div><div class="review-box"><h3>🤔 <span data-i18n="badPoint">아쉬운 점</span></h3><textarea id="badPoint" data-placeholder="badPlaceholder"></textarea></div></div></div>
@@ -160,7 +177,7 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printToday">오늘 출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.3</span></div>
+      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.4</span></div>
     </div>
   </section>
 </main>
@@ -176,7 +193,8 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
   <div class="modal-head"><h2 data-i18n="addTradeTitle">매매 추가</h2><button class="close" id="closeTrade">×</button></div>
   <div class="field"><label data-i18n="stock">종목</label><div class="stock-suggest"><input id="tradeStock" autocomplete="off" placeholder="삼성전자 / 005930"><div id="stockResults" class="stock-results"></div></div><input id="tradeCode" type="hidden"><div id="selectedStockHint" class="sub" style="margin-top:5px"></div></div>
   <div class="field"><label data-i18n="buySell">매수 / 매도</label><div class="seg"><button id="buyBtn" class="buy active" data-i18n="buy">매수</button><button id="sellBtn" class="sell" data-i18n="sell">매도</button></div></div>
-  <div class="field"><label data-i18n="price">가격</label><input id="tradePrice" type="number" min="0" placeholder="75000"></div>
+  <div class="field"><label data-i18n="currency">통화</label><select id="tradeCurrency"><option value="KRW">₩ KRW · 원</option><option value="USD">$ USD · 달러</option></select></div>
+  <div class="field"><label data-i18n="price">가격</label><div class="price-input"><input id="tradePrice" type="number" min="0" step="0.01" placeholder="75000"><span id="currencySuffix">원</span></div></div>
   <div class="field"><label data-i18n="quantity">수량</label><input id="tradeQty" type="number" min="0" placeholder="10"></div>
   <div class="field"><label data-i18n="tradeReason">매매 이유</label><textarea id="tradeWhy" style="min-height:90px"></textarea></div>
   <button class="primary" id="addTradeConfirm" data-i18n="add">추가하기</button>
@@ -190,7 +208,11 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 <div id="printModal" class="modal-wrap"><div class="modal wide">
   <div class="modal-head"><h2 data-i18n="printTitle">투자일지 출력</h2><button class="close" id="closePrint">×</button></div>
   <div class="field"><label data-i18n="printRange">출력 범위</label><div class="seg"><button id="printTodayRange" class="active" data-i18n="today">오늘</button><button id="printMonthRange" data-i18n="thisMonth">이번 달</button></div></div>
-  <div class="field"><label data-i18n="printOptions">출력 항목</label><div style="display:grid;gap:8px"><label><input id="printJournalOpt" type="checkbox" checked> <span data-i18n="dailyJournal">일별 투자일지</span></label><label><input id="printTradesOpt" type="checkbox" checked> <span data-i18n="tradeRecords">매매 내역</span></label><label><input id="printAnalysisOpt" type="checkbox" checked> <span data-i18n="marketAnalysis">시장 분석</span></label></div></div>
+  <div class="field"><label data-i18n="printOptions">출력 항목</label><div class="print-options">
+<label><span data-i18n="dailyJournal">일별 투자일지</span><input id="printJournalOpt" type="checkbox" checked></label>
+<label><span data-i18n="tradeRecords">매매 내역</span><input id="printTradesOpt" type="checkbox" checked></label>
+<label><span data-i18n="marketAnalysis">시장 분석</span><input id="printAnalysisOpt" type="checkbox" checked></label>
+</div></div>
   <div class="print-actions"><button class="primary" id="printExecute" data-i18n="printNow">인쇄 / PDF 저장</button></div>
 </div></div>
 
@@ -198,8 +220,8 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 
 <script>
 const I18N={
-ko:{appName:"투자일지",soundEffects:"효과음",soundOn:"켜짐",soundOff:"꺼짐",clickSound:"클릭",savedSound:"저장 완료",addSound:"추가 완료",introSubtitle:"매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.",introFeature1:"매일 기록",introFeature2:"투자 분석",introFeature3:"투자 복기",startApp:"투자일지 시작하기",introBottom:"나의 기록은 이 브라우저에 안전하게 저장됩니다.",journal:"일지",calendarHint:"달력에서 날짜를 선택하세요.",sun:"일",mon:"월",tue:"화",wed:"수",thu:"목",fri:"금",sat:"토",writtenDays:"기록한 날",tradeCount:"매매 횟수",monthlyReturn:"수익률",marketAnalysis:"투자전 오늘의 시장 분석",todayTrades:"오늘의 매매",addTrade:"매매 추가",tradeReason:"매매 이유",dailyReview:"오늘의 복기",goodPoint:"잘한 점",badPoint:"아쉬운 점",tomorrowPlan:"내일의 계획",save:"저장하기",stocks:"종목",stocksHint:"기록한 종목과 매매 내역을 확인합니다.",stats:"통계",settings:"설정",notifications:"알림 설정",stockManagement:"종목 관리",language:"언어",backup:"데이터 백업",export:"내보내기",import:"불러오기",print:"일지 출력",printToday:"오늘 출력",printTitle:"투자일지 출력",printRange:"출력 범위",today:"오늘",thisMonth:"이번 달",printOptions:"출력 항목",dailyJournal:"일별 투자일지",tradeRecords:"매매 내역",printNow:"인쇄 / PDF 저장",reset:"초기 데이터 삭제",delete:"삭제",appInfo:"앱 정보",addTradeTitle:"매매 추가",stock:"종목",buySell:"매수 / 매도",buy:"매수",sell:"매도",price:"가격",quantity:"수량",add:"추가하기",marketPlaceholder:"오늘 시장에서 중요했던 내용을 자유롭게 기록하세요.",reasonPlaceholder:"오늘의 매매를 왜 했는지 기록하세요.",goodPlaceholder:"오늘 잘한 점을 기록하세요.",badPlaceholder:"오늘 아쉬웠던 점을 기록하세요.",planPlaceholder:"내일의 투자 계획을 기록하세요.",winRate:"승률",avgWin:"평균 수익",avgLoss:"평균 손실",returnTrend:"수익률 추이",frequentStocks:"자주 매매한 종목",confirmReset:"모든 저장 데이터를 삭제할까요?",saved:"저장되었습니다.",autoSaved:"자동 저장됨",editDone:"수정 완료",edited:"수정되었습니다.",importMergeConfirm:"백업을 기존 데이터에 합칠까요?\n확인=병합 / 취소=교체",imported:"백업을 불러왔습니다.",importError:"백업 파일을 읽을 수 없습니다.",popupBlocked:"팝업이 차단되었습니다.",added:"매매가 추가되었습니다.",exported:"백업 파일을 만들었습니다.",noTrades:"등록된 매매가 없습니다.",noStocks:"아직 기록한 종목이 없습니다.",yesterdayPlan:"어제의 계획",check:"확인",tradeHistory:"매매 내역",totalTrades:"총 매매",averageBuy:"평균 매수가",averageSell:"평균 매도가",days:"일",times:"회"},
-en:{appName:"Investment Journal",soundEffects:"Sound effects",soundOn:"On",soundOff:"Off",clickSound:"Click",savedSound:"Saved",addSound:"Added",introSubtitle:"Record your investment journey every day,<br>and reflect on your investing habits.",introFeature1:"Daily Journal",introFeature2:"Market Analysis",introFeature3:"Daily Review",startApp:"Start Investment Journal",introBottom:"Your records are stored safely in this browser.",journal:"Journal",calendarHint:"Select a date from the calendar.",sun:"Sun",mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",writtenDays:"Written days",tradeCount:"Trades",monthlyReturn:"Return",marketAnalysis:"Today's Market Analysis",todayTrades:"Today's Trades",addTrade:"Add trade",tradeReason:"Trade Rationale",dailyReview:"Daily Review",goodPoint:"What Went Well",badPoint:"What Could Be Improved",tomorrowPlan:"Tomorrow's Plan",save:"Save",stocks:"Stocks",stocksHint:"Review recorded stocks and trades.",stats:"Stats",settings:"Settings",notifications:"Notifications",stockManagement:"Stock management",language:"Language",backup:"Data backup",export:"Export",import:"Import",print:"Print journal",printToday:"Print today",printTitle:"Print Investment Journal",printRange:"Print range",today:"Today",thisMonth:"This month",printOptions:"Print items",dailyJournal:"Daily journal",tradeRecords:"Trade records",printNow:"Print / Save PDF",reset:"Delete saved data",delete:"Delete",appInfo:"App info",addTradeTitle:"Add Trade",stock:"Stock",buySell:"Buy / Sell",buy:"Buy",sell:"Sell",price:"Price",quantity:"Quantity",add:"Add",marketPlaceholder:"Record the important market events of today.",reasonPlaceholder:"Why did you make today's trade?",goodPlaceholder:"What did you do well today?",badPlaceholder:"What could you have done better?",planPlaceholder:"Record your plan for tomorrow.",winRate:"Win rate",avgWin:"Avg. win",avgLoss:"Avg. loss",returnTrend:"Return trend",frequentStocks:"Most traded stocks",confirmReset:"Delete all saved data?",saved:"Saved.",autoSaved:"Auto-saved",editDone:"Save changes",edited:"Changes saved.",importMergeConfirm:"Merge this backup into existing data?\nOK=Merge / Cancel=Replace",imported:"Backup imported.",importError:"Could not read the backup file.",popupBlocked:"Pop-up was blocked.",added:"Trade added.",exported:"Backup file created.",noTrades:"No trades recorded.",noStocks:"No stocks recorded yet.",yesterdayPlan:"Yesterday's plan",check:"Check",tradeHistory:"Trade history",totalTrades:"Total trades",averageBuy:"Avg. buy",averageSell:"Avg. sell",days:"days",times:"times"}
+ko:{appName:"투자일지",soundEffects:"효과음",soundOn:"켜짐",soundOff:"꺼짐",clickSound:"클릭",savedSound:"저장 완료",addSound:"추가 완료",introSubtitle:"매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.",introFeature1:"매일 기록",introFeature2:"투자 분석",introFeature3:"투자 복기",startApp:"투자일지 시작하기",introBottom:"나의 기록은 이 브라우저에 안전하게 저장됩니다.",journal:"일지",calendarHint:"달력에서 날짜를 선택하세요.",sun:"일",mon:"월",tue:"화",wed:"수",thu:"목",fri:"금",sat:"토",writtenDays:"기록한 날",tradeCount:"매매 횟수",monthlyReturn:"수익률",marketAnalysis:"투자전 오늘의 시장 분석",todayTrades:"오늘의 매매",addTrade:"매매 추가",addBuy:"매수 추가",addSell:"매도 추가",currency:"통화",tradeReason:"매매 이유",dailyReview:"오늘의 복기",goodPoint:"잘한 점",badPoint:"아쉬운 점",tomorrowPlan:"내일의 계획",save:"저장하기",stocks:"종목",stocksHint:"기록한 종목과 매매 내역을 확인합니다.",stats:"통계",settings:"설정",notifications:"알림 설정",stockManagement:"종목 관리",language:"언어",backup:"데이터 백업",export:"내보내기",import:"불러오기",print:"일지 출력",printToday:"오늘 출력",printTitle:"투자일지 출력",printRange:"출력 범위",today:"오늘",thisMonth:"이번 달",printOptions:"출력 항목",dailyJournal:"일별 투자일지",tradeRecords:"매매 내역",printNow:"인쇄 / PDF 저장",reset:"초기 데이터 삭제",delete:"삭제",appInfo:"앱 정보",addTradeTitle:"매매 추가",stock:"종목",buySell:"매수 / 매도",buy:"매수",sell:"매도",price:"가격",quantity:"수량",add:"추가하기",marketPlaceholder:"오늘 시장에서 중요했던 내용을 자유롭게 기록하세요.",reasonPlaceholder:"오늘의 매매를 왜 했는지 기록하세요.",goodPlaceholder:"오늘 잘한 점을 기록하세요.",badPlaceholder:"오늘 아쉬웠던 점을 기록하세요.",planPlaceholder:"내일의 투자 계획을 기록하세요.",winRate:"승률",avgWin:"평균 수익",avgLoss:"평균 손실",returnTrend:"수익률 추이",frequentStocks:"자주 매매한 종목",confirmReset:"모든 저장 데이터를 삭제할까요?",saved:"저장되었습니다.",autoSaved:"자동 저장됨",editDone:"수정 완료",edited:"수정되었습니다.",importMergeConfirm:"백업을 기존 데이터에 합칠까요?\n확인=병합 / 취소=교체",imported:"백업을 불러왔습니다.",importError:"백업 파일을 읽을 수 없습니다.",popupBlocked:"팝업이 차단되었습니다.",added:"매매가 추가되었습니다.",exported:"백업 파일을 만들었습니다.",noTrades:"등록된 매매가 없습니다.",noStocks:"아직 기록한 종목이 없습니다.",yesterdayPlan:"어제의 계획",check:"확인",tradeHistory:"매매 내역",totalTrades:"총 매매",averageBuy:"평균 매수가",averageSell:"평균 매도가",days:"일",times:"회"},
+en:{appName:"Investment Journal",soundEffects:"Sound effects",soundOn:"On",soundOff:"Off",clickSound:"Click",savedSound:"Saved",addSound:"Added",introSubtitle:"Record your investment journey every day,<br>and reflect on your investing habits.",introFeature1:"Daily Journal",introFeature2:"Market Analysis",introFeature3:"Daily Review",startApp:"Start Investment Journal",introBottom:"Your records are stored safely in this browser.",journal:"Journal",calendarHint:"Select a date from the calendar.",sun:"Sun",mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",writtenDays:"Written days",tradeCount:"Trades",monthlyReturn:"Return",marketAnalysis:"Today's Market Analysis",todayTrades:"Today's Trades",addTrade:"Add trade",addBuy:"Add buy",addSell:"Add sell",currency:"Currency",tradeReason:"Trade Rationale",dailyReview:"Daily Review",goodPoint:"What Went Well",badPoint:"What Could Be Improved",tomorrowPlan:"Tomorrow's Plan",save:"Save",stocks:"Stocks",stocksHint:"Review recorded stocks and trades.",stats:"Stats",settings:"Settings",notifications:"Notifications",stockManagement:"Stock management",language:"Language",backup:"Data backup",export:"Export",import:"Import",print:"Print journal",printToday:"Print today",printTitle:"Print Investment Journal",printRange:"Print range",today:"Today",thisMonth:"This month",printOptions:"Print items",dailyJournal:"Daily journal",tradeRecords:"Trade records",printNow:"Print / Save PDF",reset:"Delete saved data",delete:"Delete",appInfo:"App info",addTradeTitle:"Add Trade",stock:"Stock",buySell:"Buy / Sell",buy:"Buy",sell:"Sell",price:"Price",quantity:"Quantity",add:"Add",marketPlaceholder:"Record the important market events of today.",reasonPlaceholder:"Why did you make today's trade?",goodPlaceholder:"What did you do well today?",badPlaceholder:"What could you have done better?",planPlaceholder:"Record your plan for tomorrow.",winRate:"Win rate",avgWin:"Avg. win",avgLoss:"Avg. loss",returnTrend:"Return trend",frequentStocks:"Most traded stocks",confirmReset:"Delete all saved data?",saved:"Saved.",autoSaved:"Auto-saved",editDone:"Save changes",edited:"Changes saved.",importMergeConfirm:"Merge this backup into existing data?\nOK=Merge / Cancel=Replace",imported:"Backup imported.",importError:"Could not read the backup file.",popupBlocked:"Pop-up was blocked.",added:"Trade added.",exported:"Backup file created.",noTrades:"No trades recorded.",noStocks:"No stocks recorded yet.",yesterdayPlan:"Yesterday's plan",check:"Check",tradeHistory:"Trade history",totalTrades:"Total trades",averageBuy:"Avg. buy",averageSell:"Avg. sell",days:"days",times:"times"}
 };
 let lang=localStorage.getItem("journal_lang")||"ko";
 let data=JSON.parse(localStorage.getItem("journal_data")||"null")||{
@@ -212,7 +234,10 @@ let data=JSON.parse(localStorage.getItem("journal_data")||"null")||{
 };
 let viewDate=new Date(), selectedDate=key(new Date()), selectedTradeType="buy";
 if(!data.version)data.version="1.3";
-Object.values(data.trades).forEach(arr=>arr.forEach(x=>{if(!x.id)x.id="trade_"+Math.random().toString(36).slice(2,9)}));
+Object.values(data.trades).forEach(arr=>arr.forEach(x=>{
+ if(!x.id)x.id="trade_"+Math.random().toString(36).slice(2,9);
+ if(!x.currency)x.currency=inferCurrency(x);
+}));
 function saveData(){localStorage.setItem("journal_data",JSON.stringify(data))}
 function pad(n){return String(n).padStart(2,"0")}
 function key(d){return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`}
@@ -261,6 +286,7 @@ async function showStockResults(){
 }
 function selectStock(name,code,market){
  tradeStock.value=name; tradeCode.value=code;
+ setCurrencyUI((market||"").toUpperCase().includes("NASDAQ")||(market||"").toUpperCase().includes("NYSE")?"USD":"KRW");
  document.getElementById("selectedStockHint").textContent=`${code} · ${market}`;
  document.getElementById("stockResults").classList.remove("show"); uiSound("select");
 }
@@ -331,6 +357,14 @@ function dayHtml(d,muted){
  if(j)dots.push("blue");if(tr.length)dots.push("orange");
  return `<div class="day ${muted?"muted":""} ${k===selectedDate?"selected":""}" data-date="${k}"><div class="num">${d.getDate()}</div><div class="dot-row">${dots.map(x=>`<span class="dot ${x}"></span>`).join("")}</div></div>`;
 }
+
+function inferCurrency(x){ return x?.currency || (x?.code && /^[0-9]{6}$/.test(x.code) ? "KRW" : "USD"); }
+function currencyLabel(c){return c==="USD"?"$":"₩";}
+function formatPrice(n,c){const opts={minimumFractionDigits:c==="USD"?2:0,maximumFractionDigits:c==="USD"?2:0};return `${currencyLabel(c)}${Number(n||0).toLocaleString(undefined,opts)}`;}
+function setCurrencyUI(c){
+ const sel=document.getElementById("tradeCurrency"), suf=document.getElementById("currencySuffix");
+ if(sel)sel.value=c||"KRW"; if(suf)suf.textContent=(c||"KRW")==="USD"?"$":"원";
+}
 function renderJournal(){
  document.getElementById("journalDate").textContent=fmtDate(selectedDate);
  document.getElementById("topDate").textContent=fmtDate(selectedDate);
@@ -340,28 +374,39 @@ function renderJournal(){
  const box=document.getElementById("previousPlan");
  if(pj&&pj.tomorrowPlan){box.style.display="block";box.innerHTML=`<h3>📋 ${t("yesterdayPlan")} (${key(prev).slice(5).replace("-","/")}) <span style="float:right;color:#16a34a">✓ ${t("check")}</span></h3><p>${escapeHtml(pj.tomorrowPlan)}</p>`}else box.style.display="none";
  const wrap=document.getElementById("tradeTableWrap");
+ const groups=[["buy","buy"],["sell","sell"]];
  if(!tr.length){wrap.innerHTML=`<div class="sub" style="text-align:center;padding:14px">${t("noTrades")}</div>`;return}
- wrap.innerHTML=`<div class="trade-list" id="tradeList">${tr.map((x,i)=>`<div class="trade-item" draggable="true" data-index="${i}">
-   <div class="drag-handle" title="Drag to reorder">☰</div>
-   <div class="trade-main"><b>${escapeHtml(x.stock)} ${x.code?`<span class="sub">(${escapeHtml(x.code)})</span>`:""}</b><div class="trade-meta"><span class="${x.type}">${x.type==="buy"?t("buy"):t("sell")}</span> · ${Number(x.price).toLocaleString()} × ${x.qty}${x.reason?` · ${escapeHtml(x.reason)}`:""}</div></div>
-   <div class="trade-actions"><button class="secondary" onclick="editTrade(${i})">✎</button><button class="secondary danger" onclick="removeTrade(${i})">×</button></div>
- </div>`).join("")}</div>`;
+ wrap.innerHTML=groups.map(([type,label])=>{
+   const items=tr.map((x,i)=>({...x,_index:i})).filter(x=>x.type===type);
+   if(!items.length)return "";
+   return `<div class="trade-section"><div class="trade-section-head ${type}"><span>${type==="buy"?"🟦":"🟥"} ${t(type)}</span><span>${items.length}${lang==="ko"?"건":" trades"}</span></div><div class="trade-list" data-trade-type="${type}">${items.map(x=>{
+     const c=inferCurrency(x);
+     return `<div class="trade-item" draggable="true" data-index="${x._index}">
+       <div class="drag-handle" title="Drag to reorder">☰</div>
+       <div class="trade-main"><b>${escapeHtml(x.stock)} ${x.code?`<span class="sub">(${escapeHtml(x.code)})</span>`:""}</b><div class="trade-meta"><span class="${x.type}">${t(x.type)}</span> · ${formatPrice(x.price,c)} × ${x.qty}${x.reason?` · ${escapeHtml(x.reason)}`:""}</div></div>
+       <div class="trade-actions"><button class="secondary" onclick="editTrade(${x._index})">✎</button><button class="secondary danger" onclick="removeTrade(${x._index})">×</button></div>
+     </div>`;
+   }).join("")}</div></div>`;
+ }).join("");
  setupTradeDrag();
 }
 function setupTradeDrag(){
- const list=document.getElementById("tradeList"); if(!list)return;
- let dragged=null;
- list.querySelectorAll(".trade-item").forEach(item=>{
-  item.addEventListener("dragstart",()=>{dragged=item;item.classList.add("dragging")});
-  item.addEventListener("dragend",()=>{if(dragged)dragged.classList.remove("dragging");dragged=null;persistTradeOrder()});
-  item.addEventListener("dragover",e=>{e.preventDefault();if(!dragged||dragged===item)return;const r=item.getBoundingClientRect();item.parentNode.insertBefore(dragged,e.clientY<r.top+r.height/2?item:item.nextSibling)});
+ document.querySelectorAll("#tradeTableWrap .trade-list").forEach(list=>{
+   let dragged=null;
+   list.querySelectorAll(".trade-item").forEach(item=>{
+     item.addEventListener("dragstart",()=>{dragged=item;item.classList.add("dragging")});
+     item.addEventListener("dragend",()=>{if(dragged)dragged.classList.remove("dragging");if(dragged){persistTradeOrder(list)}}); 
+     item.addEventListener("dragover",e=>{e.preventDefault();if(!dragged||dragged===item)return;const r=item.getBoundingClientRect();item.parentNode.insertBefore(dragged,e.clientY<r.top+r.height/2?item:item.nextSibling)});
+   });
  });
 }
-function persistTradeOrder(){
- const list=document.getElementById("tradeList");if(!list)return;
- const current=data.trades[selectedDate]||[], ordered=[...list.children].map(el=>current[Number(el.dataset.index)]);
- // Re-index from rendered original indexes
- data.trades[selectedDate]=ordered.filter(Boolean); saveData(); renderJournal(); renderCalendar();
+function persistTradeOrder(list){
+ const current=data.trades[selectedDate]||[];
+ const type=list.dataset.tradeType;
+ const ordered=[...list.children].map(el=>current[Number(el.dataset.index)]).filter(Boolean);
+ const others=current.filter(x=>x.type!==type);
+ data.trades[selectedDate]=[...ordered,...others];
+ saveData();renderJournal();renderCalendar();
 }
 function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function setAutoSaveStatus(state){
@@ -381,7 +426,7 @@ function editTrade(i){
  const x=(data.trades[selectedDate]||[])[i];if(!x)return;
  editingTradeIndex=i; tradeModal.classList.add("show"); tradeStock.value=x.stock;tradeCode.value=x.code||"";
  document.getElementById("selectedStockHint").textContent=x.code||"";
- tradePrice.value=x.price;tradeQty.value=x.qty;tradeWhy.value=x.reason||"";selectedTradeType=x.type;
+ tradePrice.value=x.price;tradeQty.value=x.qty;tradeWhy.value=x.reason||"";selectedTradeType=x.type;setCurrencyUI(inferCurrency(x));
  buyBtn.classList.toggle("active",x.type==="buy");sellBtn.classList.toggle("active",x.type==="sell");
  document.getElementById("addTradeConfirm").textContent=t("editDone");
 }
@@ -414,7 +459,14 @@ document.getElementById("backCalendar").onclick=()=>showScreen("calendarScreen")
 document.getElementById("prevMonth").onclick=()=>{viewDate.setMonth(viewDate.getMonth()-1);renderCalendar();renderStats()};
 document.getElementById("nextMonth").onclick=()=>{viewDate.setMonth(viewDate.getMonth()+1);renderCalendar();renderStats()};
 document.getElementById("saveJournal").onclick=()=>{uiSound("success");saveJournal();};
-document.getElementById("addTradeBtn").onclick=()=>{editingTradeIndex=-1;tradeModal.classList.add("show");tradeStock.value="";tradeCode.value="";document.getElementById("selectedStockHint").textContent="";tradePrice.value="";tradeQty.value="";tradeWhy.value="";selectedTradeType="buy";buyBtn.classList.add("active");sellBtn.classList.remove("active");document.getElementById("addTradeConfirm").textContent=t("add")};
+function openTradeModal(type="buy"){
+ editingTradeIndex=-1;tradeModal.classList.add("show");tradeStock.value="";tradeCode.value="";
+ document.getElementById("selectedStockHint").textContent="";tradePrice.value="";tradeQty.value="";tradeWhy.value="";
+ selectedTradeType=type;buyBtn.classList.toggle("active",type==="buy");sellBtn.classList.toggle("active",type==="sell");
+ setCurrencyUI("KRW");document.getElementById("addTradeConfirm").textContent=t("add");
+}
+document.getElementById("addBuyBtn").onclick=()=>openTradeModal("buy");
+document.getElementById("addSellBtn").onclick=()=>openTradeModal("sell");
 document.getElementById("closeTrade").onclick=()=>tradeModal.classList.remove("show");
 document.getElementById("buyBtn").onclick=()=>{selectedTradeType="buy";buyBtn.classList.add("active");sellBtn.classList.remove("active")};
 document.getElementById("sellBtn").onclick=()=>{selectedTradeType="sell";sellBtn.classList.add("active");buyBtn.classList.remove("active")};
@@ -422,7 +474,7 @@ document.getElementById("addTradeConfirm").onclick=()=>{
  const raw=tradeStock.value.trim();if(!raw||!tradePrice.value||!tradeQty.value){toast(lang==="ko"?"종목, 가격, 수량을 입력하세요.":"Enter stock, price and quantity.");return}
  let stock=raw,code=tradeCode.value.trim();
  const m=raw.match(/(.+?)[\s\/]+(\d{6})$/);if(m&&!code){stock=m[1].trim();code=m[2]}
- const item={id:editingTradeIndex>=0?(data.trades[selectedDate][editingTradeIndex].id||("trade_"+Date.now())):("trade_"+Date.now()),stock,code,type:selectedTradeType,price:Number(tradePrice.value),qty:Number(tradeQty.value),reason:tradeWhy.value};
+ const item={id:editingTradeIndex>=0?(data.trades[selectedDate][editingTradeIndex].id||("trade_"+Date.now())):("trade_"+Date.now()),stock,code,type:selectedTradeType,price:Number(tradePrice.value),qty:Number(tradeQty.value),currency:document.getElementById("tradeCurrency").value,reason:tradeWhy.value};
  data.trades[selectedDate]=data.trades[selectedDate]||[];
  if(editingTradeIndex>=0)data.trades[selectedDate][editingTradeIndex]=item;else data.trades[selectedDate].push(item);
  const wasEdit=editingTradeIndex>=0;saveData();tradeModal.classList.remove("show");document.getElementById("addTradeConfirm").textContent=t("add");editingTradeIndex=-1;renderJournal();renderCalendar();toast(wasEdit?t("edited"):t("added"));uiSound("success");
@@ -440,6 +492,7 @@ document.getElementById("soundToggle").onclick=()=>{
 };
 
 
+document.getElementById("tradeCurrency").addEventListener("change",e=>setCurrencyUI(e.target.value));
 tradeStock.addEventListener("input",showStockResults);
 document.getElementById("stockResults").addEventListener("click",e=>{const b=e.target.closest(".stock-result");if(b)selectStock(b.dataset.name,b.dataset.code,b.dataset.market)});
 document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))document.getElementById("stockResults").classList.remove("show")});
@@ -447,7 +500,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.3",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.4",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
@@ -460,7 +513,7 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-   data.version="1.3";saveData();renderCalendar();renderJournal();toast(t("imported"));
+   data.version="1.4";saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
@@ -502,9 +555,9 @@ const startApp=document.getElementById("startApp");
 function closeIntro(){
   uiSound("start");
   introScreen.classList.add("hidden");
-  localStorage.setItem("journal_intro_seen","1");
+  localStorage.setItem("journal_intro_seen_date",key(new Date()));
 }
-if(localStorage.getItem("journal_intro_seen")==="1") introScreen.classList.add("hidden");
+if(localStorage.getItem("journal_intro_seen_date")===key(new Date())) introScreen.classList.add("hidden");
 startApp.onclick=closeIntro;
 
 
