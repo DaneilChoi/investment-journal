@@ -100,7 +100,7 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 .print-options label:last-child{border-bottom:0}.print-options input{width:18px;height:18px;justify-self:end}
 @media(max-width:520px){.trade-add-grid{grid-template-columns:1fr}}
 
-/* v1.75 calendar / study refresh */
+/* v1.76 calendar / study refresh */
 .month-nav{position:relative;touch-action:pan-y;user-select:none}
 .month-label{padding:6px 18px;border-radius:10px;transition:background .15s}.month-label:active{background:#f8fafc}
 .calendar-wrap{position:relative;padding-right:34px}
@@ -230,7 +230,7 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printToday">오늘 출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.75</span></div>
+      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.76</span></div>
     </div>
   </section>
 </main>
@@ -565,18 +565,18 @@ function renderStats(){
 }
 function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),1600)}
 document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.screen)));
-document.getElementById("days").addEventListener("click",e=>{const d=e.target.closest(".day");if(!d)return;uiSound("select");selectedDate=d.dataset.date;renderJournal();showScreen("journalScreen")});
+document.getElementById("days").addEventListener("click",e=>{const d=e.target.closest(".day");if(!d||weekDragMoved){weekDragMoved=false;return;}uiSound("select");selectedDate=d.dataset.date;renderJournal();showScreen("journalScreen")});
 document.getElementById("backCalendar").onclick=()=>showScreen("calendarScreen");
-document.getElementById("prevMonth").onclick=()=>{viewDate.setMonth(viewDate.getMonth()-1);weekStart=startOfWeek(new Date(viewDate.getFullYear(),viewDate.getMonth(),1));clampWeekStart();renderCalendar();renderStats();renderReview()};
-document.getElementById("nextMonth").onclick=()=>{viewDate.setMonth(viewDate.getMonth()+1);weekStart=startOfWeek(new Date(viewDate.getFullYear(),viewDate.getMonth(),1));clampWeekStart();renderCalendar();renderStats();renderReview()};
+document.getElementById("prevMonth").addEventListener('click',e=>{e.stopPropagation();viewDate.setMonth(viewDate.getMonth()-1);weekStart=startOfWeek(new Date(viewDate.getFullYear(),viewDate.getMonth(),1));clampWeekStart();renderCalendar();renderStats();renderReview();uiSound('select')});
+document.getElementById("nextMonth").addEventListener('click',e=>{e.stopPropagation();viewDate.setMonth(viewDate.getMonth()+1);weekStart=startOfWeek(new Date(viewDate.getFullYear(),viewDate.getMonth(),1));clampWeekStart();renderCalendar();renderStats();renderReview();uiSound('select')});
 function moveWeek(delta){weekStart=addDays(weekStart,delta*7);clampWeekStart();renderCalendar();uiSound('select')}
 document.getElementById('weekUp').onclick=()=>moveWeek(-1); document.getElementById('weekDown').onclick=()=>moveWeek(1);
 const weekViewport=document.getElementById('weekViewport');
-weekViewport.addEventListener('pointerdown',e=>{weekDragStartY=e.clientY;weekDragMoved=false;weekViewport.setPointerCapture?.(e.pointerId)});
+weekViewport.addEventListener('pointerdown',e=>{weekDragStartY=e.clientY;weekDragMoved=false;});
 weekViewport.addEventListener('pointermove',e=>{if(weekDragStartY===0)return;const dy=e.clientY-weekDragStartY;if(Math.abs(dy)>18){weekDragMoved=true;weekDragStartY=e.clientY;moveWeek(dy<0?1:-1)}});
 weekViewport.addEventListener('pointerup',()=>{weekDragStartY=0}); weekViewport.addEventListener('pointercancel',()=>{weekDragStartY=0});
 weekViewport.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>10){e.preventDefault();moveWeek(e.deltaY>0?1:-1)}},{passive:false});
-const monthNav=document.getElementById('monthNav');let monthStartX=0;monthNav.addEventListener('pointerdown',e=>{monthStartX=e.clientX;monthNav.setPointerCapture?.(e.pointerId)});monthNav.addEventListener('pointerup',e=>{const dx=e.clientX-monthStartX;if(Math.abs(dx)>45){viewDate.setMonth(viewDate.getMonth()+(dx<0?1:-1));weekStart=startOfWeek(new Date(viewDate.getFullYear(),viewDate.getMonth(),1));clampWeekStart();renderCalendar();renderStats();renderReview();uiSound('select')}});
+const monthNav=document.getElementById('monthNav');let monthStartX=0;let monthTracking=false;monthNav.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;monthStartX=e.clientX;monthTracking=true;});monthNav.addEventListener('pointerup',e=>{if(!monthTracking)return;monthTracking=false;const dx=e.clientX-monthStartX;if(Math.abs(dx)>45){viewDate.setMonth(viewDate.getMonth()+(dx<0?1:-1));weekStart=startOfWeek(new Date(viewDate.getFullYear(),viewDate.getMonth(),1));clampWeekStart();renderCalendar();renderStats();renderReview();uiSound('select')}});monthNav.addEventListener('pointercancel',()=>{monthTracking=false});
 const weekTrack=document.getElementById('weekTrack'),weekThumb=document.getElementById('weekThumb');
 weekThumb.addEventListener('pointerdown',e=>{e.preventDefault();weekThumbDrag=true;weekThumb.setPointerCapture?.(e.pointerId)});
 weekThumb.addEventListener('pointermove',e=>{if(!weekThumbDrag)return;const rect=weekTrack.getBoundingClientRect(),h=weekThumb.offsetHeight,maxTop=Math.max(1,rect.height-h);let top=Math.max(0,Math.min(maxTop,e.clientY-rect.top-h/2));const b=monthWeekBounds(),totalWeeks=Math.max(3,Math.round((b.last-b.first)/86400000/7)+1),positions=Math.max(1,totalWeeks-3);const pos=Math.round((top/maxTop)*positions);weekStart=addDays(b.first,pos*7);renderCalendar()});
