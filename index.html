@@ -99,6 +99,10 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 .print-options label{display:grid;grid-template-columns:1fr 28px;align-items:center;min-height:46px;padding:0 14px;border-bottom:1px solid #eef2f7;cursor:pointer}
 .print-options label:last-child{border-bottom:0}.print-options input{width:18px;height:18px;justify-self:end}
 @media(max-width:520px){.trade-add-grid{grid-template-columns:1fr}}
+
+/* v1.7 journal home */
+.calendar-card-v17{padding:16px}.month-nav-v17{display:flex;align-items:center;justify-content:center;gap:14px;margin:2px 0 14px}.month-nav-v17>button{border:0;background:transparent;color:var(--navy);font-size:30px;line-height:1;padding:4px 10px}.month-title-btn{display:flex!important;flex-direction:column;align-items:center;font-size:23px!important;font-weight:900!important}.month-title-btn small{font-size:11px;color:#94a3b8;font-weight:600;margin-top:3px}.calendar-v17{touch-action:pan-x}.days-v17{grid-template-rows:repeat(3,1fr);overflow:hidden}.days-v17 .day{min-height:70px}.calendar-swipe-hint{text-align:center;color:#94a3b8;font-size:11px;padding:9px 0 1px}.weekly-summary-card{padding:16px}.weekly-summary-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.summary-grid-v17{margin-top:16px}.summary-grid-v17>div{position:relative}.summary-grid-v17 small{display:block;margin-top:6px;font-size:11px;color:#64748b}.summary-grid-v17 small::first-letter{font-weight:900}.summary-grid-v17 strong.neutral{color:#475569}.learning-grid-v17{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.learning-card{margin:0;min-height:210px}.learning-title{font-weight:900;margin-bottom:14px}.learning-meta{font-size:12px;color:#64748b;margin-top:4px}.learning-card p{font-size:13px;line-height:1.6;color:#334155}.quote-text{font-weight:700;line-height:1.7!important}.term-name{font-size:25px;color:#2563eb}.text-action{border:0;background:transparent;padding:5px 0;color:#2563eb;font-weight:800;font-size:12px}.recent-journal-card{margin-top:14px}.recent-row{width:100%;border:0;border-bottom:1px solid #eef2f7;background:#fff;padding:11px 4px;display:flex;justify-content:space-between;align-items:center;text-align:left;color:#334155}.recent-row:last-child{border-bottom:0}.recent-row span:first-child{display:flex;flex-direction:column;gap:3px}.recent-row small{color:#64748b}.month-picker-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}.month-choice{border:1px solid #dbe3ee;background:#fff;border-radius:10px;padding:12px;font-weight:800}.month-choice.active{background:#2563eb;color:#fff;border-color:#2563eb}.buy-add{color:#b91c1c!important}.sell-add{color:#1d4ed8!important}.trade-item.buy-item{border-left-color:#ef4444}.trade-item.sell-item{border-left-color:#2563eb}
+@media(max-width:760px){.learning-grid-v17{grid-template-columns:1fr}.learning-card{min-height:auto}.days-v17 .day{min-height:62px}.weekly-summary-head{align-items:flex-start}.summary-grid-v17 strong{font-size:18px}}
 </style>
 </head>
 <body>
@@ -128,19 +132,25 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 <main>
   <section id="calendarScreen" class="screen active">
     <div class="section-title"><div><h1 data-i18n="journal">일지</h1><div class="sub" data-i18n="calendarHint">달력에서 날짜를 선택하세요.</div></div></div>
-    <div class="card">
-      <div class="month-nav"><button id="prevMonth">‹</button><span id="monthLabel"></span><button id="nextMonth">›</button></div>
-      <div class="calendar">
+    <div class="card calendar-card-v17">
+      <div class="month-nav-v17" id="monthSwipeArea"><button id="prevMonth">‹</button><button class="month-title-btn" id="monthPickerBtn"><span id="monthLabel"></span><small data-i18n="monthPickerHint">좌우로 스와이프하여 월 변경</small></button><button id="nextMonth">›</button></div>
+      <div class="calendar calendar-v17" id="calendarSwipeArea">
         <div class="weekdays"><div data-i18n="sun">일</div><div data-i18n="mon">월</div><div data-i18n="tue">화</div><div data-i18n="wed">수</div><div data-i18n="thu">목</div><div data-i18n="fri">금</div><div data-i18n="sat">토</div></div>
-        <div id="days" class="days"></div>
+        <div id="days" class="days days-v17"></div>
       </div>
+      <div class="calendar-swipe-hint" data-i18n="weekSwipeHint">↑↓ 주 단위로 이동 · 요일은 고정됩니다</div>
     </div>
-    <div class="card">
-      <h3 id="summaryTitle" style="margin-top:0">8월 요약</h3>
-      <div class="summary-grid"><div><span data-i18n="writtenDays">기록한 날</span><strong id="sumDays">0일</strong></div><div><span data-i18n="tradeCount">매매 횟수</span><strong id="sumTrades">0회</strong></div><div><span data-i18n="monthlyReturn">수익률</span><strong id="sumReturn" class="positive">-</strong></div></div>
+    <div class="card weekly-summary-card">
+      <div class="weekly-summary-head"><h3 id="summaryTitle" style="margin:0">8월 24일 ~ 28일</h3><span id="summaryCompare" class="sub">지난 주 비교</span></div>
+      <div class="summary-grid summary-grid-v17"><div><span data-i18n="writtenDays">기록한 날</span><strong id="sumDays">0일</strong><small id="sumDaysDelta">—</small></div><div><span data-i18n="tradeCount">매매 횟수</span><strong id="sumTrades">0회</strong><small id="sumTradesDelta">—</small></div><div><span data-i18n="weeklyReturn">수익률</span><strong id="sumReturn" class="neutral">—</strong><small id="sumReturnDelta">기록 필요</small></div></div>
     </div>
+    <div class="learning-grid-v17">
+      <div class="card learning-card"><div class="learning-title">📚 <span data-i18n="dailyBook">오늘의 경제 필독서</span></div><div id="bookContent"></div><button class="text-action" id="nextBookBtn" data-i18n="nextRecommendation">다른 추천 보기 →</button></div>
+      <div class="card learning-card"><div class="learning-title">💬 <span data-i18n="dailyQuote">오늘의 투자 명언</span></div><div id="quoteContent"></div><button class="text-action" id="nextQuoteBtn" data-i18n="nextRecommendation">다른 추천 보기 →</button></div>
+      <div class="card learning-card"><div class="learning-title">💡 <span data-i18n="dailyTerm">오늘의 주식 용어</span></div><div id="termContent"></div><button class="text-action" id="nextTermBtn" data-i18n="nextRecommendation">다른 용어 보기 →</button></div>
+    </div>
+    <div class="card recent-journal-card"><div class="weekly-summary-head"><h3 style="margin:0" data-i18n="recentJournal">최근 작성한 일지</h3><span class="sub" data-i18n="tapDateHint">날짜를 눌러 바로 열기</span></div><div id="recentJournalList"></div></div>
   </section>
-
   <section id="journalScreen" class="screen">
     <div class="journal-head"><button class="back" id="backCalendar">‹</button><div style="text-align:center"><strong id="journalDate"></strong><div id="autosaveStatus" class="autosave">✓ 자동 저장됨</div></div><button class="icon-btn" style="color:#172554" id="journalMenu">⋮</button></div>
     <div id="previousPlan" class="prev-plan" style="display:none"></div>
@@ -186,7 +196,7 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printToday">오늘 출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.6</span></div>
+      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.7</span></div>
     </div>
   </section>
 </main>
@@ -197,6 +207,8 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
   <button data-screen="statsScreen"><span class="ico">📈</span><span data-i18n="stats">통계</span></button>
   <button data-screen="settingsScreen"><span class="ico">⚙</span><span data-i18n="settings">설정</span></button>
 </div></nav>
+
+<div id="monthPickerModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2 data-i18n="monthPicker">월 선택</h2><button class="close" id="closeMonthPicker">×</button></div><div id="monthPickerGrid" class="month-picker-grid"></div></div></div>
 
 <div id="tradeModal" class="modal-wrap"><div class="modal wide">
   <div class="modal-head"><h2 data-i18n="addTradeTitle">매매 추가</h2><button class="close" id="closeTrade">×</button></div>
@@ -229,8 +241,8 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 
 <script>
 const I18N={
-ko:{appName:"투자일지",soundEffects:"효과음",soundOn:"켜짐",soundOff:"꺼짐",clickSound:"클릭",savedSound:"저장 완료",addSound:"추가 완료",introSubtitle:"매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.",introFeature1:"매일 기록",introFeature2:"투자 분석",introFeature3:"투자 복기",startApp:"투자일지 시작하기",introBottom:"나의 기록은 이 브라우저에 안전하게 저장됩니다.",journal:"일지",calendarHint:"달력에서 날짜를 선택하세요.",sun:"일",mon:"월",tue:"화",wed:"수",thu:"목",fri:"금",sat:"토",writtenDays:"기록한 날",tradeCount:"매매 횟수",monthlyReturn:"수익률",marketAnalysis:"투자전 오늘의 시장 분석",todayTrades:"오늘의 매매",addTrade:"매매 추가",addBuy:"매수 추가",addSell:"매도 추가",currency:"통화",tradeReason:"매매 이유",dailyReview:"오늘의 복기",goodPoint:"잘한 점",badPoint:"아쉬운 점",tomorrowPlan:"내일의 계획",save:"저장하기",stocks:"종목",stocksHint:"기록한 종목과 매매 내역을 확인합니다.",review:"투자 복기",reviewHint:"나의 투자 과정을 돌아보고 다음 매매에 적용합니다.",reviewQuestion:"이번 달 나는 어떻게 투자했을까?",recentReview:"최근 복기",repeatedMistakes:"반복해서 나타나는 아쉬운 점",strengths:"이번 달 잘한 점",nextPlan:"다음 투자에서 기억할 것",reviewDays:"복기한 날",reviewTrades:"매매 횟수",reviewPlans:"계획 기록",reviewOpen:"일지 보기",noReview:"아직 복기 기록이 없습니다.",stats:"통계",settings:"설정",notifications:"알림 설정",stockManagement:"종목 관리",language:"언어",backup:"데이터 백업",export:"내보내기",import:"불러오기",print:"일지 출력",printToday:"오늘 출력",printTitle:"투자일지 출력",printRange:"출력 범위",today:"오늘",thisMonth:"이번 달",printOptions:"출력 항목",dailyJournal:"일별 투자일지",tradeRecords:"매매 내역",printNow:"인쇄 / PDF 저장",reset:"초기 데이터 삭제",delete:"삭제",appInfo:"앱 정보",addTradeTitle:"매매 추가",stock:"종목",buySell:"매수 / 매도",buy:"매수",sell:"매도",price:"가격",quantity:"수량",add:"추가하기",marketPlaceholder:"오늘 시장에서 중요했던 내용을 자유롭게 기록하세요.",reasonPlaceholder:"오늘의 매매를 왜 했는지 기록하세요.",goodPlaceholder:"오늘 잘한 점을 기록하세요.",badPlaceholder:"오늘 아쉬웠던 점을 기록하세요.",planPlaceholder:"내일의 투자 계획을 기록하세요.",winRate:"승률",avgWin:"평균 수익",avgLoss:"평균 손실",returnTrend:"수익률 추이",frequentStocks:"자주 매매한 종목",confirmReset:"모든 저장 데이터를 삭제할까요?",saved:"저장되었습니다.",autoSaved:"자동 저장됨",editDone:"수정 완료",edited:"수정되었습니다.",importMergeConfirm:"백업을 기존 데이터에 합칠까요?\n확인=병합 / 취소=교체",imported:"백업을 불러왔습니다.",importError:"백업 파일을 읽을 수 없습니다.",popupBlocked:"팝업이 차단되었습니다.",added:"매매가 추가되었습니다.",exported:"백업 파일을 만들었습니다.",noTrades:"등록된 매매가 없습니다.",noStocks:"아직 기록한 종목이 없습니다.",yesterdayPlan:"어제의 계획",check:"확인",tradeHistory:"매매 내역",totalTrades:"총 매매",averageBuy:"평균 매수가",averageSell:"평균 매도가",days:"일",times:"회"},
-en:{appName:"Investment Journal",soundEffects:"Sound effects",soundOn:"On",soundOff:"Off",clickSound:"Click",savedSound:"Saved",addSound:"Added",introSubtitle:"Record your investment journey every day,<br>and reflect on your investing habits.",introFeature1:"Daily Journal",introFeature2:"Market Analysis",introFeature3:"Daily Review",startApp:"Start Investment Journal",introBottom:"Your records are stored safely in this browser.",journal:"Journal",calendarHint:"Select a date from the calendar.",sun:"Sun",mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",writtenDays:"Written days",tradeCount:"Trades",monthlyReturn:"Return",marketAnalysis:"Today's Market Analysis",todayTrades:"Today's Trades",addTrade:"Add trade",addBuy:"Add buy",addSell:"Add sell",currency:"Currency",tradeReason:"Trade Rationale",dailyReview:"Daily Review",goodPoint:"What Went Well",badPoint:"What Could Be Improved",tomorrowPlan:"Tomorrow's Plan",save:"Save",stocks:"Stocks",stocksHint:"Review recorded stocks and trades.",review:"Investment Review",reviewHint:"Reflect on your decisions and apply the lessons to your next trades.",reviewQuestion:"How did I invest this month?",recentReview:"Recent reviews",repeatedMistakes:"Repeated weak points",strengths:"What I did well",nextPlan:"What to remember next",reviewDays:"Review days",reviewTrades:"Trades",reviewPlans:"Plans recorded",reviewOpen:"Open journal",noReview:"No review records yet.",stats:"Stats",settings:"Settings",notifications:"Notifications",stockManagement:"Stock management",language:"Language",backup:"Data backup",export:"Export",import:"Import",print:"Print journal",printToday:"Print today",printTitle:"Print Investment Journal",printRange:"Print range",today:"Today",thisMonth:"This month",printOptions:"Print items",dailyJournal:"Daily journal",tradeRecords:"Trade records",printNow:"Print / Save PDF",reset:"Delete saved data",delete:"Delete",appInfo:"App info",addTradeTitle:"Add Trade",stock:"Stock",buySell:"Buy / Sell",buy:"Buy",sell:"Sell",price:"Price",quantity:"Quantity",add:"Add",marketPlaceholder:"Record the important market events of today.",reasonPlaceholder:"Why did you make today's trade?",goodPlaceholder:"What did you do well today?",badPlaceholder:"What could you have done better?",planPlaceholder:"Record your plan for tomorrow.",winRate:"Win rate",avgWin:"Avg. win",avgLoss:"Avg. loss",returnTrend:"Return trend",frequentStocks:"Most traded stocks",confirmReset:"Delete all saved data?",saved:"Saved.",autoSaved:"Auto-saved",editDone:"Save changes",edited:"Changes saved.",importMergeConfirm:"Merge this backup into existing data?\nOK=Merge / Cancel=Replace",imported:"Backup imported.",importError:"Could not read the backup file.",popupBlocked:"Pop-up was blocked.",added:"Trade added.",exported:"Backup file created.",noTrades:"No trades recorded.",noStocks:"No stocks recorded yet.",yesterdayPlan:"Yesterday's plan",check:"Check",tradeHistory:"Trade history",totalTrades:"Total trades",averageBuy:"Avg. buy",averageSell:"Avg. sell",days:"days",times:"times"}
+ko:{appName:"투자일지",soundEffects:"효과음",soundOn:"켜짐",soundOff:"꺼짐",clickSound:"클릭",savedSound:"저장 완료",addSound:"추가 완료",introSubtitle:"매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.",introFeature1:"매일 기록",introFeature2:"투자 분석",introFeature3:"투자 복기",startApp:"투자일지 시작하기",introBottom:"나의 기록은 이 브라우저에 안전하게 저장됩니다.",journal:"일지",calendarHint:"달력에서 날짜를 선택하세요.",monthPickerHint:"좌우로 스와이프하여 월 변경",weekSwipeHint:"↑↓ 주 단위로 이동 · 요일은 고정됩니다",weeklyReturn:"수익률",dailyBook:"오늘의 경제 필독서",dailyQuote:"오늘의 투자 명언",dailyTerm:"오늘의 주식 용어",nextRecommendation:"다른 추천 보기 →",recentJournal:"최근 작성한 일지",tapDateHint:"날짜를 눌러 바로 열기",monthPicker:"월 선택",prevWeek:"지난 주",same:"동일",recordNeeded:"수익률 기록 필요",sun:"일",mon:"월",tue:"화",wed:"수",thu:"목",fri:"금",sat:"토",writtenDays:"기록한 날",tradeCount:"매매 횟수",monthlyReturn:"수익률",marketAnalysis:"투자전 오늘의 시장 분석",todayTrades:"오늘의 매매",addTrade:"매매 추가",addBuy:"매수 추가",addSell:"매도 추가",currency:"통화",tradeReason:"매매 이유",dailyReview:"오늘의 복기",goodPoint:"잘한 점",badPoint:"아쉬운 점",tomorrowPlan:"내일의 계획",save:"저장하기",stocks:"종목",stocksHint:"기록한 종목과 매매 내역을 확인합니다.",review:"투자 복기",reviewHint:"나의 투자 과정을 돌아보고 다음 매매에 적용합니다.",reviewQuestion:"이번 달 나는 어떻게 투자했을까?",recentReview:"최근 복기",repeatedMistakes:"반복해서 나타나는 아쉬운 점",strengths:"이번 달 잘한 점",nextPlan:"다음 투자에서 기억할 것",reviewDays:"복기한 날",reviewTrades:"매매 횟수",reviewPlans:"계획 기록",reviewOpen:"일지 보기",noReview:"아직 복기 기록이 없습니다.",stats:"통계",settings:"설정",notifications:"알림 설정",stockManagement:"종목 관리",language:"언어",backup:"데이터 백업",export:"내보내기",import:"불러오기",print:"일지 출력",printToday:"오늘 출력",printTitle:"투자일지 출력",printRange:"출력 범위",today:"오늘",thisMonth:"이번 달",printOptions:"출력 항목",dailyJournal:"일별 투자일지",tradeRecords:"매매 내역",printNow:"인쇄 / PDF 저장",reset:"초기 데이터 삭제",delete:"삭제",appInfo:"앱 정보",addTradeTitle:"매매 추가",stock:"종목",buySell:"매수 / 매도",buy:"매수",sell:"매도",price:"가격",quantity:"수량",add:"추가하기",marketPlaceholder:"오늘 시장에서 중요했던 내용을 자유롭게 기록하세요.",reasonPlaceholder:"오늘의 매매를 왜 했는지 기록하세요.",goodPlaceholder:"오늘 잘한 점을 기록하세요.",badPlaceholder:"오늘 아쉬웠던 점을 기록하세요.",planPlaceholder:"내일의 투자 계획을 기록하세요.",winRate:"승률",avgWin:"평균 수익",avgLoss:"평균 손실",returnTrend:"수익률 추이",frequentStocks:"자주 매매한 종목",confirmReset:"모든 저장 데이터를 삭제할까요?",saved:"저장되었습니다.",autoSaved:"자동 저장됨",editDone:"수정 완료",edited:"수정되었습니다.",importMergeConfirm:"백업을 기존 데이터에 합칠까요?\n확인=병합 / 취소=교체",imported:"백업을 불러왔습니다.",importError:"백업 파일을 읽을 수 없습니다.",popupBlocked:"팝업이 차단되었습니다.",added:"매매가 추가되었습니다.",exported:"백업 파일을 만들었습니다.",noTrades:"등록된 매매가 없습니다.",noStocks:"아직 기록한 종목이 없습니다.",yesterdayPlan:"어제의 계획",check:"확인",tradeHistory:"매매 내역",totalTrades:"총 매매",averageBuy:"평균 매수가",averageSell:"평균 매도가",days:"일",times:"회"},
+en:{appName:"Investment Journal",soundEffects:"Sound effects",soundOn:"On",soundOff:"Off",clickSound:"Click",savedSound:"Saved",addSound:"Added",introSubtitle:"Record your investment journey every day,<br>and reflect on your investing habits.",introFeature1:"Daily Journal",introFeature2:"Market Analysis",introFeature3:"Daily Review",startApp:"Start Investment Journal",introBottom:"Your records are stored safely in this browser.",journal:"Journal",calendarHint:"Select a date from the calendar.",monthPickerHint:"Swipe left or right to change month",weekSwipeHint:"↑↓ Move by week · weekdays stay fixed",weeklyReturn:"Return",dailyBook:"Today’s economics pick",dailyQuote:"Today’s investing quote",dailyTerm:"Today’s stock term",nextRecommendation:"Show another →",recentJournal:"Recent journals",tapDateHint:"Tap a date to open",monthPicker:"Select month",prevWeek:"Previous week",same:"Same",recordNeeded:"Return data needed",sun:"Sun",mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",writtenDays:"Written days",tradeCount:"Trades",monthlyReturn:"Return",marketAnalysis:"Today's Market Analysis",todayTrades:"Today's Trades",addTrade:"Add trade",addBuy:"Add buy",addSell:"Add sell",currency:"Currency",tradeReason:"Trade Rationale",dailyReview:"Daily Review",goodPoint:"What Went Well",badPoint:"What Could Be Improved",tomorrowPlan:"Tomorrow's Plan",save:"Save",stocks:"Stocks",stocksHint:"Review recorded stocks and trades.",review:"Investment Review",reviewHint:"Reflect on your decisions and apply the lessons to your next trades.",reviewQuestion:"How did I invest this month?",recentReview:"Recent reviews",repeatedMistakes:"Repeated weak points",strengths:"What I did well",nextPlan:"What to remember next",reviewDays:"Review days",reviewTrades:"Trades",reviewPlans:"Plans recorded",reviewOpen:"Open journal",noReview:"No review records yet.",stats:"Stats",settings:"Settings",notifications:"Notifications",stockManagement:"Stock management",language:"Language",backup:"Data backup",export:"Export",import:"Import",print:"Print journal",printToday:"Print today",printTitle:"Print Investment Journal",printRange:"Print range",today:"Today",thisMonth:"This month",printOptions:"Print items",dailyJournal:"Daily journal",tradeRecords:"Trade records",printNow:"Print / Save PDF",reset:"Delete saved data",delete:"Delete",appInfo:"App info",addTradeTitle:"Add Trade",stock:"Stock",buySell:"Buy / Sell",buy:"Buy",sell:"Sell",price:"Price",quantity:"Quantity",add:"Add",marketPlaceholder:"Record the important market events of today.",reasonPlaceholder:"Why did you make today's trade?",goodPlaceholder:"What did you do well today?",badPlaceholder:"What could you have done better?",planPlaceholder:"Record your plan for tomorrow.",winRate:"Win rate",avgWin:"Avg. win",avgLoss:"Avg. loss",returnTrend:"Return trend",frequentStocks:"Most traded stocks",confirmReset:"Delete all saved data?",saved:"Saved.",autoSaved:"Auto-saved",editDone:"Save changes",edited:"Changes saved.",importMergeConfirm:"Merge this backup into existing data?\nOK=Merge / Cancel=Replace",imported:"Backup imported.",importError:"Could not read the backup file.",popupBlocked:"Pop-up was blocked.",added:"Trade added.",exported:"Backup file created.",noTrades:"No trades recorded.",noStocks:"No stocks recorded yet.",yesterdayPlan:"Yesterday's plan",check:"Check",tradeHistory:"Trade history",totalTrades:"Total trades",averageBuy:"Avg. buy",averageSell:"Avg. sell",days:"days",times:"times"}
 };
 let lang=localStorage.getItem("journal_lang")||"ko";
 let data=JSON.parse(localStorage.getItem("journal_data")||"null")||{
@@ -282,12 +294,16 @@ async function loadFullStockCatalog(){
  try{
    const raw=await fetch('https://raw.githubusercontent.com/dalinaum/rs/main/krx-list.csv',{cache:'no-store'}).then(r=>r.ok?r.text():'');
    if(raw){
-     const lines=raw.split(/\r?\n/).slice(1); const full=[];
-     for(const line of lines){const m=line.match(/^\s*\d+,([^,]+),[^,]+,(.*?),(KOSPI|KOSDAQ|KOSDAQ GLOBAL|KONEX),/); if(m)full.push([m[2].trim(),m[1].trim(),m[3].startsWith('KOSDAQ')?'KOSDAQ':m[3]])}
-     if(full.length>1000){stockCatalog=full;stockCatalogLoaded=true;localStorage.setItem('journal_stock_catalog_v16',JSON.stringify(full));}
+     const lines=raw.split(/\r?\n/).filter(Boolean); const full=[];
+     const parseLine=line=>{ const a=[]; let cur='',q=false; for(let i=0;i<line.length;i++){const ch=line[i]; if(ch==='"'){ if(q&&line[i+1]==='"'){cur+='"';i++;} else q=!q; } else if(ch===','&&!q){a.push(cur);cur='';} else cur+=ch;} a.push(cur); return a; };
+     const header=parseLine(lines[0]).map(x=>x.trim().toLowerCase());
+     const codeIdx=header.indexOf('code'),nameIdx=header.indexOf('name'),marketIdx=header.indexOf('market');
+     if(codeIdx>=0&&nameIdx>=0&&marketIdx>=0){ for(const line of lines.slice(1)){const a=parseLine(line); const code=(a[codeIdx]||'').trim(); const name=(a[nameIdx]||'').trim(); const market=(a[marketIdx]||'').trim(); if(/^\d{6}$/.test(code)&&name&&(market==='KOSPI'||market==='KOSDAQ'||market==='KOSDAQ GLOBAL')) full.push([name,code,market.startsWith('KOSDAQ')?'KOSDAQ':market]); } }
+     if(full.length>1000){stockCatalog=full;stockCatalogLoaded=true;localStorage.setItem('journal_stock_catalog_v17',JSON.stringify(full));}
    }
  }catch(e){}
- if(!stockCatalogLoaded){try{const cached=JSON.parse(localStorage.getItem('journal_stock_catalog_v16')||'null');if(Array.isArray(cached)&&cached.length>1000){stockCatalog=cached;stockCatalogLoaded=true}}catch(e){}}
+ if(!stockCatalogLoaded){try{const cached=JSON.parse(localStorage.getItem('journal_stock_catalog_v17')||'null');if(Array.isArray(cached)&&cached.length>1000){stockCatalog=cached;stockCatalogLoaded=true}}catch(e){}}
+ if(!stockCatalogLoaded){ stockCatalog=[...V17_STOCK_FALLBACK,...stockCatalog.filter(x=>!V17_STOCK_FALLBACK.some(f=>f[1]===x[1]))]; }
 }
 async function showStockResults(){
  const q=tradeStock.value.trim(), box=document.getElementById('stockResults');
@@ -360,24 +376,41 @@ function showScreen(id){
  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));
  if(id==="calendarScreen")renderCalendar(); if(id==="reviewScreen")renderReview(); if(id==="statsScreen")renderStats();
 }
+let weekCursor=new Date(); weekCursor.setHours(0,0,0,0); weekCursor.setDate(weekCursor.getDate()-weekCursor.getDay());
+let calendarTouchStartX=0,calendarTouchStartY=0,monthTouchStartX=0;
+function startOfWeek(d){const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-x.getDay());return x;}
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}
 function renderCalendar(){
  const y=viewDate.getFullYear(),m=viewDate.getMonth();
  document.getElementById("monthLabel").textContent=lang==="ko"?`${y}년 ${m+1}월`:viewDate.toLocaleDateString("en-US",{month:"long",year:"numeric"});
- document.getElementById("summaryTitle").textContent=lang==="ko"?`${m+1}월 요약`:`${viewDate.toLocaleDateString("en-US",{month:"long"})} Summary`;
- const first=new Date(y,m,1), last=new Date(y,m+1,0), prevLast=new Date(y,m,0);
- let html="";
- for(let i=first.getDay()-1;i>=0;i--){const d=new Date(y,m-1,prevLast.getDate()-i);html+=dayHtml(d,true)}
- for(let i=1;i<=last.getDate();i++)html+=dayHtml(new Date(y,m,i),false);
- let next=1;while((first.getDay()+last.getDate()+next-1)%7!==0){html+=dayHtml(new Date(y,m+1,next++),true)}
+ const focus=weekCursor; let html="";
+ for(let w=0;w<3;w++){for(let i=0;i<7;i++){const d=addDays(focus,w*7+i);html+=dayHtml(d,d.getMonth()!==m);}}
  document.getElementById("days").innerHTML=html;
- let days=0,trades=0;for(let i=1;i<=last.getDate();i++){const k=key(new Date(y,m,i));if(data.journals[k])days++;trades+=(data.trades[k]||[]).length}
- document.getElementById("sumDays").textContent=`${days}${lang==="ko"?"일":" "+t("days")}`;document.getElementById("sumTrades").textContent=`${trades}${lang==="ko"?"회":" "+t("times")}`;document.getElementById("sumReturn").textContent="+3.42%";
+ const weekDays=Array.from({length:7},(_,i)=>addDays(focus,i));
+ renderWeeklySummary(weekDays);renderLearning();renderRecentJournals();
 }
 function dayHtml(d,muted){
- const k=key(d),tr=data.trades[k]||[],j=data.journals[k], dots=[];
- if(j)dots.push("blue");if(tr.length)dots.push("orange");
- return `<div class="day ${muted?"muted":""} ${k===selectedDate?"selected":""}" data-date="${k}"><div class="num">${d.getDate()}</div><div class="dot-row">${dots.map(x=>`<span class="dot ${x}"></span>`).join("")}</div></div>`;
+ const k=key(d),tr=data.trades[k]||[],j=data.journals[k],dots=[]; if(j)dots.push("blue"); if(tr.some(x=>x.type==='buy'))dots.push("red"); if(tr.some(x=>x.type==='sell'))dots.push("blue");
+ return `<div class="day ${muted?"muted":""} ${k===selectedDate?"selected":""}" data-date="${k}"><div class="num">${d.getDate()}</div><div class="dot-row">${dots.slice(0,3).map(x=>`<span class="dot ${x}"></span>`).join("")}</div></div>`;
 }
+function weekMetrics(days){
+ let written=0,trades=0; days.forEach(d=>{const k=key(d);if(data.journals[k])written++;trades+=(data.trades[k]||[]).length;}); return {written,trades};
+}
+function renderWeeklySummary(days){
+ const cur=weekMetrics(days), prev=weekMetrics(days.map(d=>addDays(d,-7)));
+ const a=days[0],b=days[6]; const title=lang==='ko'?`${a.getMonth()+1}월 ${a.getDate()}일 ~ ${b.getMonth()+1}월 ${b.getDate()}일`:`${a.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${b.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+ document.getElementById('summaryTitle').textContent=title; document.getElementById('summaryCompare').textContent=lang==='ko'?`지난 주 (${addDays(a,-7).getMonth()+1}/${addDays(a,-7).getDate()}~${addDays(b,-7).getMonth()+1}/${addDays(b,-7).getDate()}) 비교`:'Compare with previous week';
+ document.getElementById('sumDays').textContent=`${cur.written}${lang==='ko'?'일':' days'}`;document.getElementById('sumTrades').textContent=`${cur.trades}${lang==='ko'?'회':' trades'}`;document.getElementById('sumReturn').textContent='—';
+ const delta=(x)=>x>0?`▲ ${x}${lang==='ko'?'일':''}`:x<0?`▼ ${Math.abs(x)}${lang==='ko'?'일':''}`:'—';
+ const deltaTrades=cur.trades-prev.trades; document.getElementById('sumDaysDelta').textContent=delta(cur.written-prev.written);document.getElementById('sumTradesDelta').textContent=deltaTrades>0?`▲ ${deltaTrades}${lang==='ko'?'회':''}`:deltaTrades<0?`▼ ${Math.abs(deltaTrades)}${lang==='ko'?'회':''}`:'—';document.getElementById('sumReturnDelta').textContent=t('recordNeeded');
+}
+const BOOKS=[['주식투자 무작정 따라하기','윤재수','기본기를 다지고 매매 원칙을 점검하기 좋은 입문서'],['현명한 투자자','벤저민 그레이엄','가격보다 가치와 안전마진을 생각하는 습관'],['돈의 속성','김승호','돈과 투자에 대한 장기적인 태도를 돌아보기'],['전설로 떠나는 월가의 영웅','피터 린치','기업을 관찰하고 투자 아이디어를 찾는 방법']];
+const QUOTES=['“가격은 우리가 지불하는 것이고, 가치는 우리가 얻는 것이다.” — 워런 버핏','“주식시장은 인내심 없는 사람의 돈을 인내심 있는 사람에게 옮기는 장치다.” — 워런 버핏','“투자의 첫 번째 원칙은 돈을 잃지 않는 것이다.” — 워런 버핏','“무엇을 사는지 아는 것이 좋은 투자보다 먼저다.”'];
+const TERMS=[['PER','주가수익비율. 주가가 주당순이익의 몇 배로 거래되는지를 나타내는 지표입니다.'],['PBR','주가순자산비율. 주가가 주당순자산가치의 몇 배인지 보여줍니다.'],['ROE','자기자본이익률. 기업이 자기자본으로 얼마나 효율적으로 이익을 내는지 봅니다.'],['손절','투자 아이디어가 훼손됐을 때 손실을 제한하기 위해 포지션을 정리하는 행동입니다.']];
+let learningIndex={book:0,quote:0,term:0};
+function renderLearning(){const b=BOOKS[learningIndex.book%BOOKS.length],q=QUOTES[learningIndex.quote%QUOTES.length],t1=TERMS[learningIndex.term%TERMS.length];document.getElementById('bookContent').innerHTML=`<b>${b[0]}</b><div class="learning-meta">${b[1]}</div><p>${b[2]}</p>`;document.getElementById('quoteContent').innerHTML=`<p class="quote-text">${q}</p>`;document.getElementById('termContent').innerHTML=`<b class="term-name">${t1[0]}</b><p>${t1[1]}</p>`;}
+function renderRecentJournals(){const entries=Object.keys({...data.journals,...data.trades}).sort((a,b)=>b.localeCompare(a)).slice(0,5);document.getElementById('recentJournalList').innerHTML=entries.length?entries.map(d=>{const tr=data.trades[d]||[];const j=data.journals[d]||{};const title=tr.length?`${tr[0].stock}${tr.length>1?` 외 ${tr.length-1}건`:''}`:(j.marketAnalysis||j.goodPoint||'기록 있음').slice(0,30);return `<button class="recent-row" onclick="openJournalFromHome('${d}')"><span><b>${fmtDate(d)}</b><small>${escapeHtml(title)}</small></span><span>›</span></button>`}).join(''):`<div class="sub">${t('noReview')}</div>`;}
+function openJournalFromHome(d){selectedDate=d;const dd=parseKey(d);viewDate=new Date(dd);weekCursor=startOfWeek(dd);renderJournal();showScreen('journalScreen');}
 
 function inferCurrency(x){ return x?.currency || (x?.code && /^[0-9]{6}$/.test(x.code) ? "KRW" : "USD"); }
 function currencyLabel(c){return c==="USD"?"$":"₩";}
@@ -499,10 +532,7 @@ function renderStats(){
 }
 function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),1600)}
 document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.screen)));
-document.getElementById("days").addEventListener("click",e=>{const d=e.target.closest(".day");if(!d)return;uiSound("select");selectedDate=d.dataset.date;renderJournal();showScreen("journalScreen")});
 document.getElementById("backCalendar").onclick=()=>showScreen("calendarScreen");
-document.getElementById("prevMonth").onclick=()=>{viewDate.setMonth(viewDate.getMonth()-1);renderCalendar();renderStats()};
-document.getElementById("nextMonth").onclick=()=>{viewDate.setMonth(viewDate.getMonth()+1);renderCalendar();renderStats()};
 document.getElementById("saveJournal").onclick=()=>{uiSound("success");saveJournal();};
 function openTradeModal(type="buy"){
  editingTradeIndex=-1;tradeModal.classList.add("show");tradeStock.value="";tradeCode.value="";
@@ -544,7 +574,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.6",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.7",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
@@ -557,7 +587,7 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-   data.version="1.6";saveData();renderCalendar();renderJournal();toast(t("imported"));
+   data.version="1.7";saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
@@ -613,6 +643,17 @@ document.querySelectorAll("button").forEach(btn=>{
   });
 });
 
+document.getElementById('nextBookBtn').onclick=()=>{learningIndex.book++;renderLearning()};
+document.getElementById('nextQuoteBtn').onclick=()=>{learningIndex.quote++;renderLearning()};
+document.getElementById('nextTermBtn').onclick=()=>{learningIndex.term++;renderLearning()};
+document.getElementById('monthPickerBtn').onclick=()=>{const box=document.getElementById('monthPickerGrid');box.innerHTML=Array.from({length:12},(_,i)=>`<button class="month-choice ${i===viewDate.getMonth()?'active':''}" data-month="${i}">${lang==='ko'?i+1+'월':viewDate.toLocaleDateString('en-US',{month:'short'}).replace(/^[A-Za-z]+$/,()=>new Date(2000,i,1).toLocaleDateString('en-US',{month:'short'}))}</button>`).join('');document.getElementById('monthPickerModal').classList.add('show')};
+document.getElementById('closeMonthPicker').onclick=()=>document.getElementById('monthPickerModal').classList.remove('show');
+document.getElementById('monthPickerGrid').onclick=e=>{const b=e.target.closest('.month-choice');if(!b)return;viewDate.setMonth(Number(b.dataset.month));weekCursor=startOfWeek(new Date(viewDate.getFullYear(),viewDate.getMonth(),1));document.getElementById('monthPickerModal').classList.remove('show');renderCalendar();renderStats()};
+function changeMonth(delta){viewDate.setMonth(viewDate.getMonth()+delta);weekCursor=startOfWeek(new Date(viewDate.getFullYear(),viewDate.getMonth(),1));renderCalendar();renderStats();}
+document.getElementById('prevMonth').onclick=()=>changeMonth(-1);document.getElementById('nextMonth').onclick=()=>changeMonth(1);
+const ms=document.getElementById('monthSwipeArea');ms.addEventListener('touchstart',e=>{monthTouchStartX=e.touches[0].clientX},{passive:true});ms.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-monthTouchStartX;if(Math.abs(dx)>45)changeMonth(dx<0?1:-1)},{passive:true});
+const cs=document.getElementById('calendarSwipeArea');cs.addEventListener('touchstart',e=>{calendarTouchStartX=e.touches[0].clientX;calendarTouchStartY=e.touches[0].clientY},{passive:true});cs.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-calendarTouchStartX,dy=e.changedTouches[0].clientY-calendarTouchStartY;if(Math.abs(dy)>45&&Math.abs(dy)>Math.abs(dx)){weekCursor=addDays(weekCursor,dy<0?7:-7);renderCalendar()}},{passive:true});
+document.getElementById('days').addEventListener('click',e=>{const d=e.target.closest('.day');if(!d)return;uiSound('select');selectedDate=d.dataset.date;const dd=parseKey(selectedDate);viewDate=new Date(dd);weekCursor=startOfWeek(dd);renderJournal();showScreen('journalScreen')});
 applyLang();
 </script>
 </body>
