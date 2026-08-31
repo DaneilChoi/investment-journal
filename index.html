@@ -58,7 +58,7 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 .intro-screen{position:fixed;inset:0;z-index:100;background:linear-gradient(145deg,#173bd5 0%,#3730a3 52%,#ed174e 100%);display:flex;align-items:center;justify-content:center;color:#fff;padding:28px}
 .intro-screen.hidden{display:none}
 .intro-content{width:min(520px,100%);text-align:center}
-.intro-logo{font-size:58px;line-height:1;margin-bottom:22px;text-shadow:0 8px 24px rgba(0,0,0,.18)}
+.intro-logo{font-size:58px;line-height:1;margin-bottom:22px;color:#d4af37;text-shadow:0 8px 24px rgba(0,0,0,.18)}
 .intro-title{font-size:40px;font-weight:950;letter-spacing:-1.5px;margin:0 0 12px}
 .intro-subtitle{font-size:17px;line-height:1.7;opacity:.92;margin:0 auto 34px;max-width:390px}
 .intro-features{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:34px}
@@ -74,8 +74,6 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 .brand{cursor:pointer;user-select:none}.brand:active{transform:scale(.98)}
 .autosave{font-size:12px;color:#64748b;font-weight:700}.autosave.saving{color:#f59e0b}.autosave.saved{color:#16a34a}
 .trade-list{display:flex;flex-direction:column;gap:8px}.trade-item{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.drag-handle{cursor:grab;color:#94a3b8;font-size:20px;text-align:center;touch-action:none}.drag-handle:active{cursor:grabbing}.trade-main{min-width:0}.trade-main b{display:block}.trade-meta{font-size:12px;color:#64748b;margin-top:3px}.trade-actions{display:flex;gap:5px}.trade-actions button{padding:5px 8px}.trade-item.dragging{opacity:.45;border-style:dashed}
-.trade-section{margin-bottom:14px}.trade-section:last-child{margin-bottom:0}.trade-section-head{display:flex;justify-content:space-between;align-items:center;font-weight:900;padding:9px 11px;border-radius:10px 10px 0 0}.trade-section-head.buy{color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;border-bottom:0}.trade-section-head.sell{color:#1d4ed8;background:#dbeafe;border:1px solid #bfdbfe;border-bottom:0}.trade-section .trade-list{border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;padding:8px;background:#fff}.buy-add{color:#dc2626}.sell-add{color:#2563eb}.trade-item.buy-card{border-left:4px solid #ef4444}.trade-item.sell-card{border-left:4px solid #2563eb}.drag-handle{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.order-actions{display:flex;flex-direction:column;gap:3px}.order-btn{border:1px solid #dbe3ee;background:#fff;border-radius:7px;padding:3px 7px;line-height:1;font-weight:900;color:#475569}.order-btn:active{background:#f1f5f9}.trade-item.touch-dragging{position:relative;z-index:5;box-shadow:0 12px 25px rgba(15,23,42,.16);opacity:.92}.stock-source{font-size:11px;color:#64748b;margin-top:4px}.stock-result .market-badge{display:inline-block;margin-left:6px;padding:2px 5px;border-radius:999px;font-size:10px;font-weight:800;background:#f1f5f9;color:#475569}.stock-result .market-badge.kosdaq{background:#dbeafe;color:#1d4ed8}.stock-result .market-badge.kospi{background:#fee2e2;color:#b91c1c}
-
 .stock-suggest{position:relative}.stock-results{position:absolute;left:0;right:0;top:100%;z-index:50;background:#fff;border:1px solid #dbe3ee;border-radius:10px;box-shadow:0 10px 25px rgba(15,23,42,.12);max-height:220px;overflow:auto;display:none}.stock-results.show{display:block}.stock-result{width:100%;border:0;background:#fff;text-align:left;padding:11px 13px;border-bottom:1px solid #f1f5f9}.stock-result:hover{background:#f8fafc}.stock-result b{display:block}.stock-result small{color:#64748b}
 .modal.wide{max-width:720px}.modal-wrap .modal{max-height:90vh;overflow:auto}
 .print-actions{display:flex;gap:8px;flex-wrap:wrap}.setting-row button{min-width:82px}
@@ -84,11 +82,17 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 
 
 .trade-add-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.add-link.buy-add{border-color:#bfdbfe;color:#1d4ed8;background:#eff6ff}
-.add-link.sell-add{border-color:#fecaca;color:#dc2626;background:#fef2f2}
+.add-link.buy-add{border:1px solid #ef4444;color:#b91c1c;background:#fee2e2}.add-link.sell-add{border:1px solid #2563eb;color:#1d4ed8;background:#dbeafe}
+.add-link.buy-add:hover{background:#fecaca}.add-link.sell-add:hover{background:#bfdbfe}
 .trade-section{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px}
 .trade-section-head{display:flex;justify-content:space-between;align-items:center;font-weight:900;margin-bottom:8px}
-.trade-section-head.buy{color:#1d4ed8}.trade-section-head.sell{color:#dc2626}
+.trade-section-head.buy{color:#dc2626}.trade-section-head.sell{color:#2563eb}
+.trade-section.buy{border-color:#fecaca}.trade-section.sell{border-color:#bfdbfe}
+.trade-item.buy-item{border-left:4px solid #ef4444}.trade-item.sell-item{border-left:4px solid #2563eb}
+.trade-section-head.buy .trade-count{color:#dc2626}.trade-section-head.sell .trade-count{color:#2563eb}
+.reorder-btn{min-width:34px!important;padding:5px 7px!important}.review-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.review-summary .stat{background:#fff}
+.review-card{border-left:4px solid #f59e0b}.review-card.good{border-left-color:#16a34a}.review-card.bad{border-left-color:#ef4444}.review-card.plan{border-left-color:#2563eb}
+@media(max-width:520px){.review-summary{grid-template-columns:1fr}}
 .price-input{display:flex;align-items:center;border:1px solid #dbe3ee;border-radius:10px;background:#fff;overflow:hidden}
 .price-input input{border:0!important;outline:0;flex:1;border-radius:0!important}.price-input span{padding:0 12px;color:#64748b;font-weight:800}
 .print-options{display:grid;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
@@ -108,7 +112,7 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 
 <div id="introScreen" class="intro-screen">
   <div class="intro-content">
-    <div class="intro-logo">▲</div>
+    <div class="intro-logo">◈</div>
     <h1 class="intro-title" data-i18n="appName">투자일지</h1>
     <p class="intro-subtitle" data-i18n="introSubtitle">매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.</p>
     <div class="intro-features">
@@ -155,10 +159,13 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
     <button class="primary" id="saveJournal" data-i18n="save">저장하기</button>
   </section>
 
-  <section id="stocksScreen" class="screen">
-    <div class="section-title"><div><h1 data-i18n="stocks">종목</h1><div class="sub" data-i18n="stocksHint">기록한 종목과 매매 내역을 확인합니다.</div></div></div>
-    <div class="card"><input id="stockSearch" style="width:100%;padding:12px;border:1px solid #dbe3ee;border-radius:10px" placeholder="종목명 또는 코드 검색"></div>
-    <div id="stockList" class="stock-list"></div>
+  <section id="reviewScreen" class="screen">
+    <div class="section-title"><div><h1 data-i18n="review">투자 복기</h1><div class="sub" data-i18n="reviewHint">나의 투자 과정을 돌아보고 다음 매매에 적용합니다.</div></div></div>
+    <div class="card review-card"><h3 data-i18n="reviewQuestion">이번 달 나는 어떻게 투자했을까?</h3><div id="reviewMonthSummary" class="review-summary"></div></div>
+    <div class="card"><h3 data-i18n="recentReview">최근 복기</h3><div id="reviewList"></div></div>
+    <div class="card review-card bad"><h3 data-i18n="repeatedMistakes">반복해서 나타나는 아쉬운 점</h3><div id="reviewMistakes"></div></div>
+    <div class="card review-card good"><h3 data-i18n="strengths">이번 달 잘한 점</h3><div id="reviewStrengths"></div></div>
+    <div class="card review-card plan"><h3 data-i18n="nextPlan">다음 투자에서 기억할 것</h3><div id="reviewPlans"></div></div>
   </section>
 
   <section id="statsScreen" class="screen">
@@ -179,14 +186,14 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printToday">오늘 출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.4</span></div>
+      <div class="setting-row"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.6</span></div>
     </div>
   </section>
 </main>
 
 <nav class="nav"><div class="nav-inner">
   <button class="active" data-screen="calendarScreen"><span class="ico">📅</span><span data-i18n="journal">일지</span></button>
-  <button data-screen="stocksScreen"><span class="ico">📊</span><span data-i18n="stocks">종목</span></button>
+  <button data-screen="reviewScreen"><span class="ico">🧠</span><span data-i18n="review">투자 복기</span></button>
   <button data-screen="statsScreen"><span class="ico">📈</span><span data-i18n="stats">통계</span></button>
   <button data-screen="settingsScreen"><span class="ico">⚙</span><span data-i18n="settings">설정</span></button>
 </div></nav>
@@ -222,8 +229,8 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 
 <script>
 const I18N={
-ko:{appName:"투자일지",soundEffects:"효과음",soundOn:"켜짐",soundOff:"꺼짐",clickSound:"클릭",savedSound:"저장 완료",addSound:"추가 완료",introSubtitle:"매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.",introFeature1:"매일 기록",introFeature2:"투자 분석",introFeature3:"투자 복기",startApp:"투자일지 시작하기",introBottom:"나의 기록은 이 브라우저에 안전하게 저장됩니다.",journal:"일지",calendarHint:"달력에서 날짜를 선택하세요.",sun:"일",mon:"월",tue:"화",wed:"수",thu:"목",fri:"금",sat:"토",writtenDays:"기록한 날",tradeCount:"매매 횟수",monthlyReturn:"수익률",marketAnalysis:"투자전 오늘의 시장 분석",todayTrades:"오늘의 매매",addTrade:"매매 추가",addBuy:"매수 추가",addSell:"매도 추가",currency:"통화",tradeReason:"매매 이유",dailyReview:"오늘의 복기",goodPoint:"잘한 점",badPoint:"아쉬운 점",tomorrowPlan:"내일의 계획",save:"저장하기",stocks:"종목",stocksHint:"기록한 종목과 매매 내역을 확인합니다.",stats:"통계",settings:"설정",notifications:"알림 설정",stockManagement:"종목 관리",language:"언어",backup:"데이터 백업",export:"내보내기",import:"불러오기",print:"일지 출력",printToday:"오늘 출력",printTitle:"투자일지 출력",printRange:"출력 범위",today:"오늘",thisMonth:"이번 달",printOptions:"출력 항목",dailyJournal:"일별 투자일지",tradeRecords:"매매 내역",printNow:"인쇄 / PDF 저장",reset:"초기 데이터 삭제",delete:"삭제",appInfo:"앱 정보",addTradeTitle:"매매 추가",stock:"종목",buySell:"매수 / 매도",buy:"매수",sell:"매도",price:"가격",quantity:"수량",add:"추가하기",marketPlaceholder:"오늘 시장에서 중요했던 내용을 자유롭게 기록하세요.",reasonPlaceholder:"오늘의 매매를 왜 했는지 기록하세요.",goodPlaceholder:"오늘 잘한 점을 기록하세요.",badPlaceholder:"오늘 아쉬웠던 점을 기록하세요.",planPlaceholder:"내일의 투자 계획을 기록하세요.",winRate:"승률",avgWin:"평균 수익",avgLoss:"평균 손실",returnTrend:"수익률 추이",frequentStocks:"자주 매매한 종목",confirmReset:"모든 저장 데이터를 삭제할까요?",saved:"저장되었습니다.",autoSaved:"자동 저장됨",editDone:"수정 완료",edited:"수정되었습니다.",importMergeConfirm:"백업을 기존 데이터에 합칠까요?\n확인=병합 / 취소=교체",imported:"백업을 불러왔습니다.",importError:"백업 파일을 읽을 수 없습니다.",popupBlocked:"팝업이 차단되었습니다.",added:"매매가 추가되었습니다.",exported:"백업 파일을 만들었습니다.",noTrades:"등록된 매매가 없습니다.",noStocks:"아직 기록한 종목이 없습니다.",yesterdayPlan:"어제의 계획",check:"확인",tradeHistory:"매매 내역",totalTrades:"총 매매",averageBuy:"평균 매수가",averageSell:"평균 매도가",days:"일",times:"회"},
-en:{appName:"Investment Journal",soundEffects:"Sound effects",soundOn:"On",soundOff:"Off",clickSound:"Click",savedSound:"Saved",addSound:"Added",introSubtitle:"Record your investment journey every day,<br>and reflect on your investing habits.",introFeature1:"Daily Journal",introFeature2:"Market Analysis",introFeature3:"Daily Review",startApp:"Start Investment Journal",introBottom:"Your records are stored safely in this browser.",journal:"Journal",calendarHint:"Select a date from the calendar.",sun:"Sun",mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",writtenDays:"Written days",tradeCount:"Trades",monthlyReturn:"Return",marketAnalysis:"Today's Market Analysis",todayTrades:"Today's Trades",addTrade:"Add trade",addBuy:"Add buy",addSell:"Add sell",currency:"Currency",tradeReason:"Trade Rationale",dailyReview:"Daily Review",goodPoint:"What Went Well",badPoint:"What Could Be Improved",tomorrowPlan:"Tomorrow's Plan",save:"Save",stocks:"Stocks",stocksHint:"Review recorded stocks and trades.",stats:"Stats",settings:"Settings",notifications:"Notifications",stockManagement:"Stock management",language:"Language",backup:"Data backup",export:"Export",import:"Import",print:"Print journal",printToday:"Print today",printTitle:"Print Investment Journal",printRange:"Print range",today:"Today",thisMonth:"This month",printOptions:"Print items",dailyJournal:"Daily journal",tradeRecords:"Trade records",printNow:"Print / Save PDF",reset:"Delete saved data",delete:"Delete",appInfo:"App info",addTradeTitle:"Add Trade",stock:"Stock",buySell:"Buy / Sell",buy:"Buy",sell:"Sell",price:"Price",quantity:"Quantity",add:"Add",marketPlaceholder:"Record the important market events of today.",reasonPlaceholder:"Why did you make today's trade?",goodPlaceholder:"What did you do well today?",badPlaceholder:"What could you have done better?",planPlaceholder:"Record your plan for tomorrow.",winRate:"Win rate",avgWin:"Avg. win",avgLoss:"Avg. loss",returnTrend:"Return trend",frequentStocks:"Most traded stocks",confirmReset:"Delete all saved data?",saved:"Saved.",autoSaved:"Auto-saved",editDone:"Save changes",edited:"Changes saved.",importMergeConfirm:"Merge this backup into existing data?\nOK=Merge / Cancel=Replace",imported:"Backup imported.",importError:"Could not read the backup file.",popupBlocked:"Pop-up was blocked.",added:"Trade added.",exported:"Backup file created.",noTrades:"No trades recorded.",noStocks:"No stocks recorded yet.",yesterdayPlan:"Yesterday's plan",check:"Check",tradeHistory:"Trade history",totalTrades:"Total trades",averageBuy:"Avg. buy",averageSell:"Avg. sell",days:"days",times:"times"}
+ko:{appName:"투자일지",soundEffects:"효과음",soundOn:"켜짐",soundOff:"꺼짐",clickSound:"클릭",savedSound:"저장 완료",addSound:"추가 완료",introSubtitle:"매일의 투자 과정을 기록하고,<br>나의 투자 습관을 돌아보세요.",introFeature1:"매일 기록",introFeature2:"투자 분석",introFeature3:"투자 복기",startApp:"투자일지 시작하기",introBottom:"나의 기록은 이 브라우저에 안전하게 저장됩니다.",journal:"일지",calendarHint:"달력에서 날짜를 선택하세요.",sun:"일",mon:"월",tue:"화",wed:"수",thu:"목",fri:"금",sat:"토",writtenDays:"기록한 날",tradeCount:"매매 횟수",monthlyReturn:"수익률",marketAnalysis:"투자전 오늘의 시장 분석",todayTrades:"오늘의 매매",addTrade:"매매 추가",addBuy:"매수 추가",addSell:"매도 추가",currency:"통화",tradeReason:"매매 이유",dailyReview:"오늘의 복기",goodPoint:"잘한 점",badPoint:"아쉬운 점",tomorrowPlan:"내일의 계획",save:"저장하기",stocks:"종목",stocksHint:"기록한 종목과 매매 내역을 확인합니다.",review:"투자 복기",reviewHint:"나의 투자 과정을 돌아보고 다음 매매에 적용합니다.",reviewQuestion:"이번 달 나는 어떻게 투자했을까?",recentReview:"최근 복기",repeatedMistakes:"반복해서 나타나는 아쉬운 점",strengths:"이번 달 잘한 점",nextPlan:"다음 투자에서 기억할 것",reviewDays:"복기한 날",reviewTrades:"매매 횟수",reviewPlans:"계획 기록",reviewOpen:"일지 보기",noReview:"아직 복기 기록이 없습니다.",stats:"통계",settings:"설정",notifications:"알림 설정",stockManagement:"종목 관리",language:"언어",backup:"데이터 백업",export:"내보내기",import:"불러오기",print:"일지 출력",printToday:"오늘 출력",printTitle:"투자일지 출력",printRange:"출력 범위",today:"오늘",thisMonth:"이번 달",printOptions:"출력 항목",dailyJournal:"일별 투자일지",tradeRecords:"매매 내역",printNow:"인쇄 / PDF 저장",reset:"초기 데이터 삭제",delete:"삭제",appInfo:"앱 정보",addTradeTitle:"매매 추가",stock:"종목",buySell:"매수 / 매도",buy:"매수",sell:"매도",price:"가격",quantity:"수량",add:"추가하기",marketPlaceholder:"오늘 시장에서 중요했던 내용을 자유롭게 기록하세요.",reasonPlaceholder:"오늘의 매매를 왜 했는지 기록하세요.",goodPlaceholder:"오늘 잘한 점을 기록하세요.",badPlaceholder:"오늘 아쉬웠던 점을 기록하세요.",planPlaceholder:"내일의 투자 계획을 기록하세요.",winRate:"승률",avgWin:"평균 수익",avgLoss:"평균 손실",returnTrend:"수익률 추이",frequentStocks:"자주 매매한 종목",confirmReset:"모든 저장 데이터를 삭제할까요?",saved:"저장되었습니다.",autoSaved:"자동 저장됨",editDone:"수정 완료",edited:"수정되었습니다.",importMergeConfirm:"백업을 기존 데이터에 합칠까요?\n확인=병합 / 취소=교체",imported:"백업을 불러왔습니다.",importError:"백업 파일을 읽을 수 없습니다.",popupBlocked:"팝업이 차단되었습니다.",added:"매매가 추가되었습니다.",exported:"백업 파일을 만들었습니다.",noTrades:"등록된 매매가 없습니다.",noStocks:"아직 기록한 종목이 없습니다.",yesterdayPlan:"어제의 계획",check:"확인",tradeHistory:"매매 내역",totalTrades:"총 매매",averageBuy:"평균 매수가",averageSell:"평균 매도가",days:"일",times:"회"},
+en:{appName:"Investment Journal",soundEffects:"Sound effects",soundOn:"On",soundOff:"Off",clickSound:"Click",savedSound:"Saved",addSound:"Added",introSubtitle:"Record your investment journey every day,<br>and reflect on your investing habits.",introFeature1:"Daily Journal",introFeature2:"Market Analysis",introFeature3:"Daily Review",startApp:"Start Investment Journal",introBottom:"Your records are stored safely in this browser.",journal:"Journal",calendarHint:"Select a date from the calendar.",sun:"Sun",mon:"Mon",tue:"Tue",wed:"Wed",thu:"Thu",fri:"Fri",sat:"Sat",writtenDays:"Written days",tradeCount:"Trades",monthlyReturn:"Return",marketAnalysis:"Today's Market Analysis",todayTrades:"Today's Trades",addTrade:"Add trade",addBuy:"Add buy",addSell:"Add sell",currency:"Currency",tradeReason:"Trade Rationale",dailyReview:"Daily Review",goodPoint:"What Went Well",badPoint:"What Could Be Improved",tomorrowPlan:"Tomorrow's Plan",save:"Save",stocks:"Stocks",stocksHint:"Review recorded stocks and trades.",review:"Investment Review",reviewHint:"Reflect on your decisions and apply the lessons to your next trades.",reviewQuestion:"How did I invest this month?",recentReview:"Recent reviews",repeatedMistakes:"Repeated weak points",strengths:"What I did well",nextPlan:"What to remember next",reviewDays:"Review days",reviewTrades:"Trades",reviewPlans:"Plans recorded",reviewOpen:"Open journal",noReview:"No review records yet.",stats:"Stats",settings:"Settings",notifications:"Notifications",stockManagement:"Stock management",language:"Language",backup:"Data backup",export:"Export",import:"Import",print:"Print journal",printToday:"Print today",printTitle:"Print Investment Journal",printRange:"Print range",today:"Today",thisMonth:"This month",printOptions:"Print items",dailyJournal:"Daily journal",tradeRecords:"Trade records",printNow:"Print / Save PDF",reset:"Delete saved data",delete:"Delete",appInfo:"App info",addTradeTitle:"Add Trade",stock:"Stock",buySell:"Buy / Sell",buy:"Buy",sell:"Sell",price:"Price",quantity:"Quantity",add:"Add",marketPlaceholder:"Record the important market events of today.",reasonPlaceholder:"Why did you make today's trade?",goodPlaceholder:"What did you do well today?",badPlaceholder:"What could you have done better?",planPlaceholder:"Record your plan for tomorrow.",winRate:"Win rate",avgWin:"Avg. win",avgLoss:"Avg. loss",returnTrend:"Return trend",frequentStocks:"Most traded stocks",confirmReset:"Delete all saved data?",saved:"Saved.",autoSaved:"Auto-saved",editDone:"Save changes",edited:"Changes saved.",importMergeConfirm:"Merge this backup into existing data?\nOK=Merge / Cancel=Replace",imported:"Backup imported.",importError:"Could not read the backup file.",popupBlocked:"Pop-up was blocked.",added:"Trade added.",exported:"Backup file created.",noTrades:"No trades recorded.",noStocks:"No stocks recorded yet.",yesterdayPlan:"Yesterday's plan",check:"Check",tradeHistory:"Trade history",totalTrades:"Total trades",averageBuy:"Avg. buy",averageSell:"Avg. sell",days:"days",times:"times"}
 };
 let lang=localStorage.getItem("journal_lang")||"ko";
 let data=JSON.parse(localStorage.getItem("journal_data")||"null")||{
@@ -235,7 +242,7 @@ let data=JSON.parse(localStorage.getItem("journal_data")||"null")||{
  }
 };
 let viewDate=new Date(), selectedDate=key(new Date()), selectedTradeType="buy";
-if(!data.version)data.version="1.5";
+if(!data.version)data.version="1.3";
 Object.values(data.trades).forEach(arr=>arr.forEach(x=>{
  if(!x.id)x.id="trade_"+Math.random().toString(36).slice(2,9);
  if(!x.currency)x.currency=inferCurrency(x);
@@ -261,7 +268,7 @@ let stockCatalog = [
 ["SK이노베이션","096770","KOSPI"],["KT","030200","KOSPI"],["삼성생명","032830","KOSPI"],["삼성화재","000810","KOSPI"],
 ["SK텔레콤","017670","KOSPI"],["KT&G","033780","KOSPI"],["한국전력","015760","KOSPI"],["포스코퓨처엠","003670","KOSPI"],
 ["에코프로","086520","KOSDAQ"],["에코프로비엠","247540","KOSDAQ"],["알테오젠","196170","KOSDAQ"],["HLB","028300","KOSDAQ"],
-["레인보우로보틱스","277810","KOSDAQ"],["펄어비스","263750","KOSDAQ"],["JYP Ent.","035900","KOSDAQ"],["에스엠","041510","KOSDAQ"]
+["레인보우로보틱스","277810","KOSDAQ"],["하이브","352820","KOSPI"],["HPSP","403870","KOSDAQ"],["산일전기","062040","KOSPI"],["실리콘투","257720","KOSDAQ"],["펄어비스","263750","KOSDAQ"],["JYP Ent.","035900","KOSDAQ"],["에스엠","041510","KOSDAQ"]
 ];
 function stockMatches(q){
  q=(q||"").trim().toLowerCase();
@@ -269,63 +276,33 @@ function stockMatches(q){
  return stockCatalog.filter(x=>(x[0]+" "+x[1]+" "+x[2]).toLowerCase().includes(q)).slice(0,8);
 }
 let stockSearchTimer=null;
-let remoteStockCache=JSON.parse(localStorage.getItem("journal_stock_catalog_v15")||"null")||[];
-let remoteStockCacheAt=Number(localStorage.getItem("journal_stock_catalog_v15_at")||0);
-const STOCK_MAP_URL="https://raw.githubusercontent.com/pinion05/kr-us-stock-name-ticker-maps/main/data/kr/kr-stock-name-to-code.json";
-function stockMatches(q){
- q=(q||"").trim().toLowerCase();
- if(!q)return [];
- return stockCatalog.filter(x=>(x[0]+" "+x[1]+" "+x[2]).toLowerCase().includes(q)).slice(0,8);
-}
-function normalizeRemoteStockItems(j){
- const arr=[];
- if(Array.isArray(j)){
-   for(const x of j){const name=x.name||x.stock_name||x.itmsNm||x.ISU_NM||x.ISU_ABBRV;const code=String(x.code||x.ticker||x.srtnCd||x.ISU_SRT_CD||"").padStart(6,"0");const market=(x.market||x.mrktCtg||x.MKT_TP_NM||"").toUpperCase();if(name&&/^\d{6}$/.test(code))arr.push([name,code,market.includes("KOSDAQ")?"KOSDAQ":market.includes("KOSPI")||market.includes("유가")?"KOSPI":"KRX"])}
- } else if(j && typeof j==="object") {
-   for(const [name,code0] of Object.entries(j)){const code=String(code0).padStart(6,"0");if(/^\d{6}$/.test(code))arr.push([name,code,"KRX"])}
- }
- return arr;
-}
-function mergeRemoteStocks(arr){
- const seen=new Set(stockCatalog.map(x=>x[1]));
- for(const x of arr){if(!seen.has(x[1])){stockCatalog.push(x);seen.add(x[1])}}
-}
-function renderStockResults(arr,box,source=""){
- if(!arr.length){box.innerHTML=`<div class="stock-source" style="padding:10px 13px">${lang==="ko"?"검색 결과가 없습니다.":"No matching stocks found."}</div>`;box.classList.add("show");return}
- box.innerHTML=arr.slice(0,12).map(x=>`<button type="button" class="stock-result" data-name="${escapeHtml(x[0])}" data-code="${x[1]}" data-market="${x[2]}"><b>${escapeHtml(x[0])}<span class="market-badge ${(x[2]||"").toLowerCase()}">${escapeHtml(x[2]||"KRX")}</span></b><small>${x[1]}</small></button>`).join("")+`<div class="stock-source" style="padding:7px 13px">${source||""}</div>`;
- box.classList.add("show");
-}
-async function loadRemoteStockCatalog(){
+let stockCatalogLoaded=false;
+async function loadFullStockCatalog(){
+ if(stockCatalogLoaded)return;
  try{
-   if(remoteStockCache.length && Date.now()-remoteStockCacheAt<7*24*60*60*1000){mergeRemoteStocks(remoteStockCache);return remoteStockCache}
-   const r=await fetch(STOCK_MAP_URL,{cache:"no-store"});
-   if(!r.ok)throw new Error("stock map http "+r.status);
-   const j=await r.json();
-   const arr=normalizeRemoteStockItems(j);
-   if(arr.length){remoteStockCache=arr;remoteStockCacheAt=Date.now();localStorage.setItem("journal_stock_catalog_v15",JSON.stringify(arr));localStorage.setItem("journal_stock_catalog_v15_at",String(remoteStockCacheAt));mergeRemoteStocks(arr)}
-   return arr;
- }catch(e){return []}
+   const raw=await fetch('https://raw.githubusercontent.com/dalinaum/rs/main/krx-list.csv',{cache:'no-store'}).then(r=>r.ok?r.text():'');
+   if(raw){
+     const lines=raw.split(/\r?\n/).slice(1); const full=[];
+     for(const line of lines){const m=line.match(/^\s*\d+,([^,]+),[^,]+,(.*?),(KOSPI|KOSDAQ|KOSDAQ GLOBAL|KONEX),/); if(m)full.push([m[2].trim(),m[1].trim(),m[3].startsWith('KOSDAQ')?'KOSDAQ':m[3]])}
+     if(full.length>1000){stockCatalog=full;stockCatalogLoaded=true;localStorage.setItem('journal_stock_catalog_v16',JSON.stringify(full));}
+   }
+ }catch(e){}
+ if(!stockCatalogLoaded){try{const cached=JSON.parse(localStorage.getItem('journal_stock_catalog_v16')||'null');if(Array.isArray(cached)&&cached.length>1000){stockCatalog=cached;stockCatalogLoaded=true}}catch(e){}}
 }
 async function showStockResults(){
- const q=tradeStock.value.trim(), box=document.getElementById("stockResults");
- if(!q){box.classList.remove("show");return}
- const local=stockMatches(q);
- renderStockResults(local,box,local.length?(lang==="ko"?"기본 목록":"Built-in list"):"");
+ const q=tradeStock.value.trim(), box=document.getElementById('stockResults');
+ if(!q){box.classList.remove('show');return}
+ const render=arr=>{if(!arr.length){box.classList.remove('show');return}box.innerHTML=arr.slice(0,10).map(x=>`<button type="button" class="stock-result" data-name="${escapeHtml(x[0])}" data-code="${x[1]}" data-market="${x[2]}"><b>${escapeHtml(x[0])}</b><small>${x[1]} · ${x[2]}</small></button>`).join('');box.classList.add('show')};
+ render(stockMatches(q));
  clearTimeout(stockSearchTimer);
  stockSearchTimer=setTimeout(async()=>{
-   // 1) Existing search proxy: preserves KOSPI/KOSDAQ market labels when available.
+   await loadFullStockCatalog();
+   const full=stockMatches(q); render(full);
    try{
-     const dd=new Date();const bas=`${dd.getFullYear()}${pad(dd.getMonth()+1)}${pad(dd.getDate())}`;
-     const r=await fetch(`https://k-skill-proxy.nomadamas.org/v1/korean-stock/search?q=${encodeURIComponent(q)}&bas_dd=${bas}`,{headers:{Accept:"application/json"}});
-     if(r.ok){
-       const j=await r.json();const remote=normalizeRemoteStockItems(j.items||[]);
-       if(remote.length){mergeRemoteStocks(remote);renderStockResults(remote,box,lang==="ko"?"온라인 종목 검색":"Online stock search");return}
-     }
+     const dd=new Date(),bas=`${dd.getFullYear()}${pad(dd.getMonth()+1)}${pad(dd.getDate())}`;
+     const r=await fetch(`https://k-skill-proxy.nomadamas.org/v1/korean-stock/search?q=${encodeURIComponent(q)}&bas_dd=${bas}`,{headers:{Accept:'application/json'}});
+     if(r.ok){const j=await r.json();const remote=(j.items||[]).map(x=>[x.name||x.short_name,x.code,x.market||'']).filter(x=>x[0]&&x[1]); if(remote.length)render([...remote,...full]);}
    }catch(e){}
-   // 2) Full KRX-name/code fallback. This fills mid/small-cap KOSPI and KOSDAQ names missing from the small built-in list.
-   const all=await loadRemoteStockCatalog();
-   const hits=all.filter(x=>(x[0]+" "+x[1]).toLowerCase().includes(q.toLowerCase())).slice(0,12);
-   if(hits.length)renderStockResults(hits,box,lang==="ko"?"전체 KRX 종목명/코드 목록":"Full KRX name/code list");
  },180);
 }
 function selectStock(name,code,market){
@@ -375,13 +352,13 @@ function applyLang(){
  document.querySelectorAll("[data-i18n]").forEach(e=>{e.innerHTML=t(e.dataset.i18n)});
  document.querySelectorAll("[data-placeholder]").forEach(e=>e.placeholder=t(e.dataset.placeholder));
  document.getElementById("koBtn").classList.toggle("active",lang==="ko");document.getElementById("enBtn").classList.toggle("active",lang==="en");
- renderCalendar();renderJournal();renderStocks();renderStats();updateSoundButton();
+ renderCalendar();renderJournal();renderReview();renderStats();updateSoundButton();
 }
 function fmtDate(s){const d=parseKey(s);return lang==="ko"?`${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${["일","월","화","수","목","금","토"][d.getDay()]})`:`${d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}`}
 function showScreen(id){
  document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("active",s.id===id));
  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));
- if(id==="calendarScreen")renderCalendar(); if(id==="stocksScreen")renderStocks(); if(id==="statsScreen")renderStats();
+ if(id==="calendarScreen")renderCalendar(); if(id==="reviewScreen")renderReview(); if(id==="statsScreen")renderStats();
 }
 function renderCalendar(){
  const y=viewDate.getFullYear(),m=viewDate.getMonth();
@@ -423,12 +400,12 @@ function renderJournal(){
  wrap.innerHTML=groups.map(([type,label])=>{
    const items=tr.map((x,i)=>({...x,_index:i})).filter(x=>x.type===type);
    if(!items.length)return "";
-   return `<div class="trade-section"><div class="trade-section-head ${type}"><span>${type==="buy"?"🔴":"🔵"} ${t(type)}</span><span>${items.length}${lang==="ko"?"건":" trades"}</span></div><div class="trade-list" data-trade-type="${type}">${items.map(x=>{
+   return `<div class="trade-section ${type}"><div class="trade-section-head ${type}"><span>${type==="buy"?"🔴":"🔵"} ${t(type)}</span><span class="trade-count">${items.length}${lang==="ko"?"건":" trades"}</span></div><div class="trade-list" data-trade-type="${type}">${items.map(x=>{
      const c=inferCurrency(x);
-     return `<div class="trade-item ${type}-card" draggable="true" data-index="${x._index}">
+     return `<div class="trade-item ${x.type}-item" draggable="true" data-index="${x._index}">
        <div class="drag-handle" title="Drag to reorder">☰</div>
        <div class="trade-main"><b>${escapeHtml(x.stock)} ${x.code?`<span class="sub">(${escapeHtml(x.code)})</span>`:""}</b><div class="trade-meta"><span class="${x.type}">${t(x.type)}</span> · ${formatPrice(x.price,c)} × ${x.qty}${x.reason?` · ${escapeHtml(x.reason)}`:""}</div></div>
-       <div class="trade-actions"><div class="order-actions"><button class="order-btn" type="button" onclick="moveTrade('${type}',${items.indexOf(x)},-1)" aria-label="up">↑</button><button class="order-btn" type="button" onclick="moveTrade('${type}',${items.indexOf(x)},1)" aria-label="down">↓</button></div><button class="secondary" onclick="editTrade(${x._index})">✎</button><button class="secondary danger" onclick="removeTrade(${x._index})">×</button></div>
+       <div class="trade-actions"><button class="secondary reorder-btn" aria-label="up" onclick="moveTrade(${x._index},-1)">↑</button><button class="secondary reorder-btn" aria-label="down" onclick="moveTrade(${x._index},1)">↓</button><button class="secondary" onclick="editTrade(${x._index})">✎</button><button class="secondary danger" onclick="removeTrade(${x._index})">×</button></div>
      </div>`;
    }).join("")}</div></div>`;
  }).join("");
@@ -436,45 +413,25 @@ function renderJournal(){
 }
 function setupTradeDrag(){
  document.querySelectorAll("#tradeTableWrap .trade-list").forEach(list=>{
-   let dragged=null, startY=0, moved=false;
+   let dragged=null;
    const items=[...list.querySelectorAll(".trade-item")];
    items.forEach(item=>{
-     item.draggable=true;
      item.addEventListener("dragstart",()=>{dragged=item;item.classList.add("dragging")});
      item.addEventListener("dragend",()=>{if(dragged)dragged.classList.remove("dragging");if(dragged){persistTradeOrder(list);dragged=null}});
-     item.addEventListener("dragover",e=>{e.preventDefault();if(!dragged||dragged===item)return;const r=item.getBoundingClientRect();list.insertBefore(dragged,e.clientY<r.top+r.height/2?item:item.nextSibling)});
-     const handle=item.querySelector(".drag-handle");
-     handle.addEventListener("pointerdown",e=>{
-       if(e.pointerType!=="touch")return;
-       e.preventDefault();dragged=item;startY=e.clientY;moved=false;item.classList.add("touch-dragging");
-       try{handle.setPointerCapture(e.pointerId)}catch(_){}
-     });
-     handle.addEventListener("pointermove",e=>{
-       if(e.pointerType!=="touch"||dragged!==item)return;
-       if(Math.abs(e.clientY-startY)>5)moved=true;if(!moved)return;
-       const siblings=[...list.querySelectorAll(".trade-item")].filter(x=>x!==item);
-       let target=null;
-       for(const other of siblings){const r=other.getBoundingClientRect();if(e.clientY<r.top+r.height/2){target=other;break}}
-       if(target)list.insertBefore(item,target);else list.appendChild(item);
-     });
-     const finishTouch=e=>{
-       if(e.pointerType!=="touch"||dragged!==item)return;
-       item.classList.remove("touch-dragging");
-       if(moved){persistTradeOrder(list);uiSound("select")}
-       dragged=null;moved=false;
-     };
-     handle.addEventListener("pointerup",finishTouch);handle.addEventListener("pointercancel",finishTouch);
+     item.addEventListener("dragover",e=>{e.preventDefault();if(!dragged||dragged===item)return;const r=item.getBoundingClientRect();item.parentNode.insertBefore(dragged,e.clientY<r.top+r.height/2?item:item.nextSibling)});
+     let pointerStartY=0, pointerMoved=false;
+     const handle=item.querySelector('.drag-handle');
+     handle.addEventListener('pointerdown',e=>{e.preventDefault();handle.setPointerCapture?.(e.pointerId);dragged=item;pointerStartY=e.clientY;pointerMoved=false;item.classList.add('dragging');handle._pointerId=e.pointerId});
+     handle.addEventListener('pointermove',e=>{if(!dragged||dragged!==item)return;if(Math.abs(e.clientY-pointerStartY)>5)pointerMoved=true;if(!pointerMoved)return;const siblings=[...list.querySelectorAll('.trade-item:not(.dragging)')];let target=null;for(const other of siblings){const r=other.getBoundingClientRect();if(e.clientY<r.top+r.height/2){target=other;break}}if(target)list.insertBefore(item,target);else list.appendChild(item)});
+     handle.addEventListener('pointerup',e=>{if(dragged!==item)return;item.classList.remove('dragging');if(pointerMoved)persistTradeOrder(list);dragged=null});
+     handle.addEventListener('pointercancel',()=>{if(dragged!==item)return;item.classList.remove('dragging');dragged=null;renderJournal()});
    });
  });
 }
-function moveTrade(type,index,delta){
- const list=(data.trades[selectedDate]||[]).filter(x=>x.type===type);
- if(index<0||index>=list.length)return;
- const target=index+delta;if(target<0||target>=list.length)return;
- const a=list[index],b=list[target];
- const all=data.trades[selectedDate]||[];
- const posA=all.indexOf(a),posB=all.indexOf(b);
- all[posA]=b;all[posB]=a;data.trades[selectedDate]=all;saveData();renderJournal();renderCalendar();uiSound("select");
+function moveTrade(index,delta){
+ const arr=data.trades[selectedDate]||[], item=arr[index]; if(!item)return;
+ const same=arr.map((x,i)=>({x,i})).filter(o=>o.x.type===item.type); const pos=same.findIndex(o=>o.i===index); const next=pos+delta; if(pos<0||next<0||next>=same.length)return;
+ const swapIndex=same[next].i; [arr[index],arr[swapIndex]]=[arr[swapIndex],arr[index]]; saveData(); renderJournal(); renderCalendar(); uiSound('select');
 }
 function persistTradeOrder(list){
  const current=data.trades[selectedDate]||[];
@@ -520,6 +477,18 @@ function openStock(code){
  document.getElementById("stockModalBody").innerHTML=`<div class="card"><div class="stat-grid"><div class="stat"><span>${t("totalTrades")}</span><b>${trades.length}</b></div><div class="stat"><span>${t("buy")}</span><b>${buys.length}</b></div><div class="stat"><span>${t("sell")}</span><b>${sells.length}</b></div><div class="stat"><span>${t("averageBuy")}</span><b>${avg(buys)}</b></div></div></div><h3>${t("tradeHistory")}</h3>${trades.sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<div class="stock-row"><span>${x.date}<br><b class="${x.type}">${x.type==="buy"?t("buy"):t("sell")}</b></span><span>${Number(x.price).toLocaleString()} × ${x.qty}</span></div>`).join("")}`;
  document.getElementById("stockModal").classList.add("show");
 }
+function renderReview(){
+ const month=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}`;
+ const entries=Object.entries(data.journals).filter(([d,j])=>d.startsWith(month)&&j&&Object.values(j).some(v=>String(v||'').trim())).sort((a,b)=>b[0].localeCompare(a[0]));
+ const trades=Object.entries(data.trades).filter(([d])=>d.startsWith(month)).flatMap(([d,a])=>a.map(x=>({...x,date:d})));
+ document.getElementById('reviewMonthSummary').innerHTML=`<div class="stat"><span>${t('reviewDays')}</span><b>${entries.length}</b></div><div class="stat"><span>${t('reviewTrades')}</span><b>${trades.length}</b></div><div class="stat"><span>${t('reviewPlans')}</span><b>${entries.filter(([d,j])=>j.tomorrowPlan).length}</b></div>`;
+ document.getElementById('reviewList').innerHTML=entries.slice(0,8).map(([d,j])=>`<div class="review-card card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;gap:8px"><b>${fmtDate(d)}</b><button class="secondary" onclick="openReviewDate('${d}')">${t('reviewOpen')}</button></div><p class="sub">${escapeHtml(j.badPoint||j.goodPoint||j.tomorrowPlan||j.tradeReason||'').replace(/\n/g,'<br>')}</p></div>`).join('')||`<div class="sub">${t('noReview')}</div>`;
+ const collect=(field)=>{const counts={};entries.forEach(([d,j])=>String(j[field]||'').split(/[,\n]/).map(x=>x.trim()).filter(Boolean).forEach(x=>counts[x]=(counts[x]||0)+1));return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5)};
+ const mistakes=collect('badPoint'), goods=collect('goodPoint'), plans=collect('tomorrowPlan');
+ const list=(arr)=>arr.length?'<div>'+arr.map(([x,n])=>`<div class="setting-row"><span>${escapeHtml(x)}</span><b>${n}${lang==='ko'?'회':'x'}</b></div>`).join('')+'</div>':`<div class="sub">${t('noReview')}</div>`;
+ document.getElementById('reviewMistakes').innerHTML=list(mistakes); document.getElementById('reviewStrengths').innerHTML=list(goods); document.getElementById('reviewPlans').innerHTML=list(plans);
+}
+function openReviewDate(d){selectedDate=d;renderJournal();showScreen('journalScreen')}
 function renderStats(){
  const month=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}`;
  const trades=[];Object.entries(data.trades).forEach(([d,a])=>{if(d.startsWith(month))a.forEach(x=>trades.push({...x,date:d}))});
@@ -555,7 +524,6 @@ document.getElementById("addTradeConfirm").onclick=()=>{
  if(editingTradeIndex>=0)data.trades[selectedDate][editingTradeIndex]=item;else data.trades[selectedDate].push(item);
  const wasEdit=editingTradeIndex>=0;saveData();tradeModal.classList.remove("show");document.getElementById("addTradeConfirm").textContent=t("add");editingTradeIndex=-1;renderJournal();renderCalendar();toast(wasEdit?t("edited"):t("added"));uiSound("success");
 };
-document.getElementById("stockSearch").addEventListener("input",renderStocks);
 document.getElementById("closeStock").onclick=()=>stockModal.classList.remove("show");
 document.getElementById("koBtn").onclick=()=>{lang="ko";localStorage.setItem("journal_lang",lang);applyLang()};
 document.getElementById("enBtn").onclick=()=>{lang="en";localStorage.setItem("journal_lang",lang);applyLang()};
@@ -576,7 +544,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.5",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.6",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
@@ -589,7 +557,7 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-   data.version="1.4";saveData();renderCalendar();renderJournal();toast(t("imported"));
+   data.version="1.6";saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
