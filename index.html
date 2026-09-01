@@ -125,6 +125,19 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 /* v1.77 */
 .daily-learning{grid-template-columns:1fr 1fr}.mood-title{text-align:center;font-size:12px;font-weight:850;color:#64748b;margin:2px 0 8px}.mood-picker{display:flex;justify-content:center;gap:9px;margin-bottom:16px}.mood-picker button{width:48px;height:48px;border:2px solid #e2e8f0;border-radius:50%;background:#fff;font-size:25px;transition:.15s}.mood-picker button.active{transform:scale(1.1);border-color:#2563eb;background:#eff6ff;box-shadow:0 5px 14px rgba(37,99,235,.16)}.good-box{background:#f0fdf4;border-color:#bbf7d0}.warn-box{background:#fff7ed;border-color:#fed7aa}.photo-section{margin-top:14px;border-top:1px dashed #dbe3ee;padding-top:13px}.photo-head{display:flex;align-items:center;justify-content:space-between}.photo-add{font-size:12px;font-weight:850;color:#2563eb;cursor:pointer}.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.photo-item{position:relative;aspect-ratio:1.25;border-radius:10px;overflow:hidden;background:#f1f5f9}.photo-item img{width:100%;height:100%;object-fit:cover}.photo-item button{position:absolute;right:4px;top:4px;border:0;background:rgba(15,23,42,.7);color:#fff;border-radius:50%;width:24px;height:24px}.photo-note{font-size:11px;color:#94a3b8;margin-top:7px}.review-hero{text-align:center;padding:24px}.hero-face{font-size:48px}.hero-state{font-size:23px;font-weight:950;margin:4px}.hero-sub{font-size:12px;color:#64748b}.review-behavior-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.behavior-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:14px;text-align:center}.behavior-icon{font-size:25px}.behavior-name{font-size:12px;color:#64748b;font-weight:800;margin:5px}.behavior-state{font-weight:950}.state-good{color:#16a34a}.state-warn{color:#f59e0b}.state-bad{color:#ef4444}.state-neutral{color:#64748b}.review-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.review-focus h3{margin-top:0}.pattern-pill{display:flex;justify-content:space-between;align-items:center;border-radius:10px;padding:10px 12px;margin-top:8px;background:#f8fafc}.pattern-pill b{font-size:12px}.next-action{display:flex;align-items:center;justify-content:center;gap:18px;text-align:left}.next-action .big-icon{font-size:38px}.next-action strong{font-size:20px}.mini-label{font-size:11px;color:#64748b;font-weight:800;margin-bottom:3px}.coach-card h3{margin-top:0}.coach-line{font-size:15px;line-height:1.7}.coach-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed #e2e8f0;color:#475569;font-size:13px;line-height:1.65}.coach-detail.show{display:block}.setting-button{width:100%;border:0;background:#fff;font:inherit;cursor:pointer}.app-info-body{text-align:center;padding:12px}.app-info-body img{width:84px;height:84px;border-radius:20px}.app-info-body h2{margin:10px 0 6px}.app-info-body h2 span{font-size:13px;color:#94a3b8}.app-info-body p{line-height:1.65}.info-chip{display:inline-block;background:#eff6ff;color:#1d4ed8;padding:8px 12px;border-radius:999px;font-weight:850;font-size:12px}
 @media(max-width:650px){.daily-learning,.review-two{grid-template-columns:1fr}.review-behavior-grid{grid-template-columns:1fr 1fr}.mood-picker button{width:44px;height:44px}.next-action strong{font-size:18px}}
+/* v1.78 */
+.topbar{position:sticky}.top-date{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+.mood-picker button{display:inline-flex;align-items:center;justify-content:center;padding:0;line-height:1;text-align:center}
+.trade-title-line{display:flex;justify-content:center;align-items:baseline;gap:8px;flex-wrap:wrap}.trade-help{font-size:11px;color:var(--muted);font-weight:650}
+.quick-actions{margin-top:14px}.quick-actions h3{font-size:13px;margin:12px 0 7px}.chip-row{display:flex;flex-wrap:wrap;gap:7px}.action-chip{border:1px solid var(--line);background:var(--card);color:inherit;border-radius:999px;padding:8px 11px;font-weight:750}.action-chip.active{border-color:var(--blue);background:#eff6ff;color:#1d4ed8}
+.group-toggle{display:flex;justify-content:flex-end;margin-bottom:9px}.group-toggle button{font-size:12px}.trade-group{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:9px}.trade-group h4{margin:0 0 8px}.group-line{display:flex;gap:8px;justify-content:space-between;font-size:13px;padding:4px 0}.group-result{text-align:right;font-weight:850;margin-top:6px}
+.principle-add{display:flex;gap:7px}.principle-add input{flex:1;padding:10px;border:1px solid var(--line);border-radius:9px}.principle-row{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.principle-status button{min-width:auto;padding:6px 8px}.principle-status button.active{background:#dbeafe;border-color:#2563eb;color:#1d4ed8}
+.behavior-change{display:grid;grid-template-columns:90px 1fr 30px 1fr;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.behavior-change .face{text-align:center;font-size:22px}.behavior-change .arrow{text-align:center;font-weight:900}.behavior-change.good .arrow{color:var(--green)}.behavior-change.bad .arrow{color:var(--red)}
+.theme-buttons{display:flex;gap:7px}.date-range{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.date-range input{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px}
+.voice-wrap{position:relative}.voice-wrap textarea{padding-right:45px}.voice-btn{display:none;position:absolute;right:8px;top:8px;border:1px solid var(--line);background:var(--card);color:inherit;border-radius:50%;width:34px;height:34px}.speech-supported .voice-btn{display:block}.voice-btn.listening{background:#fee2e2;border-color:#ef4444;animation:pulse 1s infinite}@keyframes pulse{50%{transform:scale(1.08)}}
+.drag-handle{user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none}.trade-item{user-select:none;-webkit-user-select:none}.trade-main,.trade-actions{user-select:text;-webkit-user-select:text}
+body.dark{--navy:#dbeafe;--line:#334155;--muted:#94a3b8;--bg:#0f172a;--card:#1e293b;color:#e5e7eb}body.dark .calendar,body.dark .day,body.dark .nav,body.dark .nav button,body.dark .modal,body.dark .secondary,body.dark .action-chip,body.dark .setting-button,body.dark .behavior-card,body.dark .trade-item{background:#1e293b;color:#e5e7eb}body.dark input,body.dark textarea,body.dark select{background:#0f172a;color:#e5e7eb}body.dark .good-box{background:#123226}body.dark .warn-box{background:#382516}
+@media(max-width:650px){.brand span:last-child{display:none}.top-date{font-size:12px}.behavior-change{grid-template-columns:70px 1fr 22px 1fr}.trade-help{flex-basis:100%;text-align:center}.screen{touch-action:pan-y}.mood-picker{gap:7px}}
 </style>
 </head>
 <body>
@@ -190,7 +203,8 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
     <div id="previousPlan" class="prev-plan" style="display:none"></div>
     <div class="card yellow-card journal-card"><h2 data-i18n="marketAnalysis">투자전 오늘의 시장 분석 <button class="edit">✎</button></h2><textarea id="marketAnalysis" data-placeholder="marketPlaceholder"></textarea></div>
     <div class="card yellow-card journal-card">
-      <h2 data-i18n="todayTrades">오늘의 매매 <button class="edit">✎</button></h2>
+      <h2 class="trade-title-line"><span data-i18n="todayTrades">오늘의 매매</span><small class="trade-help" data-i18n="tradeSearchHelp">검색 안 될 때: 종목명/종목번호 입력</small><button class="edit">✎</button></h2>
+      <div class="group-toggle"><button class="secondary" id="groupViewToggle" data-i18n="groupByStock">종목별 묶어보기</button></div>
       <div id="tradeTableWrap"></div>
       <div class="trade-add-grid">
         <button class="add-link buy-add" id="addBuyBtn">＋ <span data-i18n="addBuy">매수 추가</span></button>
@@ -200,7 +214,8 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
     <div class="card yellow-card journal-card"><h2 data-i18n="tradeReason">매매 이유 <button class="edit">✎</button></h2><textarea id="tradeReason" data-placeholder="reasonPlaceholder"></textarea></div>
     <div class="card yellow-card journal-card"><h2 data-i18n="dailyReview">오늘의 복기</h2>
       <div class="mood-title">오늘의 투자 상태</div><div id="moodPicker" class="mood-picker"><button data-mood="great" title="아주 좋음">😄</button><button data-mood="good" title="차분함">🙂</button><button data-mood="neutral" title="보통">😐</button><button data-mood="rushed" title="조급함">😣</button><button data-mood="anxious" title="불안함">😰</button></div>
-      <div class="review-grid"><div class="review-box good-box"><h3>👍 <span data-i18n="goodPoint">잘한 점</span></h3><textarea id="goodPoint" data-placeholder="goodPlaceholder"></textarea></div><div class="review-box warn-box"><h3>⚠️ <span data-i18n="badPoint">아쉬운 점</span></h3><textarea id="badPoint" data-placeholder="badPlaceholder"></textarea></div></div>
+      <div class="quick-actions"><h3 data-i18n="goodActions">👍 잘한 행동</h3><div id="goodActions" class="chip-row"><button class="action-chip" data-value="plan">🧠 <span data-i18n="planAction">계획</span></button><button class="action-chip" data-value="discipline">🛡️ <span data-i18n="principleAction">원칙</span></button><button class="action-chip" data-value="patience">⏳ <span data-i18n="patienceAction">기다림</span></button></div><h3 data-i18n="cautionActions">⚠️ 주의 행동</h3><div id="cautionActions" class="chip-row"><button class="action-chip" data-value="chasing">⚠️ <span data-i18n="chasingAction">추격</span></button><button class="action-chip" data-value="impulse">⚡ <span data-i18n="impulseAction">충동</span></button><button class="action-chip" data-value="repeat">🔄 <span data-i18n="repeatAction">반복</span></button></div></div>
+      <div class="review-grid"><div class="review-box good-box"><h3>👍 <span data-i18n="goodPoint">잘한 점</span> <small class="sub" data-i18n="optional">(선택)</small></h3><textarea id="goodPoint" data-placeholder="goodPlaceholder"></textarea></div><div class="review-box warn-box"><h3>⚠️ <span data-i18n="badPoint">아쉬운 점</span> <small class="sub" data-i18n="optional">(선택)</small></h3><textarea id="badPoint" data-placeholder="badPlaceholder"></textarea></div></div>
       <div class="photo-section"><div class="photo-head"><b>📷 오늘의 장면</b><label class="photo-add">＋ 사진 추가<input id="reviewPhotos" type="file" accept="image/*" multiple hidden></label></div><div id="reviewPhotoGrid" class="photo-grid"></div><div class="photo-note">차트·체결내역·뉴스 화면을 최대 3장까지 저장합니다.</div></div>
     </div>
     <div class="card yellow-card journal-card"><h2 data-i18n="tomorrowPlan">내일의 계획 <button class="edit">✎</button></h2><textarea id="tomorrowPlan" data-placeholder="planPlaceholder"></textarea></div>
@@ -208,24 +223,23 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
   </section>
 
   <section id="reviewScreen" class="screen">
-    <div class="section-title"><div><h1 data-i18n="review">투자 복기</h1><div class="sub">숫자보다 행동의 변화를 봅니다.</div></div></div>
+    <div class="section-title"><div><h1 data-i18n="review">투자 복기</h1><div class="sub" data-i18n="reviewSubtitle">숫자보다 행동의 변화를 봅니다.</div></div></div>
     <div class="card review-hero"><div id="reviewHero"></div></div>
     <div class="review-behavior-grid" id="reviewBehaviorGrid"></div>
     <div class="review-two">
-      <div class="card review-focus good"><h3>👍 잘하고 있어요</h3><div id="reviewStrengths"></div></div>
-      <div class="card review-focus bad"><h3>⚠️ 주의해요</h3><div id="reviewMistakes"></div></div>
+      <div class="card review-focus good"><h3>👍 <span data-i18n="doingWell">잘하고 있어요</span></h3><div id="reviewStrengths"></div></div>
+      <div class="card review-focus bad"><h3>⚠️ <span data-i18n="beCareful">주의해요</span></h3><div id="reviewMistakes"></div></div>
     </div>
-    <div class="card next-action"><div class="big-icon">🎯</div><div><div class="mini-label">다음 투자에서 딱 하나</div><strong id="reviewNextAction">기록이 더 필요해요</strong></div></div>
-    <div class="card coach-card"><h3>🧠 복기 코치</h3><div id="reviewCoach"></div><button class="study-btn" id="coachMore">＋ 자세히</button><div id="coachDetail" class="coach-detail"></div></div>
-    <div class="card"><h3>🔁 최근 복기</h3><div id="reviewList"></div></div>
+    <div class="card next-action"><div class="big-icon">🎯</div><div><div class="mini-label" data-i18n="oneNextAction">다음 투자에서 딱 하나</div><strong id="reviewNextAction">기록이 더 필요해요</strong></div></div>
+    <div class="card coach-card"><h3>🧠 <span data-i18n="reviewCoachTitle">복기 코치</span></h3><div id="reviewCoach"></div><button class="study-btn" id="coachMore" data-i18n="more">＋ 자세히</button><div id="coachDetail" class="coach-detail"></div></div>
+    <div class="card"><h3 data-i18n="myPrinciples">🛡️ 나의 투자 원칙</h3><div class="principle-add"><input id="principleInput" data-placeholder="principlePlaceholder" placeholder="예: 오른 종목은 한템포 쉬기"><button class="secondary" id="addPrinciple">＋</button></div><div id="principleList"></div></div>
+    <div class="card"><h3>🔁 <span data-i18n="recentReview">최근 복기</span></h3><div id="reviewList"></div></div>
   </section>
 
   <section id="statsScreen" class="screen">
     <div class="section-title"><div><h1 data-i18n="stats">통계</h1><div class="sub" id="statsMonthLabel"></div></div></div>
-    <div class="card"><div data-i18n="monthlyReturn">월간 수익률</div><div id="statsReturn" class="stats-big positive">-</div><div id="statsProfit" class="sub"></div></div>
-    <div class="card"><div class="stat-grid"><div class="stat"><span data-i18n="tradeCount">총 매매</span><b id="stTrades">0</b></div><div class="stat"><span data-i18n="winRate">승률</span><b id="stWin">-</b></div><div class="stat"><span data-i18n="avgWin">평균 수익</span><b class="positive">-</b></div><div class="stat"><span data-i18n="avgLoss">평균 손실</span><b class="negative">-</b></div></div></div>
-    <div class="card"><h3 data-i18n="returnTrend">수익률 추이</h3><div id="barChart" class="bar-chart"></div></div>
-    <div class="card"><h3 data-i18n="frequentStocks">자주 매매한 종목</h3><div id="topStocks"></div></div>
+    <div class="card"><h3 data-i18n="behaviorChange">월별 행동 변화</h3><div id="behaviorChanges"></div></div>
+    <div class="card"><p class="sub" data-i18n="statsBehaviorNote">수익이나 거래량보다 계획·원칙·추격·충동·반복 행동이 지난달보다 어떻게 변했는지 보여줍니다.</p></div>
   </section>
 
   <section id="settingsScreen" class="screen">
@@ -233,11 +247,12 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
     <div class="card">
       <div class="setting-row"><span>🔔 <span data-i18n="notifications">알림 설정</span></span><span>›</span></div>
       <div class="setting-row"><span>🌐 <span data-i18n="language">언어</span></span><div class="lang-buttons"><button id="koBtn">한국어</button><button id="enBtn">English</button></div></div>
+      <div class="setting-row"><span>🎨 <span data-i18n="theme">테마</span></span><div class="theme-buttons"><button class="secondary" id="lightTheme">☀️ <span data-i18n="light">밝게</span></button><button class="secondary" id="darkTheme">🌙 <span data-i18n="dark">어둡게</span></button></div></div>
       <div class="setting-row"><span>🔊 <span data-i18n="soundEffects">효과음</span></span><button class="secondary" id="soundToggle">켜짐</button></div>
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printSimple">출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.77 ›</span></button>
+      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.78 ›</span></button>
     </div>
   </section>
 </main>
@@ -267,7 +282,7 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
 
 <div id="printModal" class="modal-wrap"><div class="modal wide">
   <div class="modal-head"><h2 data-i18n="printTitle">투자일지 출력</h2><button class="close" id="closePrint">×</button></div>
-  <div class="field"><label data-i18n="printRange">출력 범위</label><div class="seg"><button id="printTodayRange" class="active" data-i18n="today">오늘</button><button id="printMonthRange" data-i18n="thisMonth">이번 달</button></div></div>
+  <div class="field"><label data-i18n="printRange">출력 범위</label><div class="seg"><button id="printTodayRange" class="active" data-i18n="dateSelect">날짜 선택</button><button id="printMonthRange" data-i18n="thisMonth">이번 달</button></div><div id="printDateRange" class="date-range"><input id="printStartDate" type="date"><input id="printEndDate" type="date"></div></div>
   <div class="field"><label data-i18n="printOptions">출력 항목</label><div class="print-options">
 <label><span data-i18n="dailyJournal">일별 투자일지</span><input id="printJournalOpt" type="checkbox" checked></label>
 <label><span data-i18n="tradeRecords">매매 내역</span><input id="printTradesOpt" type="checkbox" checked></label>
@@ -276,7 +291,7 @@ textarea{width:100%;min-height:125px;border:1px solid #dbe3ee;border-radius:10px
   <div class="print-actions"><button class="primary" id="printExecute" data-i18n="printNow">인쇄 / PDF 저장</button></div>
 </div></div>
 
-<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.77</span></h2><p>매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub">데이터는 이 브라우저에 저장됩니다. 중요한 기록은 설정의 데이터 백업에서 내보내기를 권장합니다.</p></div></div></div>
+<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.78</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v178Summary">빠른 선택형 복기, 종목별 묶기, 투자 원칙, 행동 변화 통계, 날짜 출력, 테마·스와이프·음성입력을 추가했습니다.</p><p class="sub" data-i18n="nextVersion">다음 v1.79 예정: HTS 캡처 자동 인식</p></div></div></div>
 
 <div id="toast" class="toast"></div>
 
@@ -435,11 +450,12 @@ function weekMetrics(start){
  return {days,trades};
 }
 function renderWeekSummary(start){
- const cur=weekMetrics(start), prev=weekMetrics(addDays(start,-7));
+  const cur=weekMetrics(start), prev=weekMetrics(addDays(start,-7));
  document.getElementById('summaryTitle').textContent=fmtWeekRange(start)+(lang==='ko'?' (이번 주)':'');
  document.getElementById('compareLabel').textContent=lang==='ko'?`지난 주 (${fmtWeekRange(addDays(start,-7))}) 비교`:`Previous week (${fmtWeekRange(addDays(start,-7))})`;
  document.getElementById('sumDays').textContent=`${cur.days}${lang==='ko'?'일':' '+t('days')}`;
- document.getElementById('sumTrades').textContent=`${cur.trades}${lang==='ko'?'회':' '+t('times')}`;
+  const end=parseKey(selectedDate), begin=addDays(end,-6);let last7=0;for(let d=new Date(begin);d<=end;d=addDays(d,1))last7+=(data.trades[key(d)]||[]).length;
+  document.getElementById('sumTrades').textContent=`${(last7/7).toFixed(1)}${lang==='ko'?'회/일':' / day'}`;
  document.getElementById('sumReturn').textContent='—';
  setDelta('sumDaysDelta',cur.days-prev.days,lang==='ko'?'일':' days'); setDelta('sumTradesDelta',cur.trades-prev.trades,lang==='ko'?'회':' trades');
  document.getElementById('sumReturnDelta').textContent=lang==='ko'?'수익률 데이터 연결 필요':'Return data needed';
@@ -466,7 +482,9 @@ function renderJournal(){
  document.getElementById("topDate").textContent=fmtDate(selectedDate);
  const j=data.journals[selectedDate]||{},tr=data.trades[selectedDate]||[];
  ["marketAnalysis","tradeReason","goodPoint","badPoint","tomorrowPlan"].forEach(id=>document.getElementById(id).value=j[id]||"");
- document.querySelectorAll('#moodPicker button').forEach(b=>b.classList.toggle('active',b.dataset.mood===(j.mood||''))); renderReviewPhotos(j.photos||[]);
+  document.querySelectorAll('#moodPicker button').forEach(b=>b.classList.toggle('active',b.dataset.mood===(j.mood||''))); renderReviewPhotos(j.photos||[]);
+  document.querySelectorAll('#goodActions .action-chip').forEach(b=>b.classList.toggle('active',(j.goodActions||[]).includes(b.dataset.value)));
+  document.querySelectorAll('#cautionActions .action-chip').forEach(b=>b.classList.toggle('active',(j.cautionActions||[]).includes(b.dataset.value)));
  const prev=new Date(parseKey(selectedDate));prev.setDate(prev.getDate()-1);const pj=data.journals[key(prev)];
  const box=document.getElementById("previousPlan");
  if(pj&&pj.tomorrowPlan){box.style.display="block";box.innerHTML=`<h3>📋 ${t("yesterdayPlan")} (${key(prev).slice(5).replace("-","/")}) <span style="float:right;color:#16a34a">✓ ${t("check")}</span></h3><p>${escapeHtml(pj.tomorrowPlan)}</p>`}else box.style.display="none";
@@ -524,8 +542,9 @@ function setAutoSaveStatus(state){
  el.textContent=state==="saving"?"● 저장 중...":`✓ ${t("autoSaved")} ${new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit"})}`;
 }
 function saveJournal(silent=false){
- const oldJ=data.journals[selectedDate]||{}; const mood=document.querySelector('#moodPicker button.active')?.dataset.mood||oldJ.mood||'';
- data.journals[selectedDate]={...oldJ,marketAnalysis:marketAnalysis.value,tradeReason:tradeReason.value,goodPoint:goodPoint.value,badPoint:badPoint.value,tomorrowPlan:tomorrowPlan.value,mood,photos:oldJ.photos||[]};
+  const oldJ=data.journals[selectedDate]||{}; const mood=document.querySelector('#moodPicker button.active')?.dataset.mood||oldJ.mood||'';
+  const goodActions=[...document.querySelectorAll('#goodActions .action-chip.active')].map(b=>b.dataset.value),cautionActions=[...document.querySelectorAll('#cautionActions .action-chip.active')].map(b=>b.dataset.value);
+  data.journals[selectedDate]={...oldJ,marketAnalysis:marketAnalysis.value,tradeReason:tradeReason.value,goodPoint:goodPoint.value,badPoint:badPoint.value,tomorrowPlan:tomorrowPlan.value,mood,goodActions,cautionActions,photos:oldJ.photos||[]};
  saveData();setAutoSaveStatus("saved");renderCalendar();if(!silent)toast(t("saved"));
 }
 function scheduleAutoSave(){
@@ -661,19 +680,20 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-   data.version="1.77";saveData();renderCalendar();renderJournal();toast(t("imported"));
+    data.version="1.78";data.principles=data.principles||[];saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
 
-document.getElementById("printBtn").onclick=()=>document.getElementById("printModal").classList.add("show");
+document.getElementById("printBtn").onclick=()=>{printStartDate.value=printStartDate.value||selectedDate;printEndDate.value=printEndDate.value||selectedDate;document.getElementById("printModal").classList.add("show")};
 document.getElementById("closePrint").onclick=()=>document.getElementById("printModal").classList.remove("show");
 document.getElementById("printTodayRange").onclick=()=>{printRange="today";document.getElementById("printTodayRange").classList.add("active");document.getElementById("printMonthRange").classList.remove("active")};
 document.getElementById("printMonthRange").onclick=()=>{printRange="month";document.getElementById("printMonthRange").classList.add("active");document.getElementById("printTodayRange").classList.remove("active")};
 function buildPrintHtml(){
- const dates=printRange==="today"? [selectedDate] : Object.keys({...data.journals,...data.trades}).filter(d=>d.startsWith(`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}`)).sort();
+  const allDates=Object.keys({...data.journals,...data.trades}).sort();const start=printStartDate.value||selectedDate,end=printEndDate.value||start;
+  const dates=printRange==="today"?allDates.filter(d=>d>=start&&d<=end):allDates.filter(d=>d.startsWith(`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}`));
  const includeJ=document.getElementById("printJournalOpt").checked, includeT=document.getElementById("printTradesOpt").checked, includeA=document.getElementById("printAnalysisOpt").checked;
- let out=`<div class="print-target"><h1>▲ ${t("appName")}</h1><p>${printRange==="today"?fmtDate(selectedDate):document.getElementById("statsMonthLabel").textContent}</p>`;
+  let out=`<div class="print-target"><h1>▲ ${t("appName")}</h1><p>${printRange==="today"?(start===end?fmtDate(start):fmtDate(start)+' ~ '+fmtDate(end)):document.getElementById("statsMonthLabel").textContent}</p>`;
  dates.forEach(d=>{
    const j=data.journals[d]||{}, tr=data.trades[d]||[];
    out+=`<section class="card"><h2>${fmtDate(d)}</h2>`;
@@ -737,7 +757,40 @@ window.removeReviewPhoto=i=>{const j=data.journals[selectedDate]||{};(j.photos||
 document.getElementById('coachMore').onclick=()=>document.getElementById('coachDetail').classList.toggle('show');
 const appInfoModal=document.getElementById('appInfoModal');document.getElementById('appInfoBtn').onclick=()=>appInfoModal.classList.add('show');document.getElementById('closeAppInfo').onclick=()=>appInfoModal.classList.remove('show');appInfoModal.addEventListener('click',e=>{if(e.target===appInfoModal)appInfoModal.classList.remove('show')});document.addEventListener('keydown',e=>{if(e.key==='Escape')appInfoModal.classList.remove('show')});
 
-applyLang();
+// v1.78 compatibility additions: existing journal_data stays unchanged; new fields are optional.
+I18N.ko.statsBehaviorNote="수익이나 거래량보다 계획·원칙·추격·충동·반복 행동이 지난달보다 어떻게 변했는지 보여줍니다.";
+I18N.en.statsBehaviorNote="Shows how planning, discipline, chasing, impulse, and repeated behavior changed from last month.";
+Object.assign(I18N.ko,{tradeCount:"최근 7일 하루 평균",tradeSearchHelp:"검색 안 될 때: 종목명/종목번호 입력",groupByStock:"종목별 묶어보기",showList:"거래별 보기",goodActions:"👍 잘한 행동",cautionActions:"⚠️ 주의 행동",planAction:"계획",principleAction:"원칙",patienceAction:"기다림",chasingAction:"추격",impulseAction:"충동",repeatAction:"반복",optional:"(선택)",reviewSubtitle:"숫자보다 행동의 변화를 봅니다.",doingWell:"잘하고 있어요",beCareful:"주의해요",oneNextAction:"다음 투자에서 딱 하나",reviewCoachTitle:"복기 코치",more:"＋ 자세히",myPrinciples:"🛡️ 나의 투자 원칙",principlePlaceholder:"예: 오른 종목은 한템포 쉬기",behaviorChange:"월별 행동 변화",theme:"테마",light:"밝게",dark:"어둡게",dateSelect:"날짜 선택",appInfoDesc:"매매를 기록하고 반복되는 행동을 돌아보는 개인 투자 복기 앱입니다.",v178Summary:"빠른 선택형 복기, 종목별 묶기, 투자 원칙, 행동 변화 통계, 날짜 출력, 테마·스와이프·음성입력을 추가했습니다.",nextVersion:"다음 v1.79 예정: HTS 캡처 자동 인식",kept:"지킴",missed:"못지킴",deletePrinciple:"원칙을 삭제할까요?",noBehavior:"비교할 복기 기록이 더 필요해요.",monthBasis:"이번 달 기준",improved:"개선",attention:"주의",same:"유지",recording:"기록 중",plan:"계획",principle:"원칙",chasing:"추격",impulse:"충동",repeat:"반복",patience:"기다림",voiceUnsupported:"이 브라우저는 음성입력을 지원하지 않습니다."});
+Object.assign(I18N.en,{tradeCount:"7-day daily average",tradeSearchHelp:"Not found? Enter name / ticker",groupByStock:"Group by stock",showList:"Trade list",goodActions:"👍 Positive actions",cautionActions:"⚠️ Caution actions",planAction:"Plan",principleAction:"Discipline",patienceAction:"Patience",chasingAction:"Chasing",impulseAction:"Impulse",repeatAction:"Repeat",optional:"(optional)",reviewSubtitle:"Focus on behavior changes, not volume.",doingWell:"Doing well",beCareful:"Watch closely",oneNextAction:"One thing for the next trade",reviewCoachTitle:"Review coach",more:"＋ Details",myPrinciples:"🛡️ My investing principles",principlePlaceholder:"e.g. Pause before buying a rising stock",behaviorChange:"Monthly behavior change",theme:"Theme",light:"Light",dark:"Dark",dateSelect:"Select date(s)",appInfoDesc:"A personal journal for recording trades and improving repeated investing behavior.",v178Summary:"Adds quick reviews, grouped trades, principles, behavior trends, date-range printing, themes, swipe navigation, and voice input.",nextVersion:"Planned for v1.79: HTS screenshot recognition",kept:"Kept",missed:"Missed",deletePrinciple:"Delete this principle?",noBehavior:"More review records are needed for comparison.",monthBasis:"This month",improved:"Improved",attention:"Attention",same:"Same",recording:"Recording",plan:"Plan",principle:"Discipline",chasing:"Chasing",impulse:"Impulse",repeat:"Repeat",patience:"Patience",voiceUnsupported:"Voice input is not supported in this browser."});
+data.version="1.78";data.principles=Array.isArray(data.principles)?data.principles:[];
+
+document.querySelectorAll('.action-chip').forEach(b=>b.onclick=()=>{b.classList.toggle('active');scheduleAutoSave()});
+
+let groupedTradeView=localStorage.getItem('journal_grouped_view')==='1';
+function renderGroupedTrades(){const wrap=document.getElementById('tradeTableWrap'),tr=data.trades[selectedDate]||[];const map={};tr.forEach(x=>{const k=x.code||x.stock;(map[k]||(map[k]={stock:x.stock,code:x.code||'',items:[]})).items.push(x)});const groups=Object.values(map);wrap.innerHTML=groups.length?groups.map(g=>{const buys=g.items.filter(x=>x.type==='buy'),sells=g.items.filter(x=>x.type==='sell');const total=a=>a.reduce((s,x)=>s+Number(x.price||0)*Number(x.qty||0),0),qty=a=>a.reduce((s,x)=>s+Number(x.qty||0),0);const matched=Math.min(qty(buys),qty(sells)),buyAvg=qty(buys)?total(buys)/qty(buys):0,sellAvg=qty(sells)?total(sells)/qty(sells):0,pnl=matched?Math.round((sellAvg-buyAvg)*matched):null;return `<div class="trade-group"><h4>${escapeHtml(g.stock)} ${g.code?`<span class="sub">(${escapeHtml(g.code)})</span>`:''}</h4>${g.items.map(x=>`<div class="group-line"><span>${x.type==='buy'?'🔴 '+t('buy'):'🔵 '+t('sell')}</span><span>${formatPrice(x.price,inferCurrency(x))} × ${x.qty}</span></div>`).join('')}${pnl!==null?`<div class="group-result ${pnl>=0?'positive':'negative'}">${pnl>=0?'↗ +':'↘ '}${pnl.toLocaleString()}원</div>`:''}</div>`}).join(''):`<div class="sub" style="text-align:center;padding:14px">${t('noTrades')}</div>`}
+const originalRenderJournal=renderJournal;renderJournal=function(){originalRenderJournal();if(groupedTradeView)renderGroupedTrades();const b=document.getElementById('groupViewToggle');b.textContent=groupedTradeView?t('showList'):t('groupByStock')};
+document.getElementById('groupViewToggle').onclick=()=>{groupedTradeView=!groupedTradeView;localStorage.setItem('journal_grouped_view',groupedTradeView?'1':'0');renderJournal()};
+
+function renderPrinciples(){const box=document.getElementById('principleList');box.innerHTML=data.principles.map((p,i)=>{const status=p.statuses?.[selectedDate]||'';return `<div class="principle-row"><span>⏳ ${escapeHtml(p.text)}</span><span class="principle-status"><button class="secondary ${status==='kept'?'active':''}" onclick="setPrincipleStatus(${i},'kept')">🙂 ${t('kept')}</button> <button class="secondary ${status==='missed'?'active':''}" onclick="setPrincipleStatus(${i},'missed')">😣 ${t('missed')}</button></span><button class="secondary danger" onclick="removePrinciple(${i})">×</button></div>`}).join('')}
+window.setPrincipleStatus=(i,status)=>{const p=data.principles[i];p.statuses=p.statuses||{};p.statuses[selectedDate]=p.statuses[selectedDate]===status?'':status;saveData();renderPrinciples();renderReview()};
+window.removePrinciple=i=>{if(confirm(t('deletePrinciple'))){data.principles.splice(i,1);saveData();renderPrinciples()}};
+document.getElementById('addPrinciple').onclick=()=>{const input=document.getElementById('principleInput'),text=input.value.trim();if(!text)return;data.principles.push({id:'principle_'+Date.now(),text,statuses:{}});input.value='';saveData();renderPrinciples()};
+
+function scoredMetrics(month){const m=reviewMetrics(month);m.entries.forEach(([,j])=>{(j.goodActions||[]).forEach(x=>{if(x==='plan')m.plan++;if(x==='discipline')m.discipline++;if(x==='patience')m.patience++});(j.cautionActions||[]).forEach(x=>{if(x==='chasing'||x==='impulse')m.impulse++;if(x==='repeat')m.repeat++})});data.principles.forEach(p=>Object.entries(p.statuses||{}).forEach(([d,s])=>{if(d.startsWith(month))s==='kept'?m.discipline++:s==='missed'&&m.repeat++}));return m}
+function faceFor(value,negative=false){let v=negative?-value:value;return v>=3?'😄':v>=1?'🙂':v<=-3?'😣':'😐'}
+renderStats=function(){const current=`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}`,pd=new Date(viewDate.getFullYear(),viewDate.getMonth()-1,1),previous=`${pd.getFullYear()}-${pad(pd.getMonth()+1)}`,a=scoredMetrics(previous),b=scoredMetrics(current);document.getElementById('statsMonthLabel').textContent=lang==='ko'?`${viewDate.getFullYear()}년 ${viewDate.getMonth()+1}월`:`${viewDate.toLocaleDateString('en-US',{month:'long',year:'numeric'})}`;const rows=[['🧠',t('plan'),a.plan,b.plan,false],['🛡️',t('principle'),a.discipline,b.discipline,false],['⚠️',t('chasing'),a.impulse,b.impulse,true],['⚡',t('impulse'),a.impulse,b.impulse,true],['🔄',t('repeat'),a.repeat,b.repeat,true]];document.getElementById('behaviorChanges').innerHTML=rows.map(([ic,n,p,c,neg])=>{const delta=neg?p-c:c-p,cl=delta>0?'good':delta<0?'bad':'';return `<div class="behavior-change ${cl}"><b>${ic} ${n}</b><span class="face">${a.entries.length?faceFor(p,neg):'·'}</span><span class="arrow">${delta>0?'↗':delta<0?'↘':'→'}</span><span class="face">${b.entries.length?faceFor(c,neg):'😐'}</span></div>`}).join('')+(b.entries.length?'':`<p class="sub">${t('noBehavior')}</p>`)};
+
+const baseRenderReview=renderReview;renderReview=function(){baseRenderReview();renderPrinciples();if(lang==='en'){const m=scoredMetrics(`${viewDate.getFullYear()}-${pad(viewDate.getMonth()+1)}`);document.getElementById('reviewHero').innerHTML=`<div class="hero-face">${m.entries.length?'🙂':'😐'}</div><div class="hero-state">${m.entries.length?'Review in progress':'Recording'}</div><div class="hero-sub">Behavior visible in this month's records</div>`;document.getElementById('reviewBehaviorGrid').innerHTML=[['🧠','Plan',m.plan],['🛡️','Discipline',m.discipline],['⚡','Impulse',m.impulse],['🔄','Repeat',m.repeat]].map(([i,n,v])=>`<div class="behavior-card"><div class="behavior-icon">${i}</div><div class="behavior-name">${n}</div><div class="behavior-state">${faceFor(v,n==='Impulse'||n==='Repeat')} ${v?'Observed':'Recording'}</div><div class="hero-sub">This month</div></div>`).join('');document.getElementById('reviewStrengths').innerHTML=m.plan||m.discipline||m.patience?'<div class="pattern-pill"><span>🧠 Plan · 🛡️ Discipline · ⏳ Patience</span></div>':'<div class="sub">More records will reveal your strengths.</div>';document.getElementById('reviewMistakes').innerHTML=m.impulse||m.repeat?'<div class="pattern-pill"><span>⚡ Impulse · 🔄 Repeat</span></div>':'<div class="sub">No caution pattern is visible yet.</div>';document.getElementById('reviewCoach').innerHTML='<div class="coach-line">Your structured choices and journal text are summarized as behavior patterns, not investment advice.</div>';document.getElementById('coachDetail').innerHTML='This summary uses your saved journal text and quick choices. It is not a buy/sell recommendation or price forecast.';document.getElementById('reviewNextAction').textContent=m.impulse?'⏳ Pause before chasing':'🎯 Focus on your planned targets'}};
+
+function applyTheme(theme){document.body.classList.toggle('dark',theme==='dark');localStorage.setItem('journal_theme',theme);document.querySelector('meta[name="theme-color"]').content=theme==='dark'?'#0f172a':'#173bd5'}
+document.getElementById('lightTheme').onclick=()=>applyTheme('light');document.getElementById('darkTheme').onclick=()=>applyTheme('dark');applyTheme(localStorage.getItem('journal_theme')||'light');
+
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(SpeechRecognition){document.documentElement.classList.add('speech-supported');document.querySelectorAll('textarea').forEach(area=>{const wrap=document.createElement('div');wrap.className='voice-wrap';area.parentNode.insertBefore(wrap,area);wrap.appendChild(area);const btn=document.createElement('button');btn.type='button';btn.className='voice-btn';btn.textContent='🎙';btn.setAttribute('aria-label','Voice input');wrap.appendChild(btn);btn.onclick=()=>{const rec=new SpeechRecognition();rec.lang=lang==='ko'?'ko-KR':'en-US';rec.interimResults=false;btn.classList.add('listening');rec.onresult=e=>{area.value+=(area.value?' ':'')+e.results[0][0].transcript;area.dispatchEvent(new Event('input',{bubbles:true}))};rec.onend=()=>btn.classList.remove('listening');rec.onerror=()=>btn.classList.remove('listening');rec.start()}})}
+
+const screenOrder=['calendarScreen','reviewScreen','statsScreen','settingsScreen'];let swipeStart=null;document.querySelector('main').addEventListener('pointerdown',e=>{if(innerWidth>700||e.target.closest('input,textarea,button,.calendar,.month-nav,.drag-handle,.trade-item,.modal-wrap'))return;swipeStart={x:e.clientX,y:e.clientY,id:e.pointerId}});document.querySelector('main').addEventListener('pointerup',e=>{if(!swipeStart)return;const dx=e.clientX-swipeStart.x,dy=e.clientY-swipeStart.y;swipeStart=null;if(Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*1.5)return;const active=document.querySelector('.screen.active')?.id,i=screenOrder.indexOf(active);if(i<0)return;const next=i+(dx<0?1:-1);if(next>=0&&next<screenOrder.length){showScreen(screenOrder[next]);uiSound('select')}});document.querySelector('main').addEventListener('pointercancel',()=>swipeStart=null);
+
+const originalApplyLang=applyLang;applyLang=function(){originalApplyLang();document.querySelectorAll('[data-placeholder]').forEach(el=>{const v=t(el.dataset.placeholder);if(v!==el.dataset.placeholder)el.placeholder=v});renderJournal();renderReview();renderStats()};
+saveData();applyLang();
 </script>
 </body>
 </html>
