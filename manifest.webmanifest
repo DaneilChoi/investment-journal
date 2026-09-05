@@ -6,7 +6,7 @@
   "background_color": "#f8fafc",
   "theme_color": "#d4af37",
   "lang": "ko",
-  "description": "영웅문4 CSV 실제 체결 자동 입력을 지원하는 투자일지 v1.79",
+  "description": "시간순 손익과 수동·CSV 연동을 보강한 투자일지 v1.79.1",
   "icons": [
     {
       "src": "icon-192.png",
