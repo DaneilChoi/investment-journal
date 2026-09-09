@@ -311,7 +311,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printSimple">출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.79.2 수정판 ›</span></button>
+      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.79.3 ›</span></button>
     </div>
   </section>
 </main>
@@ -360,7 +360,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
 
 <div id="bulkDeleteModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2 data-i18n="manageTodayTrades">오늘 매매 정리</h2><button class="close" id="closeBulkDelete">×</button></div><p class="sub" id="bulkDeleteDate"></p><div id="bulkDeleteCounts" class="bulk-counts"></div><div class="bulk-delete-actions"><button class="secondary danger" id="deleteManualTrades" data-i18n="deleteManualTrades">수동 입력만 삭제</button><button class="secondary danger" id="deleteHtsTrades" data-i18n="deleteHtsTrades">HTS 입력만 삭제</button><button class="primary danger" id="deleteAllTrades" data-i18n="deleteAllTrades">오늘 매매 전체 삭제</button></div></div></div>
 
-<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.79.2 수정판</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v1792Summary">선택한 방사형 막대 방식의 균형 나침반을 정확히 반영했습니다.</p><p class="sub" data-i18n="nextVersion">다음 v1.80 예정: 실제 AI 복기 코치</p></div></div></div>
+<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.79.3</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v1793Summary">국내주식 기본 수수료와 매도세를 추정해 실현손익과 수익률에 반영합니다.</p><p class="sub" data-i18n="nextVersion">다음 v1.80 예정: 실제 AI 복기 코치</p></div></div></div>
 
 <div id="toast" class="toast"></div>
 
@@ -748,7 +748,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.79.2",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.79.3",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
@@ -761,7 +761,7 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-    data.version="1.79.2";data.principles=data.principles||[];saveData();renderCalendar();renderJournal();toast(t("imported"));
+    data.version="1.79.3";data.principles=data.principles||[];saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
@@ -856,17 +856,24 @@ function buildStockAliases(){const found={};Object.values(data.trades||{}).forEa
 function tradeIdentity(x,aliases={}){const currency=x.currency||inferCurrency(x)||'KRW',name=normalizeStockName(x.stock),stockAsCode=/^\d{6}$/.test(String(x.stock||'').trim())?String(x.stock).trim():'',code=normalizeStockCode(x.code||stockAsCode||aliases[`${name}|${currency}`]||'');return `${code?'code:'+code:'name:'+name}|${currency}`}
 function roundMoney(value,currency){return currency==='KRW'?Math.round(value):Math.round(value*100)/100}
 function moneyText(value,currency){const n=roundMoney(value,currency),sign=n>=0?'+':'-',amount=Math.abs(n).toLocaleString(undefined,{maximumFractionDigits:2});return currency==='USD'?`${sign}$${amount}`:`${sign}${amount}원`}
+function tradeExchange(x){return String(x?.exchange||x?.hts?.exchange||'KRX').trim().toUpperCase()||'KRX'}
+function estimatedTradeCharges(x,qty=Number(x?.qty||0)){
+ const currency=x?.currency||inferCurrency(x)||'KRW',price=Number(x?.price||0),gross=Math.max(0,price*qty);if(currency!=='KRW'||!qty)return{gross,fee:0,tax:0,net:x?.type==='sell'?gross:gross,estimated:false};
+ const exchange=tradeExchange(x),feeRate=exchange==='NXT'?0.000145:0.00015,taxRate=x?.taxExempt||x?.assetType==='ETF'||x?.assetType==='ETN'?0:0.002,ratio=Number(x?.qty)>0?qty/Number(x.qty):1;
+ const exactFee=x?.fee??x?.commission,exactTax=x?.tax??x?.transactionTax,totalFee=exactFee!==undefined&&Number.isFinite(Number(exactFee))?Math.max(0,Number(exactFee)*ratio):Math.floor((gross*feeRate)/10)*10,totalTax=x?.type==='sell'?(exactTax!==undefined&&Number.isFinite(Number(exactTax))?Math.max(0,Number(exactTax)*ratio):Math.floor(gross*taxRate)):0;
+ return{gross,fee:roundMoney(totalFee,'KRW'),tax:roundMoney(totalTax,'KRW'),net:roundMoney(x?.type==='sell'?gross-totalFee-totalTax:gross+totalFee,'KRW'),estimated:exactFee===undefined||exactTax===undefined,exchange,feeRate,taxRate};
+}
 function calculateTradeLedger(untilDate='9999-12-31'){
  const positions={},events=[],aliases=buildStockAliases();
  Object.keys(data.trades||{}).filter(date=>date<=untilDate).sort().forEach(date=>{
   (Array.isArray(data.trades[date])?data.trades[date]:[]).map((x,index)=>({x,index,time:tradeTime(x)})).sort((a,b)=>{if(a.time&&b.time)return a.time.localeCompare(b.time)||a.index-b.index;if(a.time)return-1;if(b.time)return 1;return a.index-b.index}).forEach(({x,index})=>{
    const qty=Number(x.qty||0),price=Number(x.price||0);if(!(qty>0)||!(price>=0)||(x.type!=='buy'&&x.type!=='sell'))return;
    const id=tradeIdentity(x,aliases),currency=x.currency||inferCurrency(x)||'KRW',p=positions[id]||(positions[id]={qty:0,avgCost:0,stock:x.stock,code:normalizeStockCode(x.code||aliases[`${normalizeStockName(x.stock)}|${currency}`]||''),currency});
-   if(x.type==='buy'){
-    const nextQty=p.qty+qty;p.avgCost=nextQty?((p.qty*p.avgCost)+(qty*price))/nextQty:0;p.qty=nextQty;p.stock=x.stock||p.stock;p.code=x.code||p.code;
-   }else{
-    const matchedQty=Math.min(qty,p.qty),unmatchedQty=Math.max(0,qty-matchedQty),avgCost=p.avgCost,pnl=roundMoney((price-avgCost)*matchedQty,currency);
-    events.push({id,date,index,stock:x.stock,code:x.code||'',currency,sellPrice:price,avgCost,matchedQty,unmatchedQty,pnl,trade:x});
+    if(x.type==='buy'){
+     const charges=estimatedTradeCharges(x,qty),unitCost=charges.net/qty,nextQty=p.qty+qty;p.avgCost=nextQty?((p.qty*p.avgCost)+(qty*unitCost))/nextQty:0;p.qty=nextQty;p.stock=x.stock||p.stock;p.code=x.code||p.code;
+    }else{
+     const matchedQty=Math.min(qty,p.qty),unmatchedQty=Math.max(0,qty-matchedQty),avgCost=p.avgCost,charges=estimatedTradeCharges(x,matchedQty),netSellPrice=matchedQty?charges.net/matchedQty:price,pnl=roundMoney((netSellPrice-avgCost)*matchedQty,currency),costBasis=roundMoney(avgCost*matchedQty,currency),returnPct=costBasis?pnl/costBasis*100:0;
+     events.push({id,date,index,stock:x.stock,code:x.code||'',currency,sellPrice:price,netSellPrice,avgCost,matchedQty,unmatchedQty,pnl,costBasis,returnPct,fee:charges.fee,tax:charges.tax,chargesEstimated:charges.estimated,trade:x});
     p.qty=Math.max(0,p.qty-matchedQty);if(p.qty<1e-9){p.qty=0;p.avgCost=0}
    }
   })
@@ -877,8 +884,8 @@ function renderGroupedTrades(){
  const wrap=document.getElementById('tradeTableWrap'),tr=data.trades[selectedDate]||[],ledger=calculateTradeLedger(selectedDate),map={},aliases=buildStockAliases();
  tr.forEach(x=>{const k=tradeIdentity(x,aliases);(map[k]||(map[k]={key:k,stock:x.stock,code:normalizeStockCode(x.code||aliases[`${normalizeStockName(x.stock)}|${x.currency||inferCurrency(x)||'KRW'}`]||''),currency:x.currency||inferCurrency(x)||'KRW',items:[]})).items.push(x)});
  const groups=Object.values(map);wrap.innerHTML=groups.length?groups.map(g=>{
-  const realized=ledger.events.filter(e=>e.date===selectedDate&&e.id===g.key),matched=realized.reduce((s,e)=>s+e.matchedQty,0),unmatched=realized.reduce((s,e)=>s+e.unmatchedQty,0),pnl=roundMoney(realized.reduce((s,e)=>s+e.pnl,0),g.currency),cost=matched?realized.reduce((s,e)=>s+e.avgCost*e.matchedQty,0)/matched:0;
-  return `<div class="trade-group"><h4>${escapeHtml(g.stock)} ${g.code?`<span class="sub">(${escapeHtml(g.code)})</span>`:''}</h4>${g.items.map(x=>`<div class="group-line"><span>${x.type==='buy'?'🔴 '+t('buy'):'🔵 '+t('sell')}</span><span>${formatPrice(x.price,inferCurrency(x))} × ${x.qty}</span></div>`).join('')}${matched?`<div class="group-result ${pnl>=0?'positive':'negative'}">${pnl>=0?'↗ ':'↘ '}${moneyText(pnl,g.currency)}</div><div class="cost-note">${t('carriedCost')}: ${formatPrice(cost,g.currency)} · ${t('feesExcluded')}</div>`:''}${unmatched?`<div class="unmatched-note">⚠️ ${t('missingBuyRecord')} (${unmatched.toLocaleString()})</div>`:''}</div>`
+  const realized=ledger.events.filter(e=>e.date===selectedDate&&e.id===g.key),matched=realized.reduce((s,e)=>s+e.matchedQty,0),unmatched=realized.reduce((s,e)=>s+e.unmatchedQty,0),pnl=roundMoney(realized.reduce((s,e)=>s+e.pnl,0),g.currency),basis=realized.reduce((s,e)=>s+e.costBasis,0),rate=basis?pnl/basis*100:0,cost=matched?basis/matched:0;
+  return `<div class="trade-group"><h4>${escapeHtml(g.stock)} ${g.code?`<span class="sub">(${escapeHtml(g.code)})</span>`:''}</h4>${g.items.map(x=>`<div class="group-line"><span>${x.type==='buy'?'🔴 '+t('buy'):'🔵 '+t('sell')}</span><span>${formatPrice(x.price,inferCurrency(x))} × ${x.qty}</span></div>`).join('')}${matched?`<div class="group-result ${pnl>=0?'positive':'negative'}">${pnl>=0?'↗ ':'↘ '}${moneyText(pnl,g.currency)} <small>(${rate>=0?'+':''}${rate.toFixed(2)}%)</small></div><div class="cost-note">${t('carriedCost')}: ${formatPrice(cost,g.currency)} · ${t('feesExcluded')}</div>`:''}${unmatched?`<div class="unmatched-note">⚠️ ${t('missingBuyRecord')} (${unmatched.toLocaleString()})</div>`:''}</div>`
  }).join(''):`<div class="sub" style="text-align:center;padding:14px">${t('noTrades')}</div>`
 }
 const originalRenderJournal=renderJournal;renderJournal=function(){originalRenderJournal();if(groupedTradeView)renderGroupedTrades();const b=document.getElementById('groupViewToggle');b.textContent=groupedTradeView?t('showList'):t('groupByStock')};
@@ -995,6 +1002,8 @@ Object.assign(I18N.ko,{journalName:'일지 이름',myJournalTitle:'나의 투자
 Object.assign(I18N.en,{journalName:'Journal name',myJournalTitle:'My Investment Journal',coverSubtitle:'Record the process, not only the return.',principleOfDay:'🛡️ Today’s principle',noPrincipleYet:'Create your own principle in Review.',carriedCost:'Carried average cost',missingBuyRecord:'Quantity not calculated because an earlier buy is missing',currentReviewBalance:'Current review balance',radarHelp:'Closer to the outside means the planned behavior is being practiced more consistently.',impulseControl:'Impulse control',repeatImprove:'Repeat improvement',radarStable:'Your balance is stable',radarGrowing:'You are building a good pattern',radarFocus:'Focus on one principle first',radarWaiting:'Your balance will appear as records build',v1784Summary:'Carries positions and average cost across dates and adds the A-style radial review chart and a personal journal cover.'});
 Object.assign(I18N.ko,{weeklyReturn:'일주일 수익',balanceCompass:'균형 나침반',balanceScore:'균형 점수',weeklyBalanceTitle:'이번 주 투자 균형',compassGuide:'항목의 길이와 끝점 색상으로 현재 상태를 빠르게 읽습니다.',allAxesGood:'모든 축은 바깥쪽으로 갈수록 좋은 상태입니다.',actualRecords:'실제 기록',noRecords:'기록 없음',goodFlow:'좋은 흐름',stableState:'안정적',needsAttention:'주의 필요',overallBalance:'전체 균형',repeatPrevention:'반복 방지',points:'점',noRealizedProfit:'이번 주 실현수익 없음',v1792Summary:'일지 첫 화면과 주간 실현수익을 연결하고, 선택한 방사형 막대 방식의 균형 나침반을 정확히 반영했습니다.'});
 Object.assign(I18N.en,{weeklyReturn:'Weekly profit',balanceCompass:'Balance Compass',balanceScore:'Balance score',weeklyBalanceTitle:'This Week’s Investment Balance',compassGuide:'Read the current state quickly from each spoke length and endpoint color.',allAxesGood:'Every axis improves as it extends outward.',actualRecords:'Actual records',noRecords:'No records',goodFlow:'Good flow',stableState:'Stable',needsAttention:'Needs attention',overallBalance:'Overall balance',repeatPrevention:'Repeat prevention',points:'pts',noRealizedProfit:'No realized profit this week',v1792Summary:'Connects the journal home to weekly realized profit and accurately applies the selected radial-bar Balance Compass.'});
+Object.assign(I18N.ko,{feesExcluded:'국내주식 예상 수수료·세금 반영',estimatedPnl:'예상 비용 반영 실현손익',v1793Summary:'국내주식 기본 수수료와 매도세를 추정해 실현손익과 수익률에 반영합니다.'});
+Object.assign(I18N.en,{feesExcluded:'Estimated Korean-stock fees and taxes included',estimatedPnl:'Realized P/L with estimated costs',v1793Summary:'Estimates standard Korean-stock commissions and sell-side taxes in realized P/L and returns.'});
 Object.assign(I18N.ko,{noTradeAnalysis:'매매 없음 · 복기/통계 분석에서 제외됩니다.',cropHelp1785:'이미지 위를 드래그해 저장할 사각형을 만드세요. 선택 영역은 이동하거나 모서리에서 크기를 바꿀 수 있습니다.',selectAgain:'선택 다시 하기',useFullImage:'전체 이미지 사용',v1785Summary:'무매매일 분석 제외, 간결한 날짜, 터치 선택영역 자르기를 수정했습니다.'});
 Object.assign(I18N.en,{noTradeAnalysis:'No trades · Excluded from review and statistics.',cropHelp1785:'Drag on the image to draw the area to save. Move the selection or resize it from a corner.',selectAgain:'Select again',useFullImage:'Use full image',v1785Summary:'Excludes no-trade days from analysis, shortens dates, and fixes touch cropping.'});
 
@@ -1071,7 +1080,7 @@ function renderReviewRadar(){
 const renderReviewBase1784=renderReview;renderReview=function(){renderReviewBase1784();renderReviewRadar()};
 const renderJournalBase1785=renderJournal;renderJournal=function(){renderJournalBase1785();document.getElementById('noTradeAnalysisNotice').classList.toggle('show',!hasTradesOn(selectedDate));updateUndoDeleteButton()};
 const applyLangBase1783=applyLang;applyLang=function(){applyLangBase1783();renderPersonalCover();if(document.getElementById('printModal').classList.contains('show'))renderPrintCalendar();if(document.getElementById('statsScreen').classList.contains('active'))renderStats()};
-data.version='1.79.2';saveData();applyLang();
+data.version='1.79.3';saveData();applyLang();
 </script>
 </body>
 </html>

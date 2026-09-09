@@ -6,7 +6,7 @@
   "background_color": "#f8fafc",
   "theme_color": "#d4af37",
   "lang": "ko",
-  "description": "방사형 막대 방식의 균형 나침반과 주간 실현수익을 연결한 투자일지 v1.79.2 수정판",
+  "description": "국내주식 예상 수수료·세금을 실현손익에 반영한 투자일지 v1.79.3",
   "icons": [
     {
       "src": "icon-192.png",
