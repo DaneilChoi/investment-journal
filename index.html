@@ -183,7 +183,6 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
 <header class="topbar">
   <div class="brand" id="brandHome" role="button" tabindex="0"><img class="logo" src="icon-192.png" alt="투자일지"><span data-i18n="appName">투자일지</span></div>
   <div class="top-date" id="topDate"></div>
-  <button class="icon-btn" id="menuBtn">⋮</button>
 </header>
 
 
@@ -311,7 +310,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printSimple">출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.79.3 ›</span></button>
+      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.79.4 ›</span></button>
     </div>
   </section>
 </main>
@@ -360,7 +359,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
 
 <div id="bulkDeleteModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2 data-i18n="manageTodayTrades">오늘 매매 정리</h2><button class="close" id="closeBulkDelete">×</button></div><p class="sub" id="bulkDeleteDate"></p><div id="bulkDeleteCounts" class="bulk-counts"></div><div class="bulk-delete-actions"><button class="secondary danger" id="deleteManualTrades" data-i18n="deleteManualTrades">수동 입력만 삭제</button><button class="secondary danger" id="deleteHtsTrades" data-i18n="deleteHtsTrades">HTS 입력만 삭제</button><button class="primary danger" id="deleteAllTrades" data-i18n="deleteAllTrades">오늘 매매 전체 삭제</button></div></div></div>
 
-<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.79.3</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v1793Summary">국내주식 기본 수수료와 매도세를 추정해 실현손익과 수익률에 반영합니다.</p><p class="sub" data-i18n="nextVersion">다음 v1.80 예정: 실제 AI 복기 코치</p></div></div></div>
+<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.79.4</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v1794Summary">v1.80 이전 안정판으로 화면 동선과 안내 문구를 정리하고 기존 계산·데이터 호환성을 유지합니다.</p><p class="sub" data-i18n="nextVersion">다음 v1.80 예정: 온라인 AI 행동 코치 · 사진/카메라 OCR</p></div></div></div>
 
 <div id="toast" class="toast"></div>
 
@@ -748,7 +747,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.79.3",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.79.4",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
@@ -761,7 +760,7 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-    data.version="1.79.3";data.principles=data.principles||[];saveData();renderCalendar();renderJournal();toast(t("imported"));
+    data.version="1.79.4";data.principles=data.principles||[];saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
@@ -799,7 +798,6 @@ document.getElementById("printExecute").onclick=()=>{
 };
 
 document.getElementById("resetBtn").onclick=()=>{if(!confirm(t("confirmReset")))return;localStorage.removeItem("journal_data");location.reload()};
-document.getElementById("menuBtn").onclick=()=>showScreen("settingsScreen");
 document.getElementById("journalMenu").onclick=()=>document.getElementById("printModal").classList.add("show");
 if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
 
@@ -1013,6 +1011,10 @@ Object.assign(I18N.en,{tradeFromHtsHint:'HeroMoon4 CSV · capture',htsImportTitl
 Object.assign(I18N.ko,{stockCode:'종목번호',stockCodePlaceholder:'예: 005930',stockCodeHelp:'종목번호가 같으면 날짜가 멀어도 같은 종목으로 연결됩니다.',fillTime:'체결시간',fillTimeHelp:'현재 시간이 자동 입력되며 과거 거래는 수정할 수 있습니다.',unknownTime:'시간 미상',manageTodayTrades:'오늘 매매 정리',undoDelete:'삭제 되돌리기',deleteManualTrades:'수동 입력만 삭제',deleteHtsTrades:'HTS 입력만 삭제',deleteAllTrades:'오늘 매매 전체 삭제',manualTrades:'수동',htsTrades:'HTS',allTrades:'전체',confirmBulkDelete:'선택한 오늘의 매매 기록을 삭제할까요?',bulkDeleted:'오늘의 매매 기록을 삭제했습니다.',bulkRestored:'삭제한 매매 기록을 복원했습니다.',manualCsvMatches:'CSV와 일치하는 수동 기록',replaceManualMatches:'일치하는 수동 기록을 CSV 체결로 교체하고 매매 이유를 보존',manualCsvUnmatched:'CSV와 자동으로 일치하지 않는 수동 기록은 그대로 유지됩니다.',v1791Summary:'체결시간 순 계산, 장기 종목 연결, 수동·CSV 대조와 일괄 삭제를 보강했습니다.'});
 Object.assign(I18N.en,{stockCode:'Ticker code',stockCodePlaceholder:'e.g. 005930',stockCodeHelp:'The same ticker code stays connected across dates.',fillTime:'Fill time',fillTimeHelp:'The current time is filled automatically and can be edited for past trades.',unknownTime:'Time unknown',manageTodayTrades:'Manage today’s trades',undoDelete:'Undo delete',deleteManualTrades:'Delete manual entries',deleteHtsTrades:'Delete HTS entries',deleteAllTrades:'Delete all today’s trades',manualTrades:'Manual',htsTrades:'HTS',allTrades:'All',confirmBulkDelete:'Delete the selected trades for today?',bulkDeleted:'Deleted today’s selected trades.',bulkRestored:'Restored the deleted trades.',manualCsvMatches:'Manual entries matching the CSV',replaceManualMatches:'Replace matching manual entries with CSV fills and preserve their notes',manualCsvUnmatched:'Manual entries not matched automatically will be kept.',v1791Summary:'Adds time-ordered P/L, long-range ticker linking, manual/CSV matching, and bulk cleanup.'});
 
+/* v1.79.4: final pre-v1.80 stabilization and an explicit AI/OCR roadmap */
+Object.assign(I18N.ko,{tradeFromPhotoHint:'이미지 저장 후 직접 확인',tradeFromCameraHint:'촬영 후 직접 확인',tradeFromHtsHint:'CSV 자동입력 · 캡처 저장',imageReadyManual:'선택 영역을 오늘의 장면에 저장합니다. 이 버전은 이미지 문자를 자동 입력하지 않으므로 거래 내역을 직접 확인해 주세요.',htsNextVersion:'CSV 자동입력은 지금 사용할 수 있습니다. 사진·카메라·HTS 캡처의 문자 인식(OCR)은 v1.80에서 지원할 예정입니다.',repeatPrevention:'실수 반복 방지',v1794Summary:'v1.80 이전 안정판으로 화면 동선과 안내 문구를 정리하고 기존 계산·데이터 호환성을 유지합니다.',nextVersion:'다음 v1.80 예정: 온라인 AI 행동 코치 · 사진/카메라 OCR'});
+Object.assign(I18N.en,{tradeFromPhotoHint:'Save image, then verify manually',tradeFromCameraHint:'Capture, then verify manually',tradeFromHtsHint:'CSV import · capture storage',imageReadyManual:'The selected area is saved to Today’s scenes. This version does not convert image text into trades, so please verify the trade details manually.',htsNextVersion:'CSV import is available now. OCR for photos, camera images, and HTS captures is planned for v1.80.',repeatPrevention:'Mistake prevention',v1794Summary:'The final pre-v1.80 build clarifies navigation and guidance while preserving calculations and data compatibility.',nextVersion:'Planned for v1.80: online AI behavior coach · photo/camera OCR'});
+
 let pendingHtsImport=null;
 function parseCsvRows(text){
  const rows=[];let row=[],field='',quoted=false;
@@ -1080,7 +1082,7 @@ function renderReviewRadar(){
 const renderReviewBase1784=renderReview;renderReview=function(){renderReviewBase1784();renderReviewRadar()};
 const renderJournalBase1785=renderJournal;renderJournal=function(){renderJournalBase1785();document.getElementById('noTradeAnalysisNotice').classList.toggle('show',!hasTradesOn(selectedDate));updateUndoDeleteButton()};
 const applyLangBase1783=applyLang;applyLang=function(){applyLangBase1783();renderPersonalCover();if(document.getElementById('printModal').classList.contains('show'))renderPrintCalendar();if(document.getElementById('statsScreen').classList.contains('active'))renderStats()};
-data.version='1.79.3';saveData();applyLang();
+data.version='1.79.4';saveData();applyLang();
 </script>
 </body>
 </html>
