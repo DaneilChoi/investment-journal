@@ -10,6 +10,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="투자일지">
+<link rel="stylesheet" href="v181.css">
+<link rel="stylesheet" href="v182.css">
 <style>
 :root{
   --navy:#172554; --blue:#2563eb; --indigo:#4338ca; --red:#ef4444;
@@ -317,7 +319,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printSimple">출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.80 ›</span></button>
+      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.82.1 ›</span></button>
     </div>
   </section>
 </main>
@@ -369,7 +371,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
 
 <div id="bulkDeleteModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2 data-i18n="manageTodayTrades">오늘 매매 정리</h2><button class="close" id="closeBulkDelete">×</button></div><p class="sub" id="bulkDeleteDate"></p><div id="bulkDeleteCounts" class="bulk-counts"></div><div class="bulk-delete-actions"><button class="secondary danger" id="deleteManualTrades" data-i18n="deleteManualTrades">수동 입력만 삭제</button><button class="secondary danger" id="deleteHtsTrades" data-i18n="deleteHtsTrades">HTS 입력만 삭제</button><button class="primary danger" id="deleteAllTrades" data-i18n="deleteAllTrades">오늘 매매 전체 삭제</button></div></div></div>
 
-<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.80</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v180Summary">사진·카메라 OCR 확인표, 객관적 행동 분석과 심리 확인, 미국주식 저장 기반을 추가했습니다.</p><p class="sub" data-i18n="nextVersion">v1.80 테스트: OCR 정확도와 온라인 AI 연결을 계속 보정합니다.</p></div></div></div>
+<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.82.1</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v182Summary">사용자 입력을 줄이고, 거래 흐름에서 반복 행동과 다음 행동을 자동으로 먼저 제시합니다.</p><p class="sub" data-i18n="nextVersion">온라인 AI와 서버 배포는 v1.9에서 안전하게 연결합니다.</p></div></div></div>
 
 <div id="toast" class="toast"></div>
 
@@ -761,7 +763,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.80",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.82.1",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
@@ -774,7 +776,7 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-    data.version="1.80";data.principles=data.principles||[];data.behaviorFeedback=data.behaviorFeedback||{};saveData();renderCalendar();renderJournal();toast(t("imported"));
+    data.version="1.82.1";data.principles=data.principles||[];data.behaviorFeedback=data.behaviorFeedback||{};saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
@@ -1088,7 +1090,8 @@ document.getElementById('journalNameInput').addEventListener('change',e=>{data.j
 function renderReviewRadar(){
  const m=weeklyBehaviorMetrics(weekRange(parseKey(selectedDate))),days=Math.max(1,m.entries),hasRecords=m.entries>0,pos=v=>hasRecords?Math.min(100,Math.round(30+(v/days)*35)):0,control=v=>hasRecords?Math.max(0,Math.round(85-(v/days)*30)):0;
  const values=[pos(m.plan),pos(m.discipline),pos(m.patience),control(m.impulse),control(m.repeat)],names=[t('plan'),t('principle'),t('patience'),t('impulseControl'),t('repeatPrevention')],colors=['#8eacf8','#72d0a2','#f2cf5b','#f5b84f','#ef858b'],cx=250,cy=205,outer=130,hub=58,angles=[-90,-18,54,126,198],point=(i,d)=>{const a=angles[i]*Math.PI/180;return[cx+Math.cos(a)*d,cy+Math.sin(a)*d]},level=v=>!hasRecords?t('noRecords'):v>=75?t('goodFlow'):v>=55?t('stableState'):t('needsAttention');
- const guides=angles.map((_,i)=>{const p=point(i,outer);return `<line class="compass-guide" x1="${cx}" y1="${cy}" x2="${p[0]}" y2="${p[1]}"/>`}).join(''),spokes=values.map((v,i)=>{const distance=hub+(outer-hub)*(v/100),p=point(i,distance);return `<line class="compass-spoke" x1="${cx}" y1="${cy}" x2="${p[0]}" y2="${p[1]}" stroke="${colors[i]}"/><circle class="compass-end" cx="${p[0]}" cy="${p[1]}" r="9" fill="${colors[i]}" stroke="${colors[i]}"/><circle class="compass-end-core" cx="${p[0]}" cy="${p[1]}" r="4"/>`}).join(''),labels=names.map((n,i)=>{const p=point(i,177),anchor=p[0]<cx-18?'end':p[0]>cx+18?'start':'middle',offset=i===0?-4:4;return `<text class="compass-label" x="${p[0]}" y="${p[1]+offset}" text-anchor="${anchor}">${n}<tspan class="compass-label-state" x="${p[0]}" dy="18" fill="${colors[i]}">${values[i]} · ${level(values[i])}</tspan></text>`}).join('');
+ const labelSlots=[{x:250,y:24,anchor:'middle'},{x:488,y:147,anchor:'end'},{x:488,y:365,anchor:'end'},{x:12,y:365,anchor:'start'},{x:12,y:147,anchor:'start'}],splitLabel=n=>{const words=String(n).trim().split(/\s+/);if(String(n).length<=14||words.length<2)return[n];let best=1,diff=Infinity;for(let cut=1;cut<words.length;cut++){const a=words.slice(0,cut).join(' '),b=words.slice(cut).join(' '),d=Math.abs(a.length-b.length);if(d<diff){best=cut;diff=d}}return[words.slice(0,best).join(' '),words.slice(best).join(' ')]};
+ const guides=angles.map((_,i)=>{const p=point(i,outer);return `<line class="compass-guide" x1="${cx}" y1="${cy}" x2="${p[0]}" y2="${p[1]}"/>`}).join(''),spokes=values.map((v,i)=>{const distance=hub+(outer-hub)*(v/100),p=point(i,distance);return `<line class="compass-spoke" x1="${cx}" y1="${cy}" x2="${p[0]}" y2="${p[1]}" stroke="${colors[i]}"/><circle class="compass-end" cx="${p[0]}" cy="${p[1]}" r="9" fill="${colors[i]}" stroke="${colors[i]}"/><circle class="compass-end-core" cx="${p[0]}" cy="${p[1]}" r="4"/>`}).join(''),labels=names.map((n,i)=>{const slot=labelSlots[i],lines=splitLabel(n),title=lines.map((line,j)=>`<tspan x="${slot.x}" dy="${j?19:0}">${line}</tspan>`).join('');return `<text class="compass-label" x="${slot.x}" y="${slot.y}" text-anchor="${slot.anchor}">${title}<tspan class="compass-label-state" x="${slot.x}" dy="18" fill="${colors[i]}">${values[i]} · ${level(values[i])}</tspan></text>`}).join('');
  const score=hasRecords?Math.round(values.reduce((s,v)=>s+v,0)/values.length):0,scoreState=level(score),emoji=!hasRecords?'○':score>=75?'🙂':score>=55?'😐':'😣';
  document.getElementById('reviewRadar').innerHTML=`<svg viewBox="0 0 500 420" role="img" aria-label="${names.map((n,i)=>`${n} ${values[i]}`).join(', ')}"><circle class="compass-ring" cx="${cx}" cy="${cy}" r="${outer}"/><circle class="compass-ring" cx="${cx}" cy="${cy}" r="88"/><circle class="compass-ring" cx="${cx}" cy="${cy}" r="48"/>${guides}${spokes}<circle class="compass-hub" cx="${cx}" cy="${cy}" r="${hub}"/><text x="${cx-24}" y="${cy-1}" text-anchor="middle" font-size="25">${emoji}</text><text class="compass-hub-score" x="${cx+18}" y="${cy+2}" text-anchor="middle">${hasRecords?score:'—'}</text><text class="compass-hub-caption" x="${cx}" y="${cy+27}" text-anchor="middle">${t('overallBalance')} · ${scoreState}</text>${labels}</svg>`;
  document.getElementById('radarScore').textContent=hasRecords?score:'—';document.getElementById('radarState').textContent=`${t('allAxesGood')} · ${hasRecords?t('actualRecords'):t('noRecords')}`;document.getElementById('radarKey').innerHTML=names.map((n,i)=>`<span style="--key-color:${colors[i]}"><b>${n}</b><br>${values[i]}${t('points')}</span>`).join('')
@@ -1134,7 +1137,9 @@ const renderPersonalCoverBase180=renderPersonalCover;renderPersonalCover=functio
 const renderReviewBase180=renderReview;renderReview=function(){renderReviewBase180();renderObjectiveBehavior()};
 const renderStatsBase180=renderStats;renderStats=function(){renderStatsBase180();renderObjectiveTrend()};
 const applyLangBase180=applyLang;applyLang=function(){applyLangBase180();document.querySelectorAll('#psychPicker .psych-chip').forEach(x=>x.textContent=psychLabel(x.dataset.psych));renderPersonalCover();renderObjectiveBehavior();if(document.getElementById('statsScreen').classList.contains('active'))renderObjectiveTrend()};
-data.behaviorFeedback=data.behaviorFeedback||{};data.version='1.80';saveData();applyLang();
+data.behaviorFeedback=data.behaviorFeedback||{};data.version='1.82.1';saveData();applyLang();
 </script>
+<script src="v181.js"></script>
+<script src="v182.js"></script>
 </body>
 </html>

@@ -6,7 +6,7 @@
   "background_color": "#f8fafc",
   "theme_color": "#d4af37",
   "lang": "ko",
-  "description": "사진 OCR 확인과 객관적 행동 분석을 시작한 투자일지 v1.80",
+  "description": "반복 행동과 다음 행동을 먼저 보여주는 개인 투자일지 v1.82.1",
   "icons": [
     {
       "src": "icon-192.png",
