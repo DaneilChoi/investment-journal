@@ -12,6 +12,8 @@
 <meta name="apple-mobile-web-app-title" content="투자일지">
 <link rel="stylesheet" href="v181.css">
 <link rel="stylesheet" href="v182.css">
+<link rel="stylesheet" href="v1822.css">
+<link rel="stylesheet" href="v183.css">
 <style>
 :root{
   --navy:#172554; --blue:#2563eb; --indigo:#4338ca; --red:#ef4444;
@@ -319,7 +321,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printSimple">출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.82.1 ›</span></button>
+      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.83 ›</span></button>
     </div>
   </section>
 </main>
@@ -371,7 +373,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
 
 <div id="bulkDeleteModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2 data-i18n="manageTodayTrades">오늘 매매 정리</h2><button class="close" id="closeBulkDelete">×</button></div><p class="sub" id="bulkDeleteDate"></p><div id="bulkDeleteCounts" class="bulk-counts"></div><div class="bulk-delete-actions"><button class="secondary danger" id="deleteManualTrades" data-i18n="deleteManualTrades">수동 입력만 삭제</button><button class="secondary danger" id="deleteHtsTrades" data-i18n="deleteHtsTrades">HTS 입력만 삭제</button><button class="primary danger" id="deleteAllTrades" data-i18n="deleteAllTrades">오늘 매매 전체 삭제</button></div></div></div>
 
-<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.82.1</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v182Summary">사용자 입력을 줄이고, 거래 흐름에서 반복 행동과 다음 행동을 자동으로 먼저 제시합니다.</p><p class="sub" data-i18n="nextVersion">온라인 AI와 서버 배포는 v1.9에서 안전하게 연결합니다.</p></div></div></div>
+<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.83</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v182Summary">전체 행동 복기와 다음 행동을 중심으로 정리했습니다.</p><p class="sub" data-i18n="nextVersion">온라인 AI와 서버 배포는 v1.9에서 안전하게 연결합니다.</p></div></div></div>
 
 <div id="toast" class="toast"></div>
 
@@ -763,7 +765,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.82.1",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.83",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
@@ -776,7 +778,7 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-    data.version="1.82.1";data.principles=data.principles||[];data.behaviorFeedback=data.behaviorFeedback||{};saveData();renderCalendar();renderJournal();toast(t("imported"));
+    data.version="1.83";data.principles=data.principles||[];data.behaviorFeedback=data.behaviorFeedback||{};saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
@@ -1137,9 +1139,11 @@ const renderPersonalCoverBase180=renderPersonalCover;renderPersonalCover=functio
 const renderReviewBase180=renderReview;renderReview=function(){renderReviewBase180();renderObjectiveBehavior()};
 const renderStatsBase180=renderStats;renderStats=function(){renderStatsBase180();renderObjectiveTrend()};
 const applyLangBase180=applyLang;applyLang=function(){applyLangBase180();document.querySelectorAll('#psychPicker .psych-chip').forEach(x=>x.textContent=psychLabel(x.dataset.psych));renderPersonalCover();renderObjectiveBehavior();if(document.getElementById('statsScreen').classList.contains('active'))renderObjectiveTrend()};
-data.behaviorFeedback=data.behaviorFeedback||{};data.version='1.82.1';saveData();applyLang();
+data.behaviorFeedback=data.behaviorFeedback||{};data.version='1.83';saveData();applyLang();
 </script>
 <script src="v181.js"></script>
 <script src="v182.js"></script>
+<script src="v1822.js"></script>
+<script src="v183.js"></script>
 </body>
 </html>

@@ -1,0 +1,18 @@
+/* v1.82.2: a plain-language review and one-open-at-a-time details */
+#reviewSnapshot182 .snapshot-head182{align-items:center}
+#reviewSnapshot182 .story182,#reviewSnapshot182 .snapshot-lines182{display:none}
+.plain-summary182{margin-top:17px;display:grid;gap:10px}
+.plain-summary182 .summary-point182{background:#ffffff12;border-radius:10px;padding:11px 12px;line-height:1.5}
+.plain-summary182 .summary-point182 b{display:block;color:#c9d8f6;font-size:12px;margin-bottom:3px}
+.plain-summary182 .summary-point182 strong{font-size:16px;letter-spacing:-.01em}
+.plain-summary182 .summary-point182 small{font-size:13px;color:#e5edff}
+#reviewSnapshot182 .snapshot-title182{font-size:22px}
+#reviewSnapshot182 .care182{margin-top:10px}
+.crosscheck182{display:grid;gap:7px;margin-top:12px}
+.crosscheck182>div{padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);line-height:1.45}
+.crosscheck182 b{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}
+.crosscheck182 .status182{font-weight:850;color:#0369a1}
+.crosscheck182 .status182.verified{color:#047857}.crosscheck182 .status182.caution{color:#b45309}
+body.dark .crosscheck182>div{background:#172033}body.dark .crosscheck182 .status182{color:#93c5fd}body.dark .crosscheck182 .status182.verified{color:#86efac}body.dark .crosscheck182 .status182.caution{color:#fcd34d}
+.episode-card.auto-episode182 .episode-feedback182{display:none!important}
+@media(max-width:650px){#reviewSnapshot182 .snapshot-title182{font-size:19px}.plain-summary182 .summary-point182 strong{font-size:15px}}
