@@ -120,5 +120,5 @@
   applyLang=function(){previousLang();document.querySelector('#evidenceDetails182>summary').textContent='📊 '+t('evidenceDetails');document.querySelector('#episodeDetails182>summary').textContent='🔎 '+t('episodeDetails');document.querySelector('#principleDetails182>summary').textContent='🎯 '+t('principleDetails');document.querySelector('#learningDetails182>summary').textContent='🧠 '+t('learningDetails');renderReview()};
 
   window.__v182={release:RELEASE,assessment:currentAssessment,reviewPackage:package182,parseAiResult:parseAi182};
-  saveData();applyLang();
+  // The final script performs one complete startup render after all extensions load.
 })();

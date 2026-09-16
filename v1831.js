@@ -1,9 +1,20 @@
-/* v1.83.1 — suppress stale update prompts and fetch the new build safely. */
+/* v1.83.2 — update check and single startup render. */
 (() => {
-  const CURRENT='1.83.1',banner=document.getElementById('updateBanner181'),button=document.getElementById('updateNow181');
-  data.version=CURRENT;saveData();
-  document.querySelector('#appInfoBtn .sub').textContent='v1.83.1 ›';
-  document.querySelector('#appInfoModal .app-info-body h2 span').textContent='v1.83.1';
+  const CURRENT='1.83.2',banner=document.getElementById('updateBanner181'),button=document.getElementById('updateNow181');
+  data.version=CURRENT;
+  document.querySelector('#appInfoBtn .sub').textContent='v1.83.2 ›';
+  document.querySelector('#appInfoModal .app-info-body h2 span').textContent='v1.83.2';
+  const ledgerBase=calculateTradeLedger;
+  let renderLedgerCache=null;
+  calculateTradeLedger=function(untilDate='9999-12-31'){
+    if(!renderLedgerCache)return ledgerBase(untilDate);
+    if(!renderLedgerCache.has(untilDate))renderLedgerCache.set(untilDate,ledgerBase(untilDate));
+    return renderLedgerCache.get(untilDate);
+  };
+  const reviewBase=renderReview;
+  renderReview=function(){const own=!renderLedgerCache;if(own)renderLedgerCache=new Map();try{return reviewBase()}finally{if(own)renderLedgerCache=null}};
+  const languageBase=applyLang;
+  applyLang=function(){const own=!renderLedgerCache;if(own)renderLedgerCache=new Map();try{return languageBase()}finally{if(own)renderLedgerCache=null}};
   const parts=x=>{const p=String(x||'').split('.').map(n=>Number(n)||0);if(p[0]===1&&p[1]===9)p[1]=90;return p};
   const newer=(a,b)=>{const x=parts(a),y=parts(b);for(let i=0;i<Math.max(x.length,y.length);i++){if((x[i]||0)>(y[i]||0))return true;if((x[i]||0)<(y[i]||0))return false}return false};
   let checkedRemote='';
@@ -15,5 +26,6 @@
   button.onclick=install;
   window.addEventListener('online',check);document.addEventListener('visibilitychange',()=>{if(!document.hidden)check()});
   setTimeout(check,300);
+  applyLang();saveData();
   window.__v1831={version:CURRENT,newer,check};
 })();

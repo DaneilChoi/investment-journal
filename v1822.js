@@ -55,5 +55,5 @@
   document.getElementById('openChatGPT181').onclick=async()=>{await copyPackage();const popup=window.open('https://chatgpt.com/','_blank');if(popup)popup.opener=null};
   document.getElementById('shareReview181').onclick=async()=>{const text=reviewPackage();if(navigator.share){try{await navigator.share({title:isKo()?'투자 복기':'Investment review',text});return}catch(e){if(e.name==='AbortError')return}}await copyPackage()};
   window.__v1822={comparison,summary,renderEpisodes,reviewPackage};
-  saveData();renderReview();
+  // Review is rendered once after the complete app is ready.
 })();

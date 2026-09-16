@@ -1,9 +1,9 @@
 /* v1.83 — one whole-person review, weekly realized return, visual polish */
 (() => {
-  const VERSION='1.83.1';
+  const VERSION='1.83.2';
   data.version=VERSION;
-  Object.assign(I18N.ko,{weeklyReturn:'주간 실현수익률',v182Summary:'전체 행동 복기와 다음 행동을 중심으로 정리했습니다.'});
-  Object.assign(I18N.en,{weeklyReturn:'Weekly realized return',v182Summary:'Focuses on the overall behavior review and one next action.'});
+  Object.assign(I18N.ko,{weeklyReturn:'주간 실현손익',v182Summary:'전체 행동 복기와 다음 행동을 중심으로 정리했습니다.'});
+  Object.assign(I18N.en,{weeklyReturn:'Weekly realized P&L',v182Summary:'Focuses on the overall behavior review and one next action.'});
   const isKo=()=>lang==='ko';
   const safe=x=>escapeHtml(String(x??''));
   const range=()=>weekRange(parseKey(selectedDate));
@@ -51,18 +51,14 @@
     el.className='weekly-profit-value '+(rates.every(x=>x.rate>=0)?'positive':rates.every(x=>x.rate<0)?'negative':'');
     note.textContent=isKo()?'실현매도 원가 기준 · 예상 비용 반영':'Realized sale cost basis · estimated charges included';
   }
-  const originalWeekSummary=renderWeekSummary;
-  renderWeekSummary=function(start){originalWeekSummary(start);renderRate(start)};
-  const originalJournal=renderJournal;
-  renderJournal=function(){originalJournal();renderRate(weekStart)};
   const originalReview=renderReview;
   renderReview=function(){originalReview();renderOverall();cleanHeadingIcons()};
   const originalLanguage=applyLang;
-  applyLang=function(){originalLanguage();renderOverall();renderRate();cleanHeadingIcons()};
+  applyLang=function(){originalLanguage();renderOverall();cleanHeadingIcons()};
   function cleanHeadingIcons(){document.querySelectorAll('#reviewScreen h3,#statsScreen h3,#journalScreen h2').forEach(h=>{const node=[...h.childNodes].find(x=>x.nodeType===Node.TEXT_NODE&&x.textContent.trim());if(node)node.textContent=node.textContent.replace(/^\s*[\p{Extended_Pictographic}\uFE0F\u200D]+\s*/u,'')});document.querySelectorAll('#reviewScreen .review-details182:not(.always-open182)>summary').forEach(summary=>summary.textContent=summary.textContent.replace(/^\s*[\p{Extended_Pictographic}\uFE0F\u200D]+\s*/u,''))}
   cleanHeadingIcons();
-  document.querySelector('[data-i18n="weeklyReturn"]').textContent=isKo()?'주간 실현수익률':'Weekly realized return';
-  document.querySelector('#appInfoBtn .sub').textContent='v1.83.1 ›';document.querySelector('#appInfoModal .app-info-body h2 span').textContent='v1.83.1';
+  document.querySelector('[data-i18n="weeklyReturn"]').textContent=isKo()?'주간 실현손익':'Weekly realized P&L';
+  document.querySelector('#appInfoBtn .sub').textContent='v1.83.2 ›';document.querySelector('#appInfoModal .app-info-body h2 span').textContent='v1.83.2';
   window.__v183={weeklyRealizedRate,guidance};
-  saveData();renderJournal();renderReview();
+  // Startup rendering and persistence are completed in the final update script.
 })();
