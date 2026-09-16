@@ -1,6 +1,6 @@
 /* v1.83 — one whole-person review, weekly realized return, visual polish */
 (() => {
-  const VERSION='1.83';
+  const VERSION='1.83.1';
   data.version=VERSION;
   Object.assign(I18N.ko,{weeklyReturn:'주간 실현수익률',v182Summary:'전체 행동 복기와 다음 행동을 중심으로 정리했습니다.'});
   Object.assign(I18N.en,{weeklyReturn:'Weekly realized return',v182Summary:'Focuses on the overall behavior review and one next action.'});
@@ -62,7 +62,7 @@
   function cleanHeadingIcons(){document.querySelectorAll('#reviewScreen h3,#statsScreen h3,#journalScreen h2').forEach(h=>{const node=[...h.childNodes].find(x=>x.nodeType===Node.TEXT_NODE&&x.textContent.trim());if(node)node.textContent=node.textContent.replace(/^\s*[\p{Extended_Pictographic}\uFE0F\u200D]+\s*/u,'')});document.querySelectorAll('#reviewScreen .review-details182:not(.always-open182)>summary').forEach(summary=>summary.textContent=summary.textContent.replace(/^\s*[\p{Extended_Pictographic}\uFE0F\u200D]+\s*/u,''))}
   cleanHeadingIcons();
   document.querySelector('[data-i18n="weeklyReturn"]').textContent=isKo()?'주간 실현수익률':'Weekly realized return';
-  document.querySelector('#appInfoBtn .sub').textContent='v1.83 ›';document.querySelector('#appInfoModal .app-info-body h2 span').textContent='v1.83';
+  document.querySelector('#appInfoBtn .sub').textContent='v1.83.1 ›';document.querySelector('#appInfoModal .app-info-body h2 span').textContent='v1.83.1';
   window.__v183={weeklyRealizedRate,guidance};
   saveData();renderJournal();renderReview();
 })();

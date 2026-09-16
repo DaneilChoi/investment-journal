@@ -2,7 +2,7 @@
    Local-first review episodes, priority principles, personalized learning,
    personal ChatGPT handoff, and update readiness. */
 (() => {
-  const RELEASE='1.83';
+  const RELEASE='1.83.1';
   Object.assign(I18N.ko,{
     v181Summary:'매매 구간 복기, 핵심 원칙, 맞춤 학습과 개인 ChatGPT 공유 준비를 추가했습니다.',
     nextVersion:'온라인 AI는 사용자가 명시적으로 선택한 경우에만 연결합니다.',
@@ -143,8 +143,9 @@
   const applyLangBefore181=applyLang;
   applyLang=function(){applyLangBefore181();document.querySelectorAll('[data-i18n]').forEach(el=>{const value=t(el.dataset.i18n);if(value!==el.dataset.i18n)el.innerHTML=value});document.querySelectorAll('[data-placeholder]').forEach(el=>{const value=t(el.dataset.placeholder);if(value!==el.dataset.placeholder)el.placeholder=value});if(principleVault?.querySelector('h3'))principleVault.querySelector('h3').textContent=t('principleVault');renderAiModes181();renderReview();renderHomeLearning181()};
 
-  async function checkUpdate181(){try{const response=await fetch(`version.json?${Date.now()}`,{cache:'no-store'});if(!response.ok)return;const remote=await response.json();if(remote.version&&remote.version!==RELEASE)document.getElementById('updateBanner181').classList.add('show')}catch(_){}}
-  document.getElementById('updateNow181').onclick=async()=>{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.getRegistration();await reg?.update()}location.reload()};
+  function newer181(remote,current){const parse=x=>{const p=String(x||'').split('.').map(Number);if(p[0]===1&&p[1]===9)p[1]=90;return p};const a=parse(remote),b=parse(current);for(let i=0;i<Math.max(a.length,b.length);i++){if((a[i]||0)>(b[i]||0))return true;if((a[i]||0)<(b[i]||0))return false}return false}
+  async function checkUpdate181(){try{const response=await fetch(`version.json?${Date.now()}`,{cache:'no-store'});if(!response.ok)return;const remote=await response.json(),current=document.querySelector('meta[name="app-version"]')?.content||RELEASE,banner=document.getElementById('updateBanner181');banner.classList.toggle('show',newer181(remote.version,current))}catch(_){}}
+  document.getElementById('updateNow181').onclick=async()=>{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.getRegistration();if(reg){await reg.update();if(reg.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});if(reg.installing||reg.waiting)await Promise.race([new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true})),new Promise(resolve=>setTimeout(resolve,4000))])}}const url=new URL(location.href);url.searchParams.set('updated',Date.now());location.replace(url.href)};
   window.addEventListener('online',checkUpdate181);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkUpdate181()});setTimeout(checkUpdate181,1200);
 
   window.__v181={buildEpisodes:()=>buildEpisodes(),reviewPackage:reviewPackage181,questionSet:questionSet,release:RELEASE};
