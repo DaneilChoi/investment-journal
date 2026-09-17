@@ -1,5 +1,5 @@
-const CACHE="investment-journal-v1.83.3";
-const ASSETS=["./","./index.html","./v181.css","./v181.js?v=1.83.3","./v182.css","./v182.js?v=1.83.3","./v1822.css","./v1822.js?v=1.83.3","./v183.css","./v183.js?v=1.83.3","./v1831.js?v=1.83.3","./version.json","./manifest.webmanifest","./icon-192.png","./icon-512.png","./apple-touch-icon.png","./ocr/tesseract.min.js"];
+const CACHE="investment-journal-v1.83.4";
+const ASSETS=["./","./index.html","./v181.css","./v181.js?v=1.83.4","./v182.css","./v182.js?v=1.83.4","./v1822.css","./v1822.js?v=1.83.4","./v183.css","./v183.js?v=1.83.4","./v1831.js?v=1.83.4","./v1834.css","./v1834.js?v=1.83.4","./version.json","./manifest.webmanifest","./icon-192.png","./icon-512.png","./apple-touch-icon.png","./ocr/tesseract.min.js"];
 self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith("investment-journal-")&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener("message",e=>{if(e.data?.type==="SKIP_WAITING")self.skipWaiting()});

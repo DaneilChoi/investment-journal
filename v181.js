@@ -2,7 +2,7 @@
    Local-first review episodes, priority principles, personalized learning,
    personal ChatGPT handoff, and update readiness. */
 (() => {
-  const RELEASE='1.83.3';
+  const RELEASE='1.83.4';
   Object.assign(I18N.ko,{
     v181Summary:'매매 구간 복기, 핵심 원칙, 맞춤 학습과 개인 ChatGPT 공유 준비를 추가했습니다.',
     nextVersion:'온라인 AI는 사용자가 명시적으로 선택한 경우에만 연결합니다.',
