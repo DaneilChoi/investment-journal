@@ -1,0 +1,159 @@
+/* v1.84 — Quiet Report + Theme Flow visual system. */
+:root{
+  --navy:#283a50;
+  --blue:#58789d;
+  --indigo:#66739b;
+  --red:#d65454;
+  --green:#478768;
+  --orange:#b9783d;
+  --yellow:#d6ad57;
+  --line:#ddd5c8;
+  --muted:#6c756f;
+  --bg:#f4efe5;
+  --card:#fffdf8;
+  --soft-blue:#e7eef4;
+  --soft-sage:#e6efe8;
+  --soft-coral:#f4e7e2;
+  --ink:#273139;
+}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);letter-spacing:-.012em}
+main{max-width:1080px;padding-top:19px}
+.topbar{height:66px;background:rgba(255,253,248,.96);color:var(--ink);border-bottom:1px solid var(--line);box-shadow:none;padding:0 22px}
+.topbar .brand{font-size:17px;color:var(--navy)}
+.topbar .logo{width:29px;height:29px;border-radius:9px}
+.topbar .top-date{position:absolute;left:50%;transform:translateX(-50%);font-size:17px;color:var(--ink);white-space:nowrap}
+.topbar .icon-btn{color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:none;padding:19px}
+.section-title{margin:7px 0 16px;padding:0 2px}
+.section-title h1{font-size:21px;font-weight:800;color:var(--ink)}
+.section-title .sub{margin-top:5px}
+.sub{color:var(--muted)}
+
+/* Personal cover: editorial line-art treatment instead of a saturated banner. */
+.personal-cover{min-height:0!important;padding:21px 23px!important;background:var(--card)!important;color:var(--ink)!important;border:1px solid var(--line)!important;border-radius:19px!important;box-shadow:none!important}
+.personal-cover:after{display:none!important}
+.personal-cover>div:first-child{display:flex;align-items:baseline;gap:0;min-width:0}
+.cover-kicker,.cover-subtitle{display:none!important}
+.cover-title{margin:0!important;font-size:22px!important;font-weight:800!important;letter-spacing:-.035em!important;color:var(--ink)}
+.cover-title .cover-en184{font-size:13px;font-weight:650;letter-spacing:.02em;color:var(--muted);margin-left:8px;white-space:nowrap}
+.cover-principle{margin-top:14px!important;padding:9px 12px!important;border:0!important;background:var(--soft-sage)!important;color:#355e4a!important;border-radius:11px!important;backdrop-filter:none!important}
+.cover-principle b{font-weight:800}
+.cover-pattern{margin-top:11px!important;padding:11px 13px!important;background:var(--soft-blue)!important;color:var(--ink)!important;border:0!important;border-radius:11px!important}
+.cover-pattern b{color:var(--navy);font-size:12px!important}
+.cover-pattern span{font-size:14px!important;font-weight:650}
+.cover-pattern small{color:var(--muted);opacity:1!important}
+
+/* Calendar: quiet structure with a restrained theme-flow accent. */
+.calendar{background:var(--card);border-color:var(--line);border-radius:15px}
+.month-nav{margin:3px 0 16px;color:var(--ink);font-size:19px}
+.month-nav button{color:var(--navy)}
+.weekdays{color:var(--muted)}
+.day{position:relative;background:var(--card);border-color:#ebe5db;min-height:76px}
+.day.selected{background:var(--soft-blue);box-shadow:inset 0 0 0 2px #88a5c1}
+.day .num{font-weight:750}
+.day-theme184{display:block;max-width:100%;margin:7px auto 0;padding:2px 4px;border-radius:5px;color:#496257;font-size:11px;font-weight:750;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;background:var(--soft-sage)}
+.day-theme184.empty{visibility:hidden}
+.day.has-theme184:after{content:"";position:absolute;left:12%;right:12%;bottom:0;height:3px;border-radius:4px 4px 0 0;background:#79a08b}
+.week-hint{color:var(--muted)}
+
+/* Weekly working report. */
+.weekly-note184{border-top:4px solid #7d9bb8}
+.weekly-note-head184{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.weekly-note-head184 .kicker184{display:block;color:var(--blue);font-size:11px;font-weight:850;letter-spacing:.12em;margin-bottom:4px}
+.weekly-note-head184 h2{margin:0;font-size:19px}
+.weekly-note-head184 span{color:var(--muted);font-size:13px}
+.theme-flow184{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:15px}
+.theme-day184{min-width:0;padding:9px 7px;background:var(--soft-sage);border-radius:10px;border-bottom:3px solid #7da28d;text-align:center}
+.theme-day184:nth-child(3n+2){background:var(--soft-coral);border-color:#c98a7d}
+.theme-day184:nth-child(3n){background:var(--soft-blue);border-color:#83a3bf}
+.theme-day184 b{display:block;font-size:12px;margin-bottom:5px;color:var(--muted)}
+.theme-day184 span{display:block;font-size:12px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.weekly-note-grid184{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.weekly-field184{display:block;padding:13px 14px;background:#fbf8f1;border:1px solid var(--line);border-radius:12px}
+.weekly-field184 b{display:block;margin-bottom:7px;font-size:13px;color:var(--navy)}
+.weekly-field184 input,.weekly-field184 textarea,.daily-theme-input184{width:100%;border:0;border-bottom:1px solid #bfc4c0;border-radius:0;background:transparent;color:var(--ink);padding:7px 2px;outline-offset:3px}
+.weekly-field184 textarea{min-height:58px;resize:vertical;line-height:1.5}
+.weekly-note-help184{grid-column:1/-1;color:var(--muted);font-size:12px;line-height:1.5}
+.daily-theme-card184{border-left:4px solid #7d9f8a!important;background:#fbfdf9!important}
+.daily-theme-card184 h2{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.daily-theme-card184 small{font-size:12px;color:var(--muted);font-weight:600}
+
+/* Summary and primary information use weight and ink rather than large type. */
+.week-summary-head{border-bottom:1px solid var(--line);padding-bottom:11px}
+.week-summary-head h3{font-size:16px;color:var(--ink)}
+.summary-grid{gap:0}
+.summary-grid>div{padding:13px;border-right:1px solid var(--line)}
+.summary-grid>div:last-child{border-right:0}
+.summary-grid strong{font-size:20px;color:var(--ink)}
+.study-card h3,.journal-card h2,.card h3{color:var(--ink)}
+.yellow-card{border:1px solid var(--line);border-left:4px solid #d4b068}
+
+/* Review and statistics inherit the same calm report hierarchy. */
+.review-snapshot182{background:var(--card)!important;color:var(--ink)!important;border-color:var(--line)!important}
+.reflection-block184.self184{background:var(--soft-blue);border-color:#cedbe6}
+.reflection-block184.facts184{background:#f3f1eb;border-color:#dfd9ce}
+.reflection-block184.question184{background:#f4ecdd;border-color:#e5d6b7}
+.reflection-block184 h2{color:var(--navy)}
+.objective-card{border-left-color:#7899b8}
+.week-chart-row.visual185 .spark-bars i:nth-child(odd){background:#d75a57}
+.week-chart-row.visual185 .spark-bars i:nth-child(even){background:#4e9b73}
+.flow-row185,.neutral-row184{background:#fbf8f1;border-color:var(--line)}
+.next-action{background:var(--soft-blue);border:0}
+.review-focus.good{border-left-color:#6f9b7f}.review-focus.bad{border-left-color:#c98a71}
+.primary{background:var(--navy);box-shadow:none}
+.secondary{background:var(--card);color:var(--ink);border-color:var(--line)}
+.secondary.active,.action-chip.active{background:var(--soft-blue);color:var(--navy);border-color:#8da8c1}
+.action-chip{background:#fbf8f1;border-color:var(--line)}
+
+/* Bottom navigation is a soft solid surface with a filled active state. */
+.nav{background:rgba(255,253,248,.97);border-color:var(--line);box-shadow:0 -5px 18px rgba(69,59,45,.05)}
+.nav button{background:transparent;color:#707772;font-size:13px;min-height:62px}
+.nav button.active{background:var(--soft-blue);color:var(--navy);font-weight:850}
+.nav .ico{filter:grayscale(1);opacity:.78}
+.nav button.active .ico{filter:none;opacity:1}
+
+body.dark{
+  --navy:#dce7f4;--blue:#9cb7d2;--indigo:#aeb7d7;--line:#3a4551;--muted:#aeb7bd;--bg:#141a21;--card:#1d252d;--soft-blue:#263746;--soft-sage:#263a32;--soft-coral:#44302c;--ink:#edf0ec;
+  background:var(--bg);color:var(--ink)
+}
+body.dark .topbar,body.dark .nav,body.dark .card,body.dark .calendar,body.dark .day,body.dark .personal-cover{background:var(--card)!important;color:var(--ink)!important;border-color:var(--line)!important}
+body.dark .weekly-field184,body.dark .flow-row185,body.dark .neutral-row184{background:#202932;border-color:var(--line)}
+body.dark .daily-theme-card184{background:#1d2a25!important}
+body.dark .weekly-field184 input,body.dark .weekly-field184 textarea,body.dark .daily-theme-input184{color:var(--ink);border-color:#66717c}
+body.dark .reflection-block184.self184{background:#263746;border-color:#3a5368}
+body.dark .reflection-block184.facts184{background:#282e33;border-color:#444d55}
+body.dark .reflection-block184.question184{background:#3c3426;border-color:#62553d}
+body.dark .nav button{background:transparent;color:#b3bdc5}
+body.dark .nav button.active{background:var(--soft-blue);color:#ecf3fa}
+body.dark .cover-principle{color:#bfe0ce!important}
+
+@media(max-width:650px){
+  main{padding:13px 11px 86px}
+  .topbar{height:61px;padding:0 13px}
+  .topbar .brand span{display:none}
+  .topbar .top-date{font-size:16px}
+  .card{padding:15px;border-radius:15px}
+  .personal-cover{padding:17px 15px!important;border-radius:16px!important}
+  .cover-title{font-size:19px!important;white-space:nowrap}
+  .cover-title .cover-en184{font-size:11px;margin-left:5px}
+  .cover-principle{align-items:flex-start!important;border-radius:10px!important;white-space:normal}
+  .cover-principle span:last-child{white-space:normal!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .day{min-height:73px;padding:6px 3px}
+  .day-theme184{font-size:10px;margin-top:6px}
+  .weekly-note-head184{align-items:flex-start}
+  .weekly-note-head184 h2{font-size:18px}
+  .theme-flow184{gap:4px}
+  .theme-day184{padding:8px 3px;border-radius:8px}
+  .theme-day184 span{font-size:10px}
+  .weekly-note-grid184{grid-template-columns:1fr}
+  .weekly-note-help184{grid-column:auto}
+  .summary-grid>div{padding:10px 5px}
+  .summary-grid strong{font-size:17px}
+  .section-title h1{font-size:20px}
+}
+
+@media(max-width:380px){
+  .cover-title .cover-en184{font-size:9px;margin-left:3px}
+  .theme-day184 b{font-size:10px}.theme-day184 span{font-size:9px}
+}

@@ -1,9 +1,9 @@
 /* v1.83.3 — preload analyses and reuse them until data changes. */
 (() => {
-  const CURRENT='1.83.4',banner=document.getElementById('updateBanner181'),button=document.getElementById('updateNow181');
+  const CURRENT='1.85',banner=document.getElementById('updateBanner181'),button=document.getElementById('updateNow181');
   data.version=CURRENT;
-  document.querySelector('#appInfoBtn .sub').textContent='v1.83.4 ›';
-  document.querySelector('#appInfoModal .app-info-body h2 span').textContent='v1.83.4';
+  document.querySelector('#appInfoBtn .sub').textContent='v1.85 ›';
+  document.querySelector('#appInfoModal .app-info-body h2 span').textContent='v1.85';
   const screenKeys=new Map(),ledgerCache=new Map(),reportCache=new Map();
   let revision=0,warmTimer=0;
   const signature=id=>id==='calendarScreen'?`${revision}|${lang}|${selectedDate}|${key(viewDate)}|${key(weekStart)}`:id==='reviewScreen'?`${revision}|${lang}|${selectedDate}|${key(viewDate)}`:`${revision}|${lang}|${key(statsAnchor)}`;

@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#173bd5">
-<meta name="app-version" content="1.83.4">
+<meta name="app-version" content="1.85">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="투자일지">
@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="v182.css">
 <link rel="stylesheet" href="v1822.css">
 <link rel="stylesheet" href="v183.css">
-<link rel="stylesheet" href="v1834.css">
+<link rel="stylesheet" href="v1835.css">
 <style>
 :root{
   --navy:#172554; --blue:#2563eb; --indigo:#4338ca; --red:#ef4444;
@@ -186,6 +186,8 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
 .cover-pattern{position:relative;z-index:1;margin-top:12px;padding:12px 13px;border-radius:13px;background:rgba(15,23,42,.32);border:1px solid rgba(255,255,255,.18)}.cover-pattern b{display:block;font-size:12px;margin-bottom:4px}.cover-pattern span{display:block;font-size:13px;line-height:1.45}.cover-pattern small{display:block;margin-top:5px;opacity:.74}.objective-card{border-left:5px solid #2563eb}.objective-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.confidence-badge{white-space:nowrap;border-radius:999px;padding:5px 9px;background:#dbeafe;color:#1d4ed8;font-size:11px;font-weight:900}.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.evidence-item{border:1px solid var(--line);border-radius:11px;padding:10px;background:var(--bg)}.evidence-item b{display:block;font-size:18px}.evidence-item span{font-size:11px;color:var(--muted)}.analysis-section{padding:10px 0;border-top:1px solid var(--line)}.analysis-section:first-of-type{border-top:0}.analysis-section>small{display:block;color:var(--muted);font-weight:850;margin-bottom:5px}.analysis-section p{margin:0;line-height:1.6}.feedback-buttons{display:flex;gap:7px;margin-top:10px}.feedback-buttons button.active{background:#2563eb;color:#fff;border-color:#2563eb}.psych-picker{margin-top:13px;padding-top:12px;border-top:1px dashed var(--line)}.psych-picker .chip-row{margin-top:7px}.psych-chip.active{background:#6d28d9;color:#fff;border-color:#6d28d9}.ocr-primary{background:#0f766e}.ocr-status{padding:12px;border-radius:11px;background:#f0fdfa;color:#115e59;margin-bottom:12px}.ocr-progress{height:8px;border-radius:99px;background:#ccfbf1;overflow:hidden;margin-top:8px}.ocr-progress i{display:block;height:100%;width:0;background:#14b8a6;transition:width .2s}.ocr-note{font-size:12px;color:var(--muted);line-height:1.55}.ocr-table{display:grid;gap:9px;max-height:43vh;overflow:auto;margin:12px 0}.ocr-row{border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--bg)}.ocr-row-grid{display:grid;grid-template-columns:1.3fr .8fr .8fr .8fr;gap:7px}.ocr-row-grid input,.ocr-row-grid select{min-width:0;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:inherit}.ocr-row-grid .wide{grid-column:span 2}.ocr-row-actions{display:flex;justify-content:space-between;align-items:center;margin-top:7px}.ocr-confidence{font-size:11px;color:var(--muted)}.ocr-raw{margin-top:10px}.ocr-raw textarea{min-height:90px;font-size:11px}.market-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.source-badge{font-size:10px;border-radius:99px;padding:2px 6px;background:#ecfeff;color:#0e7490;font-weight:850;margin-left:4px}.trend-objective{display:grid;gap:8px}.trend-objective-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.trend-objective-row:last-child{border-bottom:0}.trend-objective-row small{display:block;color:var(--muted)}body.dark .objective-card,body.dark .evidence-item,body.dark .ocr-row{background:#172033}body.dark .confidence-badge{background:#1e3a8a;color:#dbeafe}body.dark .ocr-status{background:#134e4a;color:#ccfbf1}body.dark .source-badge{background:#164e63;color:#cffafe}
 @media(max-width:650px){.evidence-grid{grid-template-columns:1fr 1fr}.ocr-row-grid{grid-template-columns:1fr 1fr}.market-grid{grid-template-columns:1fr}.cover-pattern{padding:10px 11px}.objective-head{display:block}.confidence-badge{display:inline-block;margin-top:7px}}
 </style>
+<link rel="stylesheet" href="v184.css">
+<link rel="stylesheet" href="v185.css">
 </head>
 <body>
 <div class="app">
@@ -323,7 +325,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
       <div class="setting-row"><span>☁ <span data-i18n="backup">데이터 백업</span></span><div style="display:flex;gap:6px"><button class="secondary" id="exportBtn" data-i18n="export">내보내기</button><button class="secondary" id="importBtn" data-i18n="import">불러오기</button><input id="importFile" type="file" accept=".json,application/json" hidden></div></div>
       <div class="setting-row"><span>🖨 <span data-i18n="print">일지 출력</span></span><button class="secondary" id="printBtn" data-i18n="printSimple">출력</button></div>
       <div class="setting-row"><span>♻ <span data-i18n="reset">초기 데이터 삭제</span></span><button class="secondary danger" id="resetBtn" data-i18n="delete">삭제</button></div>
-      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.83.4 ›</span></button>
+      <button class="setting-row setting-button" id="appInfoBtn"><span>ℹ <span data-i18n="appInfo">앱 정보</span></span><span class="sub">v1.85 ›</span></button>
     </div>
   </section>
 </main>
@@ -375,7 +377,7 @@ body.dark .hts-import-stat,body.dark .hts-group{background:#172033}body.dark .ht
 
 <div id="bulkDeleteModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2 data-i18n="manageTodayTrades">오늘 매매 정리</h2><button class="close" id="closeBulkDelete">×</button></div><p class="sub" id="bulkDeleteDate"></p><div id="bulkDeleteCounts" class="bulk-counts"></div><div class="bulk-delete-actions"><button class="secondary danger" id="deleteManualTrades" data-i18n="deleteManualTrades">수동 입력만 삭제</button><button class="secondary danger" id="deleteHtsTrades" data-i18n="deleteHtsTrades">HTS 입력만 삭제</button><button class="primary danger" id="deleteAllTrades" data-i18n="deleteAllTrades">오늘 매매 전체 삭제</button></div></div></div>
 
-<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.83.4</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v182Summary">전체 행동 복기와 다음 행동을 중심으로 정리했습니다.</p><p class="sub" data-i18n="nextVersion">온라인 AI와 서버 배포는 v1.9에서 안전하게 연결합니다.</p></div></div></div>
+<div id="appInfoModal" class="modal-wrap"><div class="modal"><div class="modal-head"><h2>ℹ️ 앱 정보</h2><button class="close" id="closeAppInfo">×</button></div><div class="app-info-body"><img src="icon-192.png" alt="투자일지"><h2>투자일지 <span>v1.85</span></h2><p data-i18n="appInfoDesc">매매를 기록하고, 반복되는 투자 행동을 돌아보며 다음 매매를 개선하기 위한 개인 투자 복기 앱입니다.</p><div class="info-chip">🧠 기록 → 복기 → 변화</div><p class="sub" data-i18n="v185Summary">주간 종목 선정 기준·테마·뉴스 맥락을 거래와 연결했습니다.</p><p class="sub" data-i18n="nextVersion">온라인 AI와 서버 배포는 v1.9에서 안전하게 연결합니다.</p></div></div></div>
 
 <div id="toast" class="toast"></div>
 
@@ -769,7 +771,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".stock-suggest"))doc
 document.getElementById("brandHome").onclick=()=>showScreen("calendarScreen");
 document.getElementById("brandHome").onkeydown=e=>{if(e.key==="Enter"||e.key===" ")showScreen("calendarScreen")};
 
-document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.83.4",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
+document.getElementById("exportBtn").onclick=()=>{const payload={app:"investment-journal",version:"1.85",exportedAt:new Date().toISOString(),data};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`investment-journal-backup-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t("exported"))};
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=e=>{
  const file=e.target.files[0];if(!file)return;const reader=new FileReader();
@@ -782,7 +784,7 @@ document.getElementById("importFile").onchange=e=>{
      data.trades={...data.trades};
      Object.entries(incomingData.trades).forEach(([d,arr])=>{data.trades[d]=data.trades[d]||[];const ids=new Set(data.trades[d].map(x=>x.id));arr.forEach(x=>{if(!x.id||!ids.has(x.id)){x.id=x.id||("trade_"+Math.random().toString(36).slice(2,9));data.trades[d].push(x)}})});
    }
-    data.version="1.83.4";data.principles=data.principles||[];data.behaviorFeedback=data.behaviorFeedback||{};saveData();renderCalendar();renderJournal();toast(t("imported"));
+    data.version="1.85";data.principles=data.principles||[];data.behaviorFeedback=data.behaviorFeedback||{};data.weeklyNotes=data.weeklyNotes||{};data.settings=data.settings||{};saveData();renderCalendar();renderJournal();toast(t("imported"));
  }catch(err){toast(t("importError"))}finally{e.target.value=""}}
  reader.readAsText(file);
 };
@@ -1143,13 +1145,15 @@ const renderPersonalCoverBase180=renderPersonalCover;renderPersonalCover=functio
 const renderReviewBase180=renderReview;renderReview=function(){renderReviewBase180();renderObjectiveBehavior()};
 const renderStatsBase180=renderStats;renderStats=function(){renderStatsBase180();renderObjectiveTrend()};
 const applyLangBase180=applyLang;applyLang=function(){applyLangBase180();document.querySelectorAll('#psychPicker .psych-chip').forEach(x=>x.textContent=psychLabel(x.dataset.psych));renderPersonalCover();renderObjectiveBehavior();if(document.getElementById('statsScreen').classList.contains('active'))renderObjectiveTrend()};
-data.behaviorFeedback=data.behaviorFeedback||{};data.version='1.83.4';
+data.behaviorFeedback=data.behaviorFeedback||{};data.version='1.85';
 </script>
-<script src="v181.js?v=1.83.4"></script>
-<script src="v182.js?v=1.83.4"></script>
-<script src="v1822.js?v=1.83.4"></script>
-<script src="v183.js?v=1.83.4"></script>
-<script src="v1831.js?v=1.83.4"></script>
-<script src="v1834.js?v=1.83.4"></script>
+<script src="v181.js?v=1.85"></script>
+<script src="v182.js?v=1.85"></script>
+<script src="v1822.js?v=1.85"></script>
+<script src="v183.js?v=1.85"></script>
+<script src="v1831.js?v=1.85"></script>
+<script src="v1835.js?v=1.85"></script>
+<script src="v184.js?v=1.85"></script>
+<script src="v185.js?v=1.85"></script>
 </body>
 </html>
