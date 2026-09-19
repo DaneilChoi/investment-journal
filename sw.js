@@ -1,5 +1,5 @@
-const CACHE="investment-journal-v1.85";
-const ASSETS=["./","./index.html","./v181.css","./v181.js?v=1.85","./v182.css","./v182.js?v=1.85","./v1822.css","./v1822.js?v=1.85","./v183.css","./v183.js?v=1.85","./v1831.js?v=1.85","./v1835.css","./v1835.js?v=1.85","./v184.css","./v184.js?v=1.85","./v185.css","./v185.js?v=1.85","./version.json","./manifest.webmanifest","./icon-192.png","./icon-512.png","./apple-touch-icon.png","./ocr/tesseract.min.js"];
+const CACHE="investment-journal-v1.9";
+const ASSETS=["./","./index.html","./app.css?v=1.9","./app.js?v=1.9","./version.json","./manifest.webmanifest","./icon-192.png","./icon-512.png","./apple-touch-icon.png","./book-cover-1.png","./ocr/tesseract.min.js"];
 self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith("investment-journal-")&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener("message",e=>{if(e.data?.type==="SKIP_WAITING")self.skipWaiting()});
