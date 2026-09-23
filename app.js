@@ -455,6 +455,8 @@
   const text=(k,e)=>ko()?k:e;
   function staticCopy(){
     const labels={goodPoint:['내가 잘했다고 느낀 점','What I felt went well'],badPoint:['내가 아쉬웠던 점','What I would revisit'],goodActions:['내가 선택한 행동','Actions I selected'],cautionActions:['다시 보고 싶은 행동','Actions to revisit'],reviewSubtitle:['내가 쓴 복기와 거래 기록을 나란히 봅니다.','See your own reflection alongside the trade record.'],weeklyBehaviorChange:['복기에 적힌 표현의 변화','Changes in recorded reflections'],objectiveTrend:['거래 흐름의 변화','Changes in trade activity'],weeklyBestWorst:['실현손익 상·하위 종목','Highest and lowest realized P&L'],weeklyStatsNote:['횟수와 수익은 결과 자료입니다. 늘거나 줄었다는 사실만으로 매매의 좋고 나쁨을 판단하지 않습니다.','Counts and returns describe results. A change alone does not judge a trade.'],weeklyBalanceTitle:['기록을 그림으로 보기','View recorded patterns'],compassGuide:['기기 내 규칙으로 그린 참고 그림입니다. 실력·수익 점수가 아닙니다.','A rule-based illustration of records, not a skill or profit score.']};
+    // Daily-review field headings live in I18N; do not overwrite them from a later patch.
+    delete labels.goodPoint;delete labels.badPoint;
     for(const [key,values] of Object.entries(labels))document.querySelectorAll(`[data-i18n="${key}"]`).forEach(el=>{if(el.children.length===0)el.textContent=ko()?values[0]:values[1]});
     document.querySelector('#appInfoBtn .sub').textContent=`v${VERSION} ›`;
     document.querySelector('#appInfoModal .app-info-body h2 span').textContent=`v${VERSION}`;
